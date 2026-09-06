@@ -103,10 +103,14 @@ export const handler = async (event) => {
 
   const db = getDb();
 
-  // Remove the function prefix to get the real path
-  // e.g. /.netlify/functions/api/students -> /students
+  // Remove the function prefix or /api prefix to get the real route
+  // e.g. /api/coaches or /.netlify/functions/api/coaches -> /coaches
   const rawPath = event.path || '';
-  const path = rawPath.replace('/.netlify/functions/api', '') || '/';
+  let path = rawPath
+    .split('?')[0]
+    .replace(/^\/\.netlify\/functions\/api/, '')
+    .replace(/^\/api/, '')
+    .replace(/\/+$/, '') || '/';
   const method = event.httpMethod;
   const body = event.body ? JSON.parse(event.body) : {};
 
