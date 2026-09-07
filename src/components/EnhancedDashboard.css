@@ -1341,3 +1341,327 @@
   background: #fecaca;
 }
 
+/* ========================================================
+   OFFICIAL COMPETITION TECHNICAL LEVEL CARD (IMAGE FIDELITY)
+   ======================================================== */
+.portal-tech-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03);
+  margin-bottom: 24px;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.portal-tech-card:hover {
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.08);
+}
+
+.tech-card-header {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+  color: #ffffff;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tech-card-header-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.tech-card-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.84rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.tech-card-main {
+  padding: 20px;
+}
+
+.tech-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.tech-card-title-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tech-card-level-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+.tech-card-level-name {
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.tech-card-age-group {
+  font-size: 0.9rem;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tech-card-level-tabs {
+  background: #f8fafc;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tabs-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #475569;
+}
+
+.tabs-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.tech-tab-btn {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.tech-tab-btn:hover {
+  background: #f1f5f9;
+}
+
+.tech-tab-btn.active {
+  background: #1e3a8a;
+  color: #ffffff;
+  border-color: #1e3a8a;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
+}
+
+/* Technical Table */
+.tech-specs-table-container {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1.5px solid #cbd5e1;
+  background: #ffffff;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.tech-specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  direction: rtl;
+  font-size: 0.9rem;
+  min-width: 680px;
+}
+
+.tech-specs-table th {
+  background: #f8fafc;
+  color: #1e293b;
+  font-weight: 800;
+  padding: 10px 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.86rem;
+}
+
+.tech-specs-table .tech-sub-header th {
+  background: #f1f5f9;
+  font-size: 0.8rem;
+  color: #475569;
+  padding: 6px 4px;
+}
+
+.tech-specs-table td {
+  padding: 12px 10px;
+  border: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+.cell-level {
+  text-align: right;
+  padding-right: 14px !important;
+}
+
+.cell-level strong {
+  display: block;
+  font-size: 0.96rem;
+  color: #0f172a;
+}
+
+.cell-level small {
+  display: block;
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.cell-highlight {
+  background: #fefce8;
+}
+
+.ops-number {
+  display: block;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #b45309;
+}
+
+.cell-ops small {
+  font-size: 0.76rem;
+  color: #92400e;
+  font-weight: 700;
+}
+
+.cell-table-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0284c7;
+}
+
+.cell-floors strong {
+  color: #059669;
+}
+
+.badge-pill-soft {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.badge-pill-soft.green {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-pill-soft.amber {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.cell-method {
+  font-weight: 700;
+  color: #475569;
+  font-size: 0.84rem;
+}
+
+.tech-special-breakdown {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.breakdown-title {
+  display: block;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #92400e;
+  margin-bottom: 6px;
+}
+
+.breakdown-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.breakdown-tag {
+  background: #ffffff;
+  border: 1px solid #fcd34d;
+  color: #78350f;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.tech-card-action-bar {
+  display: flex;
+  justify-content: stretch;
+}
+
+.tech-card-start-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  font-size: 1.15rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.35);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tech-card-start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.45);
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+.tech-card-start-btn .btn-badge {
+  background: rgba(255, 255, 255, 0.25);
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+

@@ -20,6 +20,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [currentCoach, setCurrentCoach] = useState(null);
   const [loginRole, setLoginRole] = useState('student');
+  const [studentAuthMode, setStudentAuthMode] = useState('login');
   const [isAdminView, setIsAdminView] = useState(false);
 
   useEffect(() => {
@@ -118,8 +119,9 @@ function App() {
   if (!currentUser && currentView === 'home') {
     return (
       <Landing 
-        onLogin={(role) => {
+        onLogin={(role, subMode) => {
           setLoginRole(role || 'student');
+          if (subMode) setStudentAuthMode(subMode);
           setCurrentView('login');
         }} 
         onExploreCompetitions={() => setCurrentView('competitions')} 
@@ -233,6 +235,7 @@ function App() {
               onCoachLogin={handleCoachLogin}
               onBack={() => setCurrentView('home')}
               initialRole={loginRole}
+              initialStudentMode={studentAuthMode}
             />
           )
         ) : (

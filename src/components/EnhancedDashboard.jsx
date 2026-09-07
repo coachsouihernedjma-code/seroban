@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import './EnhancedDashboard.css';
-import { getFilteredLevels } from '../data/levels';
+import { getFilteredLevels, getEligibleCategoriesForYear, getDefaultLevelForYear } from '../data/levels';
 import { initialCourses } from '../data/programsAndCompetitions';
 import { getCompetitions } from '../utils/competitions';
 import { fetchStudents, fetchResults } from '../services/dbSync';
@@ -166,9 +166,37 @@ function EnhancedDashboard({
     loadDashboardData();
   }, [currentUser?.id, currentUser?.name]);
 
+  const userBirthYear = currentUser?.birthYear || (2026 - (currentUser?.age || 9));
+
+  // All eligible categories for this user's birth year in Algerian system
+  const eligibleLevels = useMemo(
+    () => getEligibleCategoriesForYear(userBirthYear),
+    [userBirthYear]
+  );
+
+  const [activeLevelId, setActiveLevelId] = useState(
+    currentUser?.levelId || getDefaultLevelForYear(userBirthYear)?.levelId || 'prep'
+  );
+
+  // Synchronize when currentUser changes
+  useEffect(() => {
+    if (currentUser?.levelId) {
+      setActiveLevelId(currentUser.levelId);
+    } else {
+      const def = getDefaultLevelForYear(userBirthYear);
+      if (def) setActiveLevelId(def.levelId);
+    }
+  }, [currentUser?.levelId, userBirthYear]);
+
+  // Current active level object with full category and metadata
+  const currentLevelObj = useMemo(() => {
+    const found = eligibleLevels.find((l) => l.levelId === activeLevelId);
+    return found || eligibleLevels[0] || getDefaultLevelForYear(userBirthYear);
+  }, [eligibleLevels, activeLevelId, userBirthYear]);
+
   const filteredLevels = useMemo(
-    () => getFilteredLevels(currentSystem, currentUser?.age || 9),
-    [currentSystem, currentUser?.age]
+    () => getFilteredLevels(currentSystem, currentUser?.age || (2026 - userBirthYear)),
+    [currentSystem, currentUser?.age, userBirthYear]
   );
 
   const navItems = [
@@ -183,7 +211,24 @@ function EnhancedDashboard({
     { id: 'settings', label: 'الإعدادات', icon: '⚙️', action: () => onNavigate('dashboard') },
   ];
 
+  const handleStartTechnicalTest = () => {
+    if (currentLevelObj) {
+      onStartTraining({
+        id: currentLevelObj.levelId,
+        name: currentLevelObj.levelName,
+        color: currentLevelObj.color,
+        category: currentLevelObj.category,
+      });
+    } else {
+      handleStartQuick();
+    }
+  };
+
   const handleStartQuick = () => {
+    if (currentLevelObj) {
+      handleStartTechnicalTest();
+      return;
+    }
     if (filteredLevels.length > 0) {
       const firstLevel = filteredLevels[0];
       onStartTraining({ ...firstLevel, category: firstLevel.matchedCategory });
@@ -395,11 +440,15 @@ function EnhancedDashboard({
 
         {/* Right: Brand */}
         <div className="topbar-right">
-          <div className="topbar-brand">
-            <div className="topbar-brand-icon">🧮</div>
-            <div className="topbar-brand-text">
-              <span className="topbar-brand-title">Suroban Academy</span>
-              <span className="topbar-brand-sub">أكاديمية السوروبان</span>
+          <div className="topbar-brand" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <img
+              src="/logo.jpg"
+              alt="شعار الفريق"
+              style={{ width: '46px', height: '46px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #3b82f6' }}
+            />
+            <div className="topbar-brand-text" style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
+              <span className="topbar-brand-title" style={{ fontSize: '1.15rem', fontWeight: 900, color: '#1e3a8a' }}>فريق موجة البحر</span>
+              <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#f59e0b' }}>سويهر نجمة</span>
             </div>
           </div>
         </div>
@@ -440,6 +489,154 @@ function EnhancedDashboard({
 
         {/* CENTER: MAIN STREAM */}
         <main className="portal-center-column">
+          {/* OFFICIAL TECHNICAL LEVEL SHEET (Matches Competition Image 100%) */}
+          <section className="portal-tech-card">
+            <div className="tech-card-header">
+              <div className="tech-card-header-badge">
+                <span className="badge-flag">🇩🇿</span>
+                <span className="badge-text">البطولة الوطنية للسوروبان "موجة البحر" — النسخة الخامسة</span>
+              </div>
+              <div className="tech-card-header-meta">
+                <span>📍 درارية</span>
+                <span>📅 2026/09/19</span>
+              </div>
+            </div>
+
+            <div className="tech-card-main">
+              <div className="tech-card-top-row">
+                <div className="tech-card-title-group">
+                  <div
+                    className="tech-card-level-badge"
+                    style={{
+                      background: currentLevelObj?.color || '#10b981',
+                      color: '#ffffff'
+                    }}
+                  >
+                    {currentLevelObj?.badge ? currentLevelObj.badge.split(' ')[0] : '🏅'}
+                  </div>
+                  <div>
+                    <h2 className="tech-card-level-name">
+                      {currentLevelObj?.levelName || 'المستوى التحضيري'}
+                    </h2>
+                    <span className="tech-card-age-group">
+                      👥 الفئة المعتمدة لسنك: <strong>{currentLevelObj?.category?.ageGroup || `مواليد (${userBirthYear})`}</strong>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Multiple level switcher tabs if student qualifies for more than 1 level */}
+              {eligibleLevels.length > 1 && (
+                <div className="tech-card-level-tabs">
+                  <span className="tabs-label">المستويات المتاحة لسنك:</span>
+                  <div className="tabs-buttons">
+                    {eligibleLevels.map((lvl) => (
+                      <button
+                        key={lvl.levelId}
+                        type="button"
+                        className={`tech-tab-btn ${activeLevelId === lvl.levelId ? 'active' : ''}`}
+                        onClick={() => setActiveLevelId(lvl.levelId)}
+                      >
+                        {lvl.levelName}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Technical Specifications Table matching the image */}
+              <div className="tech-specs-table-container">
+                <table className="tech-specs-table">
+                  <thead>
+                    <tr>
+                      <th>المستوى / السن</th>
+                      <th>عدد العمليات في الاختبار</th>
+                      <th colSpan="3">عدد الجداول × 10</th>
+                      <th>عدد الطوابق</th>
+                      <th>التوقيت</th>
+                      <th>طريقة الحل</th>
+                    </tr>
+                    <tr className="tech-sub-header">
+                      <th></th>
+                      <th></th>
+                      <th>آحاد</th>
+                      <th>عشرات</th>
+                      <th>مئات</th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="cell-level">
+                        <strong>{currentLevelObj?.levelName}</strong>
+                        <small>{currentLevelObj?.category?.ageGroup}</small>
+                      </td>
+                      <td className="cell-highlight cell-ops">
+                        <span className="ops-number">{currentLevelObj?.category?.operationsCount}ع</span>
+                        <small>({currentLevelObj?.category?.operationsCount} عملية)</small>
+                      </td>
+                      <td className="cell-table-val">
+                        {currentLevelObj?.category?.tables?.units ?? '/'}
+                      </td>
+                      <td className="cell-table-val">
+                        {currentLevelObj?.category?.tables?.tens ?? '/'}
+                      </td>
+                      <td className="cell-table-val">
+                        {currentLevelObj?.category?.tables?.hundreds ?? '/'}
+                      </td>
+                      <td className="cell-floors">
+                        <span className="badge-pill-soft green">
+                          {currentLevelObj?.category?.floorsText}
+                        </span>
+                        <br />
+                        <small style={{ color: '#059669', fontWeight: 700 }}>
+                          ({currentLevelObj?.category?.floorsRange || '3 - 5'} طوابق)
+                        </small>
+                      </td>
+                      <td className="cell-time">
+                        <span className="badge-pill-soft amber">
+                          ⏱️ {currentLevelObj?.category?.durationText || '07 دقائق'}
+                        </span>
+                      </td>
+                      <td className="cell-method">
+                        <span>{currentLevelObj?.category?.solutionMethod || 'حساب ذهني'}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Special Breakdown for Level 4 if applicable */}
+              {currentLevelObj?.category?.specialBreakdown && (
+                <div className="tech-special-breakdown">
+                  <span className="breakdown-title">📌 تفاصيل العمليات والجداول:</span>
+                  <div className="breakdown-tags">
+                    {currentLevelObj.category.specialBreakdown.map((item, i) => (
+                      <span key={i} className="breakdown-tag">{item}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Direct Action Button */}
+              <div className="tech-card-action-bar">
+                <button
+                  type="button"
+                  className="tech-card-start-btn"
+                  onClick={handleStartTechnicalTest}
+                >
+                  <span className="btn-icon">🚀</span>
+                  <span className="btn-title">انطلق لاختبار وتدريب هذا المستوى الآن</span>
+                  <span className="btn-badge">
+                    {currentLevelObj?.category?.operationsCount} عملية • {currentLevelObj?.category?.durationText || '07 دقائق'}
+                  </span>
+                </button>
+              </div>
+            </div>
+          </section>
+
           {/* Hero Banner with 3D Mascot */}
           <section className="portal-hero-banner">
             <div className="hero-banner-content">

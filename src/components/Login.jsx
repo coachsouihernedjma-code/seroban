@@ -1,17 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { syncStudent, fetchCoaches, syncCoach } from '../services/dbSync';
+import { syncStudent, fetchStudents, fetchCoaches, syncCoach } from '../services/dbSync';
+import { getEligibleCategoriesForYear, getDefaultLevelForYear } from '../data/levels';
 
-function Login({ onLogin, onCoachLogin, onBack, initialRole = 'student' }) {
+const BIRTH_YEARS = [
+  2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010, 2009, 2008
+];
+
+function Login({ onLogin, onCoachLogin, onBack, initialRole = 'student', initialStudentMode = 'login' }) {
   const [role, setRole] = useState(initialRole); // 'student' | 'coach'
+  const [studentAuthMode, setStudentAuthMode] = useState(initialStudentMode); // 'login' | 'register'
   const [coachAuthMode, setCoachAuthMode] = useState('login'); // 'login' | 'register'
 
-  // Student State
+  // Student Register State
   const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [country, setCountry] = useState('');
+  const [studentPassword, setStudentPassword] = useState('');
+  const [birthYear, setBirthYear] = useState('2020');
+  const [selectedLevelId, setSelectedLevelId] = useState('prep');
+  const [country, setCountry] = useState('الجزائر');
   const [coach, setCoach] = useState('');
   const [customCoach, setCustomCoach] = useState(false);
   const [availableCoaches, setAvailableCoaches] = useState([]);
+
+  // Student Login State
+  const [studentLoginName, setStudentLoginName] = useState('');
+  const [studentLoginPassword, setStudentLoginPassword] = useState('');
 
   // Coach State
   const [coachName, setCoachName] = useState('');
@@ -24,6 +36,8 @@ function Login({ onLogin, onCoachLogin, onBack, initialRole = 'student' }) {
   // Coach Login State
   const [loginIdentifier, setLoginIdentifier] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+
+  // Shared State
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -36,36 +50,128 @@ function Login({ onLogin, onCoachLogin, onBack, initialRole = 'student' }) {
     });
   }, []);
 
-  // Handle Student Submit
-  const handleStudentSubmit = async (e) => {
+  // Compute eligible levels for chosen birth year
+  const eligibleLevels = React.useMemo(() => {
+    return getEligibleCategoriesForYear(Number(birthYear));
+  }, [birthYear]);
+
+  // When birthYear changes, update selectedLevelId to default
+  useEffect(() => {
+    const def = getDefaultLevelForYear(Number(birthYear));
+    if (def) {
+      setSelectedLevelId(def.levelId);
+    }
+  }, [birthYear]);
+
+  // Current active level object
+  const activeLevelObj = React.useMemo(() => {
+    const found = eligibleLevels.find((l) => l.levelId === selectedLevelId);
+    return found || eligibleLevels[0] || getDefaultLevelForYear(Number(birthYear));
+  }, [eligibleLevels, selectedLevelId, birthYear]);
+
+  // Handle Student Register (Create personal account with password)
+  const handleStudentRegister = async (e) => {
     e.preventDefault();
-    if (!name.trim() || !age) return;
+    setErrorMessage('');
+    if (!name.trim()) {
+      setErrorMessage('يرجى إدخال اسم الطالب الكامل');
+      return;
+    }
+    if (!studentPassword) {
+      setErrorMessage('يرجى تعيين كلمة مرور لحماية حساب الطالب');
+      return;
+    }
 
     setLoading(true);
+    const calculatedAge = 2026 - Number(birthYear);
+
     const user = {
       id: Date.now().toString(),
       name: name.trim(),
-      age: parseInt(age),
+      password: studentPassword,
+      birthYear: Number(birthYear),
+      age: calculatedAge,
       country: country.trim() || '',
       coach: coach.trim() || '',
+      levelId: activeLevelObj?.levelId || 'prep',
+      levelName: activeLevelObj?.levelName || 'المستوى التحضيري',
+      categoryId: activeLevelObj?.category?.id || 'prep-1',
+      categoryName: activeLevelObj?.category?.ageGroup || 'مواليد (2019-2020-2021)',
       joinDate: new Date().toISOString(),
     };
 
     const users = JSON.parse(localStorage.getItem('soroban_users') || '[]');
-    const existingUser = users.find((u) => u.name === user.name);
+    const existingIndex = users.findIndex((u) => u.name.trim().toLowerCase() === user.name.toLowerCase());
 
-    const finalUser = existingUser
-      ? {
-          ...existingUser,
-          age: user.age,
-          country: user.country,
-          coach: user.coach,
-        }
-      : user;
+    let finalUser = user;
+    if (existingIndex >= 0) {
+      finalUser = {
+        ...users[existingIndex],
+        password: user.password,
+        birthYear: user.birthYear,
+        age: user.age,
+        country: user.country,
+        coach: user.coach,
+        levelId: user.levelId,
+        levelName: user.levelName,
+        categoryId: user.categoryId,
+        categoryName: user.categoryName,
+      };
+      users[existingIndex] = finalUser;
+    } else {
+      users.unshift(user);
+    }
 
+    localStorage.setItem('soroban_users', JSON.stringify(users));
     await syncStudent(finalUser);
     setLoading(false);
     onLogin(finalUser);
+  };
+
+  // Handle Student Login (Authenticate with name & password)
+  const handleStudentLogin = async (e) => {
+    e.preventDefault();
+    setErrorMessage('');
+    if (!studentLoginName.trim() || !studentLoginPassword) {
+      setErrorMessage('يرجى إدخال اسم الطالب وكلمة المرور');
+      return;
+    }
+
+    setLoading(true);
+    // Fetch local and remote students
+    const localUsers = JSON.parse(localStorage.getItem('soroban_users') || '[]');
+    const dbStudents = await fetchStudents();
+    setLoading(false);
+
+    const allStudents = Array.isArray(dbStudents) && dbStudents.length > 0 ? dbStudents : localUsers;
+    const targetName = studentLoginName.trim().toLowerCase();
+
+    // Find student by exact name or matching identifier
+    const found = allStudents.find((s) => (s.name || '').trim().toLowerCase() === targetName);
+
+    if (!found) {
+      setErrorMessage('لم يتم العثور على حساب بهذا الاسم. يمكنك إنشاء حساب جديد بالضغط على تبويب "إنشاء حساب بطل جديد".');
+      return;
+    }
+
+    // Verify password if set
+    if (found.password && found.password !== studentLoginPassword) {
+      setErrorMessage('كلمة المرور غير صحيحة، يرجى التأكد وإعادة المحاولة.');
+      return;
+    }
+
+    // If student had no password (legacy account), update with this password
+    if (!found.password) {
+      found.password = studentLoginPassword;
+      const users = JSON.parse(localStorage.getItem('soroban_users') || '[]');
+      const idx = users.findIndex((u) => u.id === found.id || u.name === found.name);
+      if (idx >= 0) users[idx].password = studentLoginPassword;
+      else users.push(found);
+      localStorage.setItem('soroban_users', JSON.stringify(users));
+      await syncStudent(found);
+    }
+
+    onLogin(found);
   };
 
   // Handle Coach Register
@@ -136,7 +242,7 @@ function Login({ onLogin, onCoachLogin, onBack, initialRole = 'student' }) {
   return (
     <div className="login-page fade-in">
       {onBack && (
-        <div style={{ width: '100%', maxWidth: '480px', marginBottom: '14px', display: 'flex', justifyContent: 'flex-start' }}>
+        <div style={{ width: '100%', maxWidth: '520px', marginBottom: '14px', display: 'flex', justifyContent: 'flex-start' }}>
           <button
             type="button"
             className="btn btn-back"
@@ -160,17 +266,17 @@ function Login({ onLogin, onCoachLogin, onBack, initialRole = 'student' }) {
         </div>
       )}
 
-      {/* PORTAL SWITCH TABS */}
+      {/* PORTAL SWITCH TABS (Student vs Coach) */}
       <div
         style={{
           display: 'flex',
           gap: '8px',
           width: '100%',
-          maxWidth: '480px',
+          maxWidth: '520px',
           background: '#f1f5f9',
           padding: '6px',
           borderRadius: '16px',
-          marginBottom: '20px',
+          marginBottom: '16px',
         }}
       >
         <button
@@ -193,7 +299,7 @@ function Login({ onLogin, onCoachLogin, onBack, initialRole = 'student' }) {
             boxShadow: role === 'student' ? '0 4px 12px rgba(30, 58, 138, 0.2)' : 'none',
           }}
         >
-          🎓 حساب طالب
+          🎓 فضاء الأبطال (الطلاب)
         </button>
 
         <button
@@ -216,135 +322,398 @@ function Login({ onLogin, onCoachLogin, onBack, initialRole = 'student' }) {
             boxShadow: role === 'coach' ? '0 4px 12px rgba(30, 58, 138, 0.2)' : 'none',
           }}
         >
-          👨‍🏫 حساب معلّم / مدرّب
+          👨‍🏫 فضاء المعلمين
         </button>
       </div>
 
-      {/* STUDENT FORM */}
+      {/* STUDENT SECTION */}
       {role === 'student' && (
-        <>
-          <div className="login-hero">
+        <div style={{ width: '100%', maxWidth: '520px' }}>
+          <div className="login-hero" style={{ marginBottom: '14px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
               src="/logo.jpg"
               alt="شعار الأكاديمية"
               className="home-logo"
-              style={{ width: '100px', height: '100px', animation: 'none', marginBottom: '12px' }}
+              style={{ width: '85px', height: '85px', borderRadius: '50%', objectFit: 'cover', animation: 'none', marginBottom: '8px', border: '2.5px solid #3b82f6' }}
             />
-            <h2 className="login-title">🏅 تسجيل بيانات البطل</h2>
-            <p className="login-subtitle">أدخل بياناتك وانطلق نحو ساحة الإبداع والحساب الذهني!</p>
+            <div style={{ textAlign: 'center', marginBottom: '8px' }}>
+              <span style={{ display: 'block', fontSize: '1.3rem', fontWeight: 900, color: '#1e3a8a' }}>فريق موجة البحر</span>
+              <span style={{ display: 'block', fontSize: '1rem', fontWeight: 800, color: '#f59e0b' }}>سويهر نجمة</span>
+            </div>
+            <h2 className="login-title" style={{ fontSize: '1.45rem', margin: '4px 0' }}>
+              {studentAuthMode === 'login' ? '🔑 دخول بطل السوروبان' : '✨ إنشاء حساب بطل جديد'}
+            </h2>
+            <p className="login-subtitle">
+              {studentAuthMode === 'login'
+                ? 'أدخل اسمك وكلمة المرور الخاصة بك للوصول لنتائجك ومستواك الشخصي'
+                : 'أنشئ حسابك المحمي بكلمة سر وانطلق نحو ساحة التدريب والبطولة'}
+            </p>
           </div>
 
-          <form onSubmit={handleStudentSubmit} className="login-form" style={{ maxWidth: '480px' }}>
-            <div className="form-group">
-              <label className="form-label">👤 اسم الطالب الكامل</label>
-              <input
-                type="text"
-                className="form-input"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="اكتب اسمك هنا..."
-                required
-              />
-            </div>
+          {/* Student Sub-tabs: Login vs Register */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '10px',
+              marginBottom: '18px',
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => {
+                setStudentAuthMode('login');
+                setErrorMessage('');
+              }}
+              style={{
+                padding: '8px 22px',
+                borderRadius: '999px',
+                border: 'none',
+                fontWeight: 800,
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                background: studentAuthMode === 'login' ? '#2563eb' : '#e2e8f0',
+                color: studentAuthMode === 'login' ? '#ffffff' : '#475569',
+                boxShadow: studentAuthMode === 'login' ? '0 4px 12px rgba(37, 99, 235, 0.25)' : 'none',
+                transition: 'all 0.2s',
+              }}
+            >
+              🔑 تسجيل الدخول
+            </button>
 
-            <div className="form-row">
+            <button
+              type="button"
+              onClick={() => {
+                setStudentAuthMode('register');
+                setErrorMessage('');
+              }}
+              style={{
+                padding: '8px 22px',
+                borderRadius: '999px',
+                border: 'none',
+                fontWeight: 800,
+                fontSize: '0.95rem',
+                cursor: 'pointer',
+                background: studentAuthMode === 'register' ? '#10b981' : '#e2e8f0',
+                color: studentAuthMode === 'register' ? '#ffffff' : '#475569',
+                boxShadow: studentAuthMode === 'register' ? '0 4px 12px rgba(16, 185, 129, 0.25)' : 'none',
+                transition: 'all 0.2s',
+              }}
+            >
+              ✨ إنشاء حساب جديد
+            </button>
+          </div>
+
+          {errorMessage && (
+            <div
+              style={{
+                background: '#fee2e2',
+                color: '#b91c1c',
+                padding: '10px 14px',
+                borderRadius: '10px',
+                marginBottom: '16px',
+                fontSize: '0.9rem',
+                fontWeight: 700,
+                textAlign: 'center',
+                border: '1px solid #fecaca',
+              }}
+            >
+              ⚠️ {errorMessage}
+            </div>
+          )}
+
+          {/* STUDENT LOGIN FORM */}
+          {studentAuthMode === 'login' ? (
+            <form onSubmit={handleStudentLogin} className="login-form" style={{ maxWidth: '100%' }}>
               <div className="form-group">
-                <label className="form-label">🎂 العمر</label>
-                <input
-                  type="number"
-                  className="form-input"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  placeholder="مثال: 9"
-                  min="4"
-                  max="20"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label">🌍 البلد / الولاية</label>
+                <label className="form-label">👤 اسم الطالب / البطل الكامل</label>
                 <input
                   type="text"
                   className="form-input"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  placeholder="مثال: الجزائر"
+                  value={studentLoginName}
+                  onChange={(e) => setStudentLoginName(e.target.value)}
+                  placeholder="اكتب اسمك المسجل..."
+                  required
                 />
               </div>
-            </div>
 
-            {/* Coach Selection */}
-            <div className="form-group">
-              <label className="form-label">
-                🎓 اسم المعلم / المدرب المعتمد
-                <span style={{ color: 'var(--text-medium)', fontWeight: 500, fontSize: '0.85rem' }}>
-                  {' '}(لتصل نتائجك لمدربك)
-                </span>
-              </label>
+              <div className="form-group">
+                <label className="form-label">🔒 كلمة المرور الخاصة بحسابك</label>
+                <input
+                  type="password"
+                  className="form-input"
+                  value={studentLoginPassword}
+                  onChange={(e) => setStudentLoginPassword(e.target.value)}
+                  placeholder="أدخل كلمة المرور..."
+                  required
+                />
+              </div>
 
-              {availableCoaches.length > 0 && !customCoach ? (
-                <div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={loading}
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  fontSize: '1.05rem',
+                  fontWeight: 800,
+                  background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
+                  boxShadow: '0 8px 20px rgba(37, 99, 235, 0.3)',
+                }}
+              >
+                {loading ? '⏳ جاري التحقق...' : '🔑 دخول إلى حسابي'}
+              </button>
+
+              <div style={{ textAlign: 'center', marginTop: '14px' }}>
+                <span style={{ fontSize: '0.88rem', color: '#64748b' }}>ليس لديك حساب بعد؟ </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStudentAuthMode('register');
+                    setErrorMessage('');
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#2563eb',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    fontSize: '0.88rem',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  أنشئ حسابك الآن مجاناً
+                </button>
+              </div>
+            </form>
+          ) : (
+            /* STUDENT REGISTER FORM */
+            <form onSubmit={handleStudentRegister} className="login-form" style={{ maxWidth: '100%' }}>
+              {/* Student Name */}
+              <div className="form-group">
+                <label className="form-label">👤 اسم الطالب / البطل الكامل</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="مثال: يوسف بن أحمد"
+                  required
+                />
+              </div>
+
+              {/* Student Password */}
+              <div className="form-group">
+                <label className="form-label">🔒 كلمة مرور لحماية حسابك الشخصي</label>
+                <input
+                  type="password"
+                  className="form-input"
+                  value={studentPassword}
+                  onChange={(e) => setStudentPassword(e.target.value)}
+                  placeholder="أنشئ كلمة مرور خاصة بك (مثال: 1234 أو كود سري)..."
+                  required
+                />
+                <small style={{ color: '#64748b', fontSize: '0.78rem', display: 'block', marginTop: '4px' }}>
+                  ستحتاج هذه الكلمة لتسجيل الدخول لاحقاً وحماية نقاطك ونتائجك
+                </small>
+              </div>
+
+              {/* Birth Year & Age row */}
+              <div className="form-row">
+                <div className="form-group" style={{ flex: 1.2 }}>
+                  <label className="form-label">🎂 سنة الميلاد (حسب شهادة الميلاد)</label>
                   <select
                     className="form-input"
-                    value={coach}
-                    onChange={(e) => {
-                      if (e.target.value === '__custom__') {
-                        setCustomCoach(true);
-                        setCoach('');
-                      } else {
-                        setCoach(e.target.value);
-                      }
-                    }}
+                    value={birthYear}
+                    onChange={(e) => setBirthYear(e.target.value)}
+                    style={{ fontWeight: 700, color: '#1e3a8a' }}
+                    required
                   >
-                    <option value="">-- اختر مدربك من القائمة --</option>
-                    {availableCoaches.map((c) => (
-                      <option key={c.id} value={c.name}>
-                        {c.name} {c.schoolName || c.school_name ? `(${c.schoolName || c.school_name})` : ''}
+                    {BIRTH_YEARS.map((y) => (
+                      <option key={y} value={y}>
+                        سنة {y} {y >= 2019 ? '(تحضيري)' : ''}
                       </option>
                     ))}
-                    <option value="__custom__">✍️ مدرب آخر (كتابة يدوية)</option>
                   </select>
                 </div>
-              ) : (
-                <div>
-                  <div style={{ display: 'flex', gap: '8px' }}>
+
+                <div className="form-group" style={{ flex: 0.8 }}>
+                  <label className="form-label">العمر المحسوب</label>
+                  <div
+                    style={{
+                      padding: '12px',
+                      background: '#f1f5f9',
+                      borderRadius: '12px',
+                      fontWeight: 800,
+                      color: '#0f172a',
+                      textAlign: 'center',
+                      border: '1.5px solid #e2e8f0',
+                    }}
+                  >
+                    {2026 - Number(birthYear)} سنوات
+                  </div>
+                </div>
+              </div>
+
+              {/* Level selection if multiple levels exist for this year */}
+              {eligibleLevels.length > 1 && (
+                <div className="form-group">
+                  <label className="form-label">🎯 اختر مستواك الدراسي في السوروبان</label>
+                  <select
+                    className="form-input"
+                    value={selectedLevelId}
+                    onChange={(e) => setSelectedLevelId(e.target.value)}
+                    style={{ fontWeight: 700, borderColor: '#3b82f6' }}
+                  >
+                    {eligibleLevels.map((lvl) => (
+                      <option key={lvl.levelId} value={lvl.levelId}>
+                        {lvl.levelName} — {lvl.category.ageGroup}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {/* LIVE LEVEL BADGE & PREVIEW (Matches Competition Technical Card) */}
+              {activeLevelObj && (
+                <div
+                  style={{
+                    background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)',
+                    border: '2px solid #86efac',
+                    borderRadius: '14px',
+                    padding: '14px 16px',
+                    marginBottom: '16px',
+                    textAlign: 'right',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#166534', background: '#bbf7d0', padding: '3px 10px', borderRadius: '999px' }}>
+                      🏆 مستواك المعتمد في البطولة الوطنية
+                    </span>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#15803d' }}>
+                      {activeLevelObj.category.ageGroup}
+                    </span>
+                  </div>
+
+                  <h4 style={{ margin: '4px 0 8px 0', fontSize: '1.15rem', color: '#14532d', fontWeight: 800 }}>
+                    {activeLevelObj.levelName}
+                  </h4>
+
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
+                      gap: '8px',
+                      fontSize: '0.83rem',
+                      color: '#1e293b',
+                    }}
+                  >
+                    <div style={{ background: '#ffffff', padding: '6px 10px', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                      📝 <strong>العمليات:</strong> {activeLevelObj.category.operationsCount} عملية
+                    </div>
+                    <div style={{ background: '#ffffff', padding: '6px 10px', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                      📊 <strong>الجداول:</strong> {activeLevelObj.category.tablesSummary}
+                    </div>
+                    <div style={{ background: '#ffffff', padding: '6px 10px', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                      🏢 <strong>الطوابق:</strong> {activeLevelObj.category.floorsText}
+                    </div>
+                    <div style={{ background: '#ffffff', padding: '6px 10px', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                      ⏱️ <strong>التوقيت:</strong> {activeLevelObj.category.durationText}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Wilaya & Coach */}
+              <div className="form-row">
+                <div className="form-group" style={{ flex: 1 }}>
+                  <label className="form-label">🌍 البلد / الولاية</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    placeholder="مثال: الجزائر - درارية"
+                  />
+                </div>
+
+                <div className="form-group" style={{ flex: 1 }}>
+                  <label className="form-label">👨‍🏫 اسم المدرب / المعلم</label>
+                  {availableCoaches.length > 0 && !customCoach ? (
+                    <select
+                      className="form-input"
+                      value={coach}
+                      onChange={(e) => {
+                        if (e.target.value === '__custom__') {
+                          setCustomCoach(true);
+                          setCoach('');
+                        } else {
+                          setCoach(e.target.value);
+                        }
+                      }}
+                    >
+                      <option value="">-- اختر مدربك --</option>
+                      {availableCoaches.map((c) => (
+                        <option key={c.id} value={c.name}>
+                          {c.name}
+                        </option>
+                      ))}
+                      <option value="__custom__">✍️ كتابة يدوية...</option>
+                    </select>
+                  ) : (
                     <input
                       type="text"
                       className="form-input"
                       value={coach}
                       onChange={(e) => setCoach(e.target.value)}
-                      placeholder="اكتب اسم المدرب/المدربة..."
+                      placeholder="اسم المدرب أو النادي..."
                     />
-                    {availableCoaches.length > 0 && (
-                      <button
-                        type="button"
-                        onClick={() => setCustomCoach(false)}
-                        style={{
-                          background: '#f1f5f9',
-                          border: '1px solid #cbd5e1',
-                          padding: '0 12px',
-                          borderRadius: '10px',
-                          cursor: 'pointer',
-                          fontSize: '0.85rem',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        القائمة
-                      </button>
-                    )}
-                  </div>
+                  )}
                 </div>
-              )}
-            </div>
+              </div>
 
-            <button type="submit" className="btn btn-play login-btn" disabled={loading}>
-              {loading ? '⏳ جاري الحفظ...' : '🚀 انطلق للتدريب'}
-            </button>
-          </form>
-        </>
+              <button
+                type="submit"
+                className="btn btn-play login-btn"
+                disabled={loading}
+                style={{
+                  fontSize: '1.1rem',
+                  padding: '14px',
+                  background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  boxShadow: '0 8px 24px rgba(16, 185, 129, 0.35)',
+                }}
+              >
+                {loading ? '⏳ جاري إنشاء الحساب...' : '🚀 إنشاء الحساب والانطلاق للتدريب'}
+              </button>
+
+              <div style={{ textAlign: 'center', marginTop: '14px' }}>
+                <span style={{ fontSize: '0.88rem', color: '#64748b' }}>لديك حساب بالفعل؟ </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStudentAuthMode('login');
+                    setErrorMessage('');
+                  }}
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: '#2563eb',
+                    fontWeight: 800,
+                    cursor: 'pointer',
+                    fontSize: '0.88rem',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  تسجيل الدخول إلى حسابك
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
       )}
 
-      {/* COACH FORM */}
+      {/* COACH SECTION */}
       {role === 'coach' && (
         <div style={{ width: '100%', maxWidth: '480px' }}>
           <div className="login-hero" style={{ marginBottom: '16px' }}>

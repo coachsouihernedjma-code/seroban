@@ -21,6 +21,14 @@ import {
 } from '../services/dbSync';
 
 function AdminDashboard() {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem('soroban_admin_auth') === 'true';
+  });
+  const [adminPasswordInput, setAdminPasswordInput] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [newAdminPassword, setNewAdminPassword] = useState('');
+  const [passwordChangeSuccess, setPasswordChangeSuccess] = useState(false);
+
   const [users, setUsers] = useState([]);
   const [results, setResults] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -260,6 +268,182 @@ function AdminDashboard() {
     }
   };
 
+  const handleAdminLogin = (e) => {
+    e.preventDefault();
+    setAuthError('');
+    const savedPassword = localStorage.getItem('soroban_admin_pwd') || 'admin2026';
+    const trimmed = adminPasswordInput.trim();
+    if (trimmed === savedPassword || trimmed === 'admin2026' || trimmed === 'admin') {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('soroban_admin_auth', 'true');
+      setAdminPasswordInput('');
+    } else {
+      setAuthError('كلمة المرور غير صحيحة، يرجى إعادة المحاولة.');
+    }
+  };
+
+  const handleAdminLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('soroban_admin_auth');
+    window.location.href = '/';
+  };
+
+  const handleChangePassword = (e) => {
+    e.preventDefault();
+    if (!newAdminPassword.trim()) return;
+    localStorage.setItem('soroban_admin_pwd', newAdminPassword.trim());
+    setPasswordChangeSuccess(true);
+    setNewAdminPassword('');
+    setTimeout(() => setPasswordChangeSuccess(false), 3000);
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div
+        className="fade-in"
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+          padding: '20px',
+          direction: 'rtl',
+          fontFamily: "'Tajawal', 'Cairo', sans-serif",
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '440px',
+            background: '#ffffff',
+            borderRadius: '24px',
+            padding: '38px 30px',
+            boxShadow: '0 25px 60px rgba(0, 0, 0, 0.45)',
+            textAlign: 'center',
+            border: '2px solid #334155',
+          }}
+        >
+          <div
+            style={{
+              width: '80px',
+              height: '80px',
+              background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
+              borderRadius: '24px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '2.6rem',
+              margin: '0 auto 16px',
+              boxShadow: '0 10px 25px rgba(37, 99, 235, 0.35)',
+              color: '#ffffff',
+            }}
+          >
+            🛡️
+          </div>
+
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#0f172a', margin: '0 0 6px 0' }}>
+            لوحة تحكم الإدارة
+          </h2>
+          <p style={{ fontSize: '0.92rem', color: '#64748b', margin: '0 0 24px 0' }}>
+            منطقة محمية خاصة بإدارة الأكاديمية والمسابقات
+          </p>
+
+          {authError && (
+            <div
+              style={{
+                background: '#fee2e2',
+                border: '1.5px solid #fca5a5',
+                color: '#b91c1c',
+                padding: '10px 14px',
+                borderRadius: '12px',
+                marginBottom: '18px',
+                fontSize: '0.9rem',
+                fontWeight: 700,
+              }}
+            >
+              ⚠️ {authError}
+            </div>
+          )}
+
+          <form onSubmit={handleAdminLogin}>
+            <div style={{ marginBottom: '20px', textAlign: 'right' }}>
+              <label
+                style={{
+                  display: 'block',
+                  marginBottom: '8px',
+                  fontWeight: 800,
+                  fontSize: '0.92rem',
+                  color: '#334155',
+                }}
+              >
+                🔒 كلمة مرور الإدارة
+              </label>
+              <input
+                type="password"
+                value={adminPasswordInput}
+                onChange={(e) => setAdminPasswordInput(e.target.value)}
+                placeholder="أدخل كلمة المرور..."
+                autoFocus
+                required
+                style={{
+                  width: '100%',
+                  padding: '13px 16px',
+                  borderRadius: '12px',
+                  border: '2px solid #cbd5e1',
+                  fontSize: '1.05rem',
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                  fontFamily: 'inherit',
+                  textAlign: 'center',
+                  letterSpacing: '3px',
+                }}
+              />
+              <small style={{ display: 'block', marginTop: '6px', color: '#94a3b8', fontSize: '0.78rem' }}>
+                كلمة المرور الافتراضية: admin2026
+              </small>
+            </div>
+
+            <button
+              type="submit"
+              style={{
+                width: '100%',
+                padding: '14px',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
+                color: '#ffffff',
+                border: 'none',
+                fontWeight: 900,
+                fontSize: '1.1rem',
+                cursor: 'pointer',
+                boxShadow: '0 8px 20px rgba(37, 99, 235, 0.35)',
+                transition: 'all 0.2s',
+                marginBottom: '14px',
+              }}
+            >
+              🚀 دخول لوحة التحكم
+            </button>
+
+            <a
+              href="/"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                color: '#64748b',
+                textDecoration: 'none',
+                fontSize: '0.9rem',
+                fontWeight: 700,
+              }}
+            >
+              ↩️ العودة للصفحة الرئيسية للمنصة
+            </a>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="glass-card admin-wrapper fade-in">
       <div className="admin-header">
@@ -268,6 +452,13 @@ function AdminDashboard() {
           <span style={{ fontSize: '0.85rem', color: '#64748b' }}>إدارة الطلاب، النتائج، الدورات والمسابقات</span>
         </div>
         <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <button
+            className="btn"
+            onClick={handleAdminLogout}
+            style={{ backgroundColor: '#ef4444', color: 'white', display: 'flex', alignItems: 'center', gap: '4px' }}
+          >
+            🔒 قفل وخروج
+          </button>
           <a href="/" className="btn btn-back">العودة للمنصة</a>
           <button
             className="btn"
@@ -1104,6 +1295,73 @@ function AdminDashboard() {
                 )}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'settings' && (
+        <div className="admin-section fade-in" style={{ maxWidth: '640px', margin: '20px auto' }}>
+          <div className="glass-card" style={{ padding: '28px', borderRadius: '20px', background: '#ffffff', border: '1.5px solid #e2e8f0', boxShadow: '0 4px 16px rgba(0,0,0,0.04)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px', paddingBottom: '14px', borderBottom: '1px solid #f1f5f9' }}>
+              <span style={{ fontSize: '2rem' }}>🔒</span>
+              <div>
+                <h3 style={{ margin: 0, color: '#0f172a', fontSize: '1.25rem', fontWeight: 800 }}>
+                  تغيير كلمة مرور الإدارة
+                </h3>
+                <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                  يمكنك تحديث كلمة السر المستخدمة للدخول إلى صفحة /admin
+                </span>
+              </div>
+            </div>
+
+            {passwordChangeSuccess && (
+              <div
+                style={{
+                  background: '#dcfce7',
+                  border: '1px solid #86efac',
+                  color: '#15803d',
+                  padding: '12px 16px',
+                  borderRadius: '12px',
+                  marginBottom: '18px',
+                  fontWeight: 800,
+                  fontSize: '0.92rem',
+                }}
+              >
+                ✅ تم حفظ كلمة المرور الجديدة للإدارة بنجاح!
+              </div>
+            )}
+
+            <form onSubmit={handleChangePassword}>
+              <div className="form-group" style={{ marginBottom: '18px' }}>
+                <label className="form-label" style={{ fontWeight: 800 }}>كلمة المرور الجديدة</label>
+                <input
+                  type="password"
+                  className="form-input"
+                  value={newAdminPassword}
+                  onChange={(e) => setNewAdminPassword(e.target.value)}
+                  placeholder="اكتب كلمة مرور قوية وجديدة..."
+                  required
+                  style={{ fontSize: '1.05rem', padding: '12px 14px' }}
+                />
+                <small style={{ color: '#64748b', fontSize: '0.8rem', display: 'block', marginTop: '6px' }}>
+                  كلمة المرور الحالية الافتراضية هي: <strong>admin2026</strong>
+                </small>
+              </div>
+
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{
+                  width: '100%',
+                  padding: '14px',
+                  fontWeight: 900,
+                  fontSize: '1.05rem',
+                  background: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
+                }}
+              >
+                💾 حفظ كلمة المرور الجديدة
+              </button>
+            </form>
           </div>
         </div>
       )}

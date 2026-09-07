@@ -13,13 +13,22 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
   const [finalResult, setFinalResult] = useState(null);
   const [copied, setCopied] = useState(false);
   const inputRef = useRef(null);
-  const totalProblems = level.category.config.count || 100;
+  const totalProblems = level.category.config?.count || level.category.operationsCount || 90;
+  const maxTimeSeconds = (level.category.durationMinutes || 7) * 60; // 7 minutes = 420s
 
   useEffect(() => {
     setCurrentProblem(generateProblem(level.category.config));
-    const timer = setInterval(() => setTime(t => t + 1), 1000);
+    const timer = setInterval(() => {
+      setTime((t) => {
+        const nextTime = t + 1;
+        if (nextTime >= maxTimeSeconds) {
+          clearInterval(timer);
+        }
+        return nextTime;
+      });
+    }, 1000);
     return () => clearInterval(timer);
-  }, [level]);
+  }, [level, maxTimeSeconds]);
 
   // Auto focus input when feedback clears
   useEffect(() => {
@@ -210,14 +219,30 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
               </div>
             )}
 
-            <div className="problem-stack">
-              {currentProblem.numbers.map((n, i) => (
-                <div key={i} className="problem-line">
-                  <span className="op-sign">{n.sign < 0 ? '−' : (i > 0 ? '+' : '')}</span>
-                  <span className="op-val">{n.val}</span>
-                </div>
-              ))}
-            </div>
+            {currentProblem.isMultiplication ? (
+              <div
+                style={{
+                  fontSize: '3.2rem',
+                  fontWeight: 900,
+                  color: '#1e3a8a',
+                  padding: '30px 10px',
+                  direction: 'ltr',
+                  textAlign: 'center',
+                  letterSpacing: '2px',
+                }}
+              >
+                {currentProblem.text} = ؟
+              </div>
+            ) : (
+              <div className="problem-stack">
+                {currentProblem.numbers.map((n, i) => (
+                  <div key={i} className="problem-line">
+                    <span className="op-sign">{n.sign < 0 ? '−' : (i > 0 ? '+' : '')}</span>
+                    <span className="op-val">{n.val}</span>
+                  </div>
+                ))}
+              </div>
+            )}
 
             {/* Answer — submit on Enter */}
             <form onSubmit={handleAnswer} className="answer-form">
@@ -243,8 +268,11 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
         {/* Stats Sidebar */}
         <aside className="training-stats-sidebar">
           <div className="stat-box timer-box">
-            <span className="stat-box-label">الوقت المستغرق</span>
+            <span className="stat-box-label">⏱️ الوقت المستغرق</span>
             <span className="stat-box-val timer-val">{formatClock(time)}</span>
+            <span style={{ fontSize: '0.75rem', marginTop: '4px', color: time >= maxTimeSeconds - 60 ? '#ef4444' : '#64748b' }}>
+              متبقي من 07 دقائق: {formatClock(Math.max(0, maxTimeSeconds - time))}
+            </span>
           </div>
 
           <div className="stat-box">

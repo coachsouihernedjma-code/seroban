@@ -53,11 +53,15 @@ function Landing({ onLogin, onExploreCompetitions }) {
       <header className="landing-navbar-wrapper">
         <div className="landing-navbar">
           {/* Logo / Brand */}
-          <div className="landing-brand" onClick={() => scrollTo('home')}>
-            <div className="landing-logo-abacus">🧮</div>
-            <div className="landing-brand-text">
-              <span className="landing-brand-title">Soroban Online</span>
-              <span className="landing-brand-sub">أكاديمية السوروبان الدولية</span>
+          <div className="landing-brand" onClick={() => scrollTo('home')} style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }}>
+            <img
+              src="/logo.jpg"
+              alt="شعار الفريق"
+              style={{ width: '52px', height: '52px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #3b82f6' }}
+            />
+            <div className="landing-brand-text" style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.25 }}>
+              <span className="landing-brand-title" style={{ fontSize: '1.2rem', fontWeight: 900, color: '#1e3a8a' }}>فريق موجة البحر</span>
+              <span style={{ fontSize: '0.95rem', fontWeight: 800, color: '#f59e0b' }}>سويهر نجمة</span>
             </div>
           </div>
 
@@ -142,11 +146,19 @@ function Landing({ onLogin, onExploreCompetitions }) {
             >
               👨‍🏫 بوابة المعلمين
             </button>
-            <button type="button" className="landing-btn-outline" onClick={() => onLogin('student')}>
-              إنشاء حساب
+            <button
+              type="button"
+              className="landing-btn-outline"
+              onClick={() => onLogin('student', 'login')}
+            >
+              🔑 تسجيل الدخول
             </button>
-            <button type="button" className="landing-btn-primary" onClick={() => onLogin('student')}>
-              تسجيل الدخول
+            <button
+              type="button"
+              className="landing-btn-primary"
+              onClick={() => onLogin('student', 'register')}
+            >
+              ✨ إنشاء حساب بطل
             </button>
           </div>
         </div>
@@ -163,11 +175,15 @@ function Landing({ onLogin, onExploreCompetitions }) {
             منصة متكاملة لتعلّم وتدريب السوروبان أونلاين والمشاركة في المسابقات العالمية.
           </p>
           <div className="landing-hero-cta">
-            <button type="button" className="hero-cta-main" onClick={() => onLogin('student')}>
-              🎓 ابدأ التدريب الآن
+            <button type="button" className="hero-cta-main" onClick={() => onLogin('student', 'register')}>
+              ✨ إنشاء حساب وبدء التدريب
             </button>
-            <button type="button" className="hero-cta-secondary" onClick={onExploreCompetitions}>
-              🏆 استكشف المسابقات
+            <button
+              type="button"
+              className="hero-cta-secondary"
+              onClick={() => onLogin('student', 'login')}
+            >
+              🔑 تسجيل الدخول
             </button>
             <button
               type="button"
