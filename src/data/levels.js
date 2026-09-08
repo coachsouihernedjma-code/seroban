@@ -24,7 +24,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '7 جداول آحاد (3 إلى 5 طوابق) | 90 عملية | 07 دقائق',
-          config: { count: 90, floorsMin: 3, floorsMax: 5, ops: 4, type: 'units_only', maxDigits: 1 }
+          config: { categoryId: 'prep', count: 90, floorsMin: 3, floorsMax: 5, ops: 4, type: 'units_only', maxDigits: 1 }
         }
       ]
     },
@@ -52,7 +52,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '6 آحاد، 3 عشرات (3 إلى 6 طوابق) | 110 عملية | 07 دقائق',
-          config: { count: 110, floorsMin: 3, floorsMax: 6, ops: 5, type: 'tens_easy' }
+          config: { categoryId: 'l1-1', count: 110, floorsMin: 3, floorsMax: 6, ops: 5, type: 'tens_easy' }
         },
         {
           id: 'l1-2',
@@ -72,7 +72,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '6 آحاد، 5 عشرات (3 إلى 6 طوابق) | 120 عملية | 07 دقائق',
-          config: { count: 120, floorsMin: 3, floorsMax: 6, ops: 5, type: 'tens_medium' }
+          config: { categoryId: 'l1-2', count: 120, floorsMin: 3, floorsMax: 6, ops: 5, type: 'tens_medium' }
         },
         {
           id: 'l1-3',
@@ -92,7 +92,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '6 آحاد، 6 عشرات، 1 مئات (3 إلى 6 طوابق) | 130 عملية | 07 دقائق',
-          config: { count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'tens_hard' }
+          config: { categoryId: 'l1-3', count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'tens_hard' }
         },
         {
           id: 'l1-4',
@@ -112,7 +112,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '7 آحاد، 7 عشرات، 1 مئات (3 إلى 6 طوابق) | 150 عملية | 07 دقائق',
-          config: { count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'tens_expert' }
+          config: { categoryId: 'l1-4', count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'tens_expert' }
         }
       ]
     },
@@ -140,7 +140,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '7 آحاد، 5 عشرات، 1 مئات (3 إلى 6 طوابق) | 130 عملية | 07 دقائق',
-          config: { count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'rule_5' }
+          config: { categoryId: 'l2-1', count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'rule_5' }
         },
         {
           id: 'l2-2',
@@ -160,7 +160,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '7 آحاد، 6 عشرات، 2 مئات (3 إلى 6 طوابق) | 150 عملية | 07 دقائق',
-          config: { count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'rule_5' }
+          config: { categoryId: 'l2-2', count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'rule_5' }
         }
       ]
     },
@@ -188,7 +188,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '7 آحاد، 5 عشرات، 1 مئات (3 إلى 6 طوابق) | 130 عملية | 07 دقائق',
-          config: { count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'rule_10' }
+          config: { categoryId: 'l3-1', count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'rule_10' }
         },
         {
           id: 'l3-2',
@@ -208,7 +208,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '7 آحاد، 6 عشرات، 2 مئات (3 إلى 6 طوابق) | 150 عملية | 07 دقائق',
-          config: { count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'rule_10' }
+          config: { categoryId: 'l3-2', count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'rule_10' }
         }
       ]
     },
@@ -243,7 +243,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: 'ضرب ومركب متنوع (3 إلى 6 طوابق) | 130 عملية | 07 دقائق',
-          config: { count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'mixed_1' }
+          config: { categoryId: 'l4-1', count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'mixed_1' }
         },
         {
           id: 'l4-2',
@@ -270,7 +270,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: 'ضرب ومركب متقدم (3 إلى 6 طوابق) | 150 عملية | 07 دقائق',
-          config: { count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'mixed_2' }
+          config: { categoryId: 'l4-2', count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'mixed_2' }
         }
       ]
     }

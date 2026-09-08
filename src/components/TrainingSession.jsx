@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { generateProblem } from '../utils/mathGenerator';
+import { generateProblem, resetPool } from '../utils/mathGenerator';
 import { buildResultMessage, formatClock, PLATFORM_NAME } from '../utils/resultMessage';
 import { syncResult } from '../services/dbSync';
 
@@ -17,6 +17,9 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
   const maxTimeSeconds = (level.category.durationMinutes || 7) * 60; // 7 minutes = 420s
 
   useEffect(() => {
+    // Reset the PDF problem pool so each session starts fresh (reshuffled)
+    const categoryId = level.category.config?.categoryId;
+    if (categoryId) resetPool(categoryId);
     setCurrentProblem(generateProblem(level.category.config));
     const timer = setInterval(() => {
       setTime((t) => {
