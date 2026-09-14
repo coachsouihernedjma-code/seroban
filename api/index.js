@@ -4,7 +4,7 @@ let sql = null;
 let initialized = false;
 
 function getDb() {
-  const dbUrl = process.env.DATABASE_URL;
+  const dbUrl = process.env.DATABASE_URL || process.env.VITE_DATABASE_URL;
   if (!dbUrl) return null;
   if (!sql) {
     sql = neon(dbUrl);
@@ -37,6 +37,7 @@ async function initTables(db) {
     try { await db`ALTER TABLE students ADD COLUMN IF NOT EXISTS category_id VARCHAR(50)`; } catch {}
     try { await db`ALTER TABLE students ADD COLUMN IF NOT EXISTS category_name VARCHAR(100)`; } catch {}
     try { await db`ALTER TABLE students ADD COLUMN IF NOT EXISTS password VARCHAR(255)`; } catch {}
+
     await db`
       CREATE TABLE IF NOT EXISTS coaches (
         id VARCHAR(64) PRIMARY KEY,
@@ -47,9 +48,10 @@ async function initTables(db) {
         country VARCHAR(100),
         school_name VARCHAR(255),
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-      )
+      );
     `;
     try { await db`ALTER TABLE coaches ADD COLUMN IF NOT EXISTS password VARCHAR(255)`; } catch {}
+
     await db`
       CREATE TABLE IF NOT EXISTS competitions (
         id VARCHAR(64) PRIMARY KEY,
@@ -65,6 +67,7 @@ async function initTables(db) {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
     `;
+
     await db`
       CREATE TABLE IF NOT EXISTS competition_results (
         id VARCHAR(64) PRIMARY KEY,
@@ -86,55 +89,79 @@ async function initTables(db) {
       );
     `;
     initialized = true;
-    console.log('✅ [Neon] Tables initialized');
   } catch (err) {
-    console.error('❌ [Neon] Init error:', err.message);
+    console.error('Init tables error:', err.message);
   }
 }
 
-function json(statusCode, body) {
-  return {
-    statusCode,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
-    },
-    body: JSON.stringify(body),
-  };
+async function parseBody(req) {
+  if (req.body && typeof req.body === 'object') {
+    return req.body;
+  }
+  if (req.body && typeof req.body === 'string') {
+    try {
+      return JSON.parse(req.body);
+    } catch {
+      return {};
+    }
+  }
+  return new Promise((resolve) => {
+    let data = '';
+    req.on('data', (chunk) => { data += chunk; });
+    req.on('end', () => {
+      try {
+        resolve(data ? JSON.parse(data) : {});
+      } catch {
+        resolve({});
+      }
+    });
+    setTimeout(() => resolve({}), 800);
+  });
 }
 
-export const handler = async (event) => {
-  // Handle CORS preflight
-  if (event.httpMethod === 'OPTIONS') {
-    return json(200, {});
+function sendJson(res, statusCode, data) {
+  res.statusCode = statusCode;
+  res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+  res.end(JSON.stringify(data));
+}
+
+export default async function handler(req, res) {
+  // CORS preflight
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS');
+    res.statusCode = 200;
+    return res.end();
   }
 
   const db = getDb();
 
-  // Remove the function prefix or /api prefix to get the real route
-  // e.g. /api/coaches or /.netlify/functions/api/coaches -> /coaches
-  const rawPath = event.path || '';
-  let path = rawPath
-    .split('?')[0]
-    .replace(/^\/\.netlify\/functions\/api/, '')
-    .replace(/^\/api/, '')
-    .replace(/\/+$/, '') || '/';
-  const method = event.httpMethod;
-  const body = event.body ? JSON.parse(event.body) : {};
+  // Extract path
+  const rawUrl = req.headers['x-forwarded-uri'] || req.url || '';
+  const cleanUrl = rawUrl.split('?')[0];
+  let path = cleanUrl.replace(/^\/api/, '').replace(/\/+$/, '') || '/';
+  if (req.query && req.query.path) {
+    const qp = Array.isArray(req.query.path) ? req.query.path.join('/') : req.query.path;
+    path = '/' + qp.replace(/^\/+/, '');
+  }
+
+  const method = req.method;
 
   // Status check
-  if (path === '/status' || path === '') {
-    return json(200, {
+  if (path === '/status' || path === '/') {
+    return sendJson(res, 200, {
       connected: !!db,
-      hasDatabaseUrl: !!process.env.DATABASE_URL,
+      hasDatabaseUrl: !!(process.env.DATABASE_URL || process.env.VITE_DATABASE_URL),
     });
   }
 
   if (!db) {
-    return json(503, {
-      error: 'DATABASE_URL not configured in Netlify environment variables',
+    return sendJson(res, 503, {
+      error: 'DATABASE_URL not configured in environment variables',
       hasDatabaseUrl: false,
     });
   }
@@ -145,9 +172,10 @@ export const handler = async (event) => {
     // ── STUDENTS ──────────────────────────────────────────────
     if (path === '/students' && method === 'GET') {
       const rows = await db`SELECT * FROM students ORDER BY created_at DESC`;
-      return json(200, rows);
+      return sendJson(res, 200, rows);
     }
     if (path === '/students' && method === 'POST') {
+      const body = await parseBody(req);
       const id = body.id || Date.now().toString();
       const birthYear = body.birthYear || (body.age ? 2026 - body.age : null);
       await db`
@@ -168,111 +196,129 @@ export const handler = async (event) => {
           category_id = EXCLUDED.category_id, category_name = EXCLUDED.category_name,
           password = EXCLUDED.password;
       `;
-      return json(200, { success: true, id });
+      return sendJson(res, 200, { success: true, id });
     }
     if (path.startsWith('/students/') && method === 'DELETE') {
       const id = path.split('/students/')[1];
       await db`DELETE FROM students WHERE id = ${id}`;
-      return json(200, { success: true, deleted: id });
+      return sendJson(res, 200, { success: true, deleted: id });
     }
 
     // ── COACHES ───────────────────────────────────────────────
     if (path === '/coaches' && method === 'GET') {
       const rows = await db`SELECT * FROM coaches ORDER BY created_at DESC`;
-      return json(200, rows);
+      return sendJson(res, 200, rows);
     }
     if (path === '/coaches' && method === 'POST') {
+      const body = await parseBody(req);
       const id = body.id || Date.now().toString();
       await db`
         INSERT INTO coaches (id, name, phone, email, password, country, school_name)
-        VALUES (${id}, ${body.name || ''}, ${body.phone || ''}, ${body.email || ''},
-                ${body.password || ''}, ${body.country || ''}, ${body.schoolName || body.school_name || ''})
+        VALUES (
+          ${id}, ${body.name || ''}, ${body.phone || ''}, ${body.email || ''},
+          ${body.password || ''}, ${body.country || ''}, ${body.schoolName || body.school_name || ''}
+        )
         ON CONFLICT (id) DO UPDATE SET
           name = EXCLUDED.name, phone = EXCLUDED.phone, email = EXCLUDED.email,
-          password = EXCLUDED.password, country = EXCLUDED.country, school_name = EXCLUDED.school_name;
+          password = EXCLUDED.password, country = EXCLUDED.country,
+          school_name = EXCLUDED.school_name;
       `;
-      return json(200, { success: true, id });
+      return sendJson(res, 200, { success: true, id });
     }
     if (path.startsWith('/coaches/') && method === 'DELETE') {
       const id = path.split('/coaches/')[1];
       await db`DELETE FROM coaches WHERE id = ${id}`;
-      return json(200, { success: true, deleted: id });
+      return sendJson(res, 200, { success: true, deleted: id });
     }
 
     // ── COMPETITIONS ──────────────────────────────────────────
     if (path === '/competitions' && method === 'GET') {
-      const rows = await db`SELECT * FROM competitions ORDER BY open_date ASC`;
-      return json(200, rows);
+      const rows = await db`SELECT * FROM competitions ORDER BY created_at DESC`;
+      return sendJson(res, 200, rows);
     }
     if (path === '/competitions' && method === 'POST') {
+      const body = await parseBody(req);
       const id = body.id || Date.now().toString();
       await db`
-        INSERT INTO competitions (id, title, description, system, level_id, category_id, open_date, close_date, banner_url, status)
-        VALUES (${id}, ${body.title || ''}, ${body.description || ''}, ${body.system || 'algerian'},
-                ${body.levelId || body.level_id || ''}, ${body.categoryId || body.category_id || ''},
-                ${body.openDate ? new Date(body.openDate) : null}, ${body.closeDate ? new Date(body.closeDate) : null},
-                ${body.bannerUrl || ''}, ${body.status || 'open'})
+        INSERT INTO competitions (
+          id, title, description, system, level_id, category_id,
+          open_date, close_date, banner_url, status
+        )
+        VALUES (
+          ${id}, ${body.title || ''}, ${body.description || ''},
+          ${body.system || 'algerian'}, ${body.levelId || body.level_id || ''},
+          ${body.categoryId || body.category_id || ''},
+          ${body.openDate || body.open_date || null},
+          ${body.closeDate || body.close_date || null},
+          ${body.bannerUrl || body.banner_url || ''},
+          ${body.status || 'open'}
+        )
         ON CONFLICT (id) DO UPDATE SET
-          title = EXCLUDED.title, description = EXCLUDED.description, system = EXCLUDED.system,
-          level_id = EXCLUDED.level_id, category_id = EXCLUDED.category_id,
-          open_date = EXCLUDED.open_date, close_date = EXCLUDED.close_date, status = EXCLUDED.status;
+          title = EXCLUDED.title, description = EXCLUDED.description,
+          system = EXCLUDED.system, level_id = EXCLUDED.level_id,
+          category_id = EXCLUDED.category_id, open_date = EXCLUDED.open_date,
+          close_date = EXCLUDED.close_date, banner_url = EXCLUDED.banner_url,
+          status = EXCLUDED.status;
       `;
-      return json(200, { success: true, id });
+      return sendJson(res, 200, { success: true, id });
     }
     if (path.startsWith('/competitions/') && method === 'DELETE') {
       const id = path.split('/competitions/')[1];
       await db`DELETE FROM competitions WHERE id = ${id}`;
-      return json(200, { success: true, deleted: id });
+      return sendJson(res, 200, { success: true, deleted: id });
     }
 
     // ── RESULTS ───────────────────────────────────────────────
     if (path === '/results' && method === 'GET') {
       const rows = await db`SELECT * FROM competition_results ORDER BY created_at DESC`;
-      return json(200, rows);
+      return sendJson(res, 200, rows);
     }
     if (path === '/results' && method === 'POST') {
+      const body = await parseBody(req);
       const id = body.id || Date.now().toString();
       await db`
         INSERT INTO competition_results (
           id, user_id, user_name, level_id, level_name, category_id, category_name,
-          competition_id, competition_title, system, score, total, time_seconds, time_formatted, is_competition
+          competition_id, competition_title, system, score, total,
+          time_seconds, time_formatted, is_competition
         )
         VALUES (
           ${id}, ${body.userId || body.user_id || ''}, ${body.userName || body.user_name || ''},
           ${body.levelId || body.level_id || ''}, ${body.levelName || body.level_name || ''},
           ${body.categoryId || body.category_id || ''}, ${body.categoryName || body.category_name || ''},
-          ${body.competitionId || body.competition_id || null}, ${body.competitionTitle || body.competition_title || null},
+          ${body.competitionId || body.competition_id || null},
+          ${body.competitionTitle || body.competition_title || null},
           ${body.system || 'algerian'}, ${body.score || 0}, ${body.total || 0},
           ${body.timeSeconds || body.time_seconds || 0}, ${body.timeFormatted || body.time_formatted || ''},
           ${!!body.isCompetition || !!body.is_competition}
         )
         ON CONFLICT (id) DO NOTHING;
       `;
-      return json(200, { success: true, id });
+      return sendJson(res, 200, { success: true, id });
     }
     if (path.startsWith('/results/') && method === 'DELETE') {
       const id = path.split('/results/')[1];
       await db`DELETE FROM competition_results WHERE id = ${id}`;
-      return json(200, { success: true, deleted: id });
+      return sendJson(res, 200, { success: true, deleted: id });
     }
 
-    // ── CLEAR ALL ─────────────────────────────────────────────
+    // ── CLEAR DATA ────────────────────────────────────────────
     if (path === '/clear-all' && method === 'POST') {
       await db`TRUNCATE TABLE students, coaches, competitions, competition_results`;
-      return json(200, { success: true, message: 'All tables cleared' });
+      return sendJson(res, 200, { success: true, message: 'All tables cleared' });
     }
     if (path === '/clear-students' && method === 'POST') {
       await db`TRUNCATE TABLE students`;
-      return json(200, { success: true });
+      return sendJson(res, 200, { success: true });
     }
     if (path === '/clear-results' && method === 'POST') {
       await db`TRUNCATE TABLE competition_results`;
-      return json(200, { success: true });
+      return sendJson(res, 200, { success: true });
     }
 
-    return json(404, { error: 'Route not found', path });
+    return sendJson(res, 404, { error: 'Route not found', path });
   } catch (err) {
     console.error('API Error:', err);
-    return json(500, { error: err.message });
+    return sendJson(res, 500, { error: err.message });
   }
-};
+}
