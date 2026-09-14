@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import './CoachDashboard.css';
 import { fetchStudents, fetchResults } from '../services/dbSync';
-import { generateResultsWordDocument, downloadWordDocument } from '../utils/wordExport';
+import { generateCoachStudentsReport, downloadWordDocument } from '../utils/wordExport';
 
 function CoachDashboard({ coach, onLogout, onBack }) {
   const [students, setStudents] = useState([]);
@@ -108,13 +108,18 @@ function CoachDashboard({ coach, onLogout, onBack }) {
   };
 
   const handleExportWord = async () => {
-    if (displayedResults.length === 0) {
-      alert('لا توجد نتائج لتصديرها حالياً');
+    if (myStudents.length === 0) {
+      alert('لا يوجد طلاب مسجلون تحت إشرافك حالياً');
       return;
     }
-    const html = await generateResultsWordDocument(displayedResults, myStudents);
-    const safeName = coach.name.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
-    downloadWordDocument(html, `نتائج_طلبة_المدرب_${safeName}.doc`);
+    try {
+      const html = await generateCoachStudentsReport(coach.name, myStudents, myResults);
+      const safeName = coach.name.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
+      downloadWordDocument(html, `كشف_طلبة_المدرب_${safeName}.doc`);
+    } catch (err) {
+      console.error('Word export error:', err);
+      alert('حدث خطأ أثناء إنشاء الملف. حاول مرة أخرى.');
+    }
   };
 
   const formatDate = (isoString) => {
@@ -241,17 +246,39 @@ function CoachDashboard({ coach, onLogout, onBack }) {
       {/* TAB 1: STUDENTS LIST */}
       {activeTab === 'students' && (
         <div className="coach-table-card">
-          <div className="coach-filter-bar">
+          <div className="coach-filter-bar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
             <h3 style={{ margin: 0, color: '#1e3a8a' }}>
               قائمة الطلاب الذين اختاروك كمدرب ({displayedStudents.length})
             </h3>
-            <input
-              type="text"
-              placeholder="🔍 ابحث عن طالب..."
-              className="coach-search-input"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+              <input
+                type="text"
+                placeholder="🔍 ابحث عن طالب..."
+                className="coach-search-input"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={handleExportWord}
+                style={{
+                  background: 'linear-gradient(135deg, #1e3a8a, #2563eb)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '8px 14px',
+                  borderRadius: '10px',
+                  cursor: 'pointer',
+                  fontWeight: 700,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  boxShadow: '0 2px 8px rgba(37, 99, 235, 0.25)',
+                  fontSize: '0.88rem',
+                }}
+              >
+                📥 تحميل كشف النقاط (Word)
+              </button>
+            </div>
           </div>
 
           {loading ? (

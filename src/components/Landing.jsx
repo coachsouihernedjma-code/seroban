@@ -32,6 +32,7 @@ const FEATURES = [
 function Landing({ onLogin, onExploreCompetitions }) {
   const [competitions, setCompetitions] = useState([]);
   const [activeTab, setActiveTab] = useState('home');
+  const [showContact, setShowContact] = useState(false);
 
   useEffect(() => {
     const list = getCompetitions()
@@ -116,7 +117,7 @@ function Landing({ onLogin, onExploreCompetitions }) {
               <button
                 type="button"
                 className="landing-nav-link"
-                onClick={() => scrollTo('contact')}
+                onClick={() => setShowContact(true)}
               >
                 تواصل معنا
               </button>
@@ -339,8 +340,123 @@ function Landing({ onLogin, onExploreCompetitions }) {
         </div>
       </div>
 
+      {/* CONTACT MODAL */}
+      {showContact && (
+        <div
+          style={{
+            position: 'fixed', inset: 0, zIndex: 9999,
+            background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '20px',
+          }}
+          onClick={() => setShowContact(false)}
+        >
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)',
+              borderRadius: '24px',
+              padding: '40px 36px',
+              maxWidth: '440px',
+              width: '100%',
+              textAlign: 'center',
+              boxShadow: '0 24px 80px rgba(0,0,0,0.25)',
+              position: 'relative',
+              border: '1px solid #e0f2fe',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close button */}
+            <button
+              onClick={() => setShowContact(false)}
+              style={{
+                position: 'absolute', top: '14px', left: '14px',
+                background: '#f1f5f9', border: 'none', borderRadius: '50%',
+                width: '32px', height: '32px', cursor: 'pointer',
+                fontSize: '1.1rem', color: '#64748b',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}
+            >✕</button>
+
+            {/* Header */}
+            <div style={{ fontSize: '3rem', marginBottom: '10px' }}>📞</div>
+            <h2 style={{ margin: '0 0 6px 0', fontSize: '1.5rem', fontWeight: 900, color: '#1e3a8a' }}>
+              تواصل معنا
+            </h2>
+            <p style={{ color: '#64748b', marginBottom: '28px', fontSize: '0.95rem' }}>
+              نحن هنا لمساعدتك! تواصل معنا عبر أي من القنوات التالية
+            </p>
+
+            {/* WhatsApp */}
+            <a
+              href="https://wa.me/213664159368"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'flex', alignItems: 'center', gap: '14px',
+                background: 'linear-gradient(135deg, #25d366, #128c7e)',
+                color: 'white', textDecoration: 'none',
+                borderRadius: '14px', padding: '16px 20px',
+                marginBottom: '14px', fontWeight: 700, fontSize: '1rem',
+                boxShadow: '0 6px 20px rgba(37, 211, 102, 0.3)',
+                transition: 'transform 0.2s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              <span style={{ fontSize: '1.8rem' }}>💬</span>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: '0.8rem', opacity: 0.9, marginBottom: '2px' }}>واتساب</div>
+                <div style={{ direction: 'ltr' }}>+213 664 159 368</div>
+              </div>
+            </a>
+
+            {/* Email */}
+            <a
+              href="mailto:Coach.souihernedjma@gmail.com"
+              style={{
+                display: 'flex', alignItems: 'center', gap: '14px',
+                background: 'linear-gradient(135deg, #3b82f6, #1e40af)',
+                color: 'white', textDecoration: 'none',
+                borderRadius: '14px', padding: '16px 20px',
+                marginBottom: '24px', fontWeight: 700, fontSize: '0.95rem',
+                boxShadow: '0 6px 20px rgba(59, 130, 246, 0.3)',
+                transition: 'transform 0.2s',
+              }}
+              onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+              onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              <span style={{ fontSize: '1.8rem' }}>✉️</span>
+              <div style={{ textAlign: 'right' }}>
+                <div style={{ fontSize: '0.8rem', opacity: 0.9, marginBottom: '2px' }}>البريد الإلكتروني</div>
+                <div style={{ direction: 'ltr', fontSize: '0.9rem' }}>Coach.souihernedjma@gmail.com</div>
+              </div>
+            </a>
+
+            <p style={{ color: '#94a3b8', fontSize: '0.82rem', margin: 0 }}>
+              سنرد عليك في أقرب وقت ممكن 🌟
+            </p>
+          </div>
+        </div>
+      )}
+
       {/* FOOTER */}
       <footer className="landing-footer" id="contact">
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', marginBottom: '12px' }}>
+          <a
+            href="https://wa.me/213664159368"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#25d366', textDecoration: 'none', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            💬 +213 664 159 368
+          </a>
+          <a
+            href="mailto:Coach.souihernedjma@gmail.com"
+            style={{ color: '#93c5fd', textDecoration: 'none', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}
+          >
+            ✉️ Coach.souihernedjma@gmail.com
+          </a>
+        </div>
         <p>جميع الحقوق محفوظة © 2026 coach souiher nedjma</p>
       </footer>
     </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { generateResultsWordDocument, downloadWordDocument } from '../utils/wordExport';
+import { generateResultsWordDocument, generateAllStudentsReport, downloadWordDocument } from '../utils/wordExport';
 import { levelsData } from '../data/levels';
 import {
   getCompetitions,
@@ -916,42 +916,94 @@ function AdminDashboard() {
       )}
 
       {activeTab === 'users' && (
-        <div style={{ overflowX: 'auto' }}>
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>الاسم</th>
-                <th>العمر</th>
-                <th>البلد</th>
-                <th>المدرب</th>
-                <th>تاريخ التسجيل</th>
-                <th>إجراءات</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.length === 0 ? (
-                <tr><td colSpan="6" style={{ padding: '30px', textAlign: 'center', color: '#999' }}>لا يوجد طلاب مسجلين بعد</td></tr>
-              ) : (
-                users.map(u => (
-                  <tr key={u.id}>
-                    <td style={{ fontWeight: 'bold' }}>{u.name}</td>
-                    <td>{u.age} سنة</td>
-                    <td>{u.country || '—'}</td>
-                    <td>{u.coach || '—'}</td>
-                    <td style={{ color: '#888', fontSize: '0.9rem' }}>{formatDate(u.joinDate || u.join_date)}</td>
-                    <td>
-                      <button
-                        onClick={() => handleDeleteStudent(u.id, u.name)}
-                        style={{ background: '#ef4444', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}
-                      >
-                        🗑️ حذف
-                      </button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+        <div style={{ background: 'white', borderRadius: 'var(--radius-md)', padding: '20px', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', borderBottom: '2px solid var(--bg-light)', paddingBottom: '12px', flexWrap: 'wrap', gap: '10px' }}>
+            <div>
+              <h3 style={{ color: 'var(--primary-dark)', margin: 0 }}>
+                📋 قائمة الطلاب المسجلين بالمنصة
+              </h3>
+              <span style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                إجمالي المسجلين: {users.length} طالب
+              </span>
+            </div>
+            <button
+              onClick={async () => {
+                if (users.length === 0) {
+                  alert('لا يوجد طلاب مسجلون لتحميل القائمة');
+                  return;
+                }
+                try {
+                  const html = await generateAllStudentsReport(users);
+                  downloadWordDocument(html, `القائمة_الشاملة_لجميع_المسجلين.doc`);
+                } catch (err) {
+                  console.error('Export all students error:', err);
+                  alert('حدث خطأ أثناء تصدير القائمة الشاملة للمسجلين');
+                }
+              }}
+              style={{
+                background: 'linear-gradient(135deg, #1e3a8a, #2563eb)',
+                color: 'white',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 6px rgba(37,99,235,0.25)',
+              }}
+            >
+              📥 تحميل القائمة الشاملة لجميع المسجلين (Word)
+            </button>
+          </div>
+          <div style={{ overflowX: 'auto' }}>
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th style={{ width: '40px', textAlign: 'center' }}>#</th>
+                  <th>الاسم واللقب</th>
+                  <th>العمر / الميلاد</th>
+                  <th>البلد / الولاية</th>
+                  <th>المستوى</th>
+                  <th>الفئة</th>
+                  <th>المدرب المختار</th>
+                  <th style={{ background: '#fef3c7', color: '#92400e', textAlign: 'center' }}>حقوق التسجيل</th>
+                  <th>تاريخ التسجيل</th>
+                  <th>إجراءات</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.length === 0 ? (
+                  <tr><td colSpan="10" style={{ padding: '30px', textAlign: 'center', color: '#999' }}>لا يوجد طلاب مسجلين بعد</td></tr>
+                ) : (
+                  users.map((u, idx) => (
+                    <tr key={u.id || idx}>
+                      <td style={{ textAlign: 'center', fontWeight: 'bold' }}>{idx + 1}</td>
+                      <td style={{ fontWeight: 'bold', color: '#1e3a8a' }}>{u.name}</td>
+                      <td>{u.birthYear || u.birth_year ? `${u.birthYear || u.birth_year} (${u.age || ''} سنة)` : (u.age ? `${u.age} سنة` : '—')}</td>
+                      <td>{u.country || u.wilaya || '—'}</td>
+                      <td>{u.levelName || u.level_name || '—'}</td>
+                      <td style={{ fontSize: '0.85rem', color: '#64748b' }}>{u.categoryName || u.category_name || '—'}</td>
+                      <td style={{ fontWeight: 'bold', color: '#0f766e' }}>{u.coach || '—'}</td>
+                      <td style={{ textAlign: 'center', background: '#fffbeb', borderLeft: '1px dashed #fcd34d', borderRight: '1px dashed #fcd34d' }}>
+                        <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>—</span>
+                      </td>
+                      <td style={{ color: '#888', fontSize: '0.9rem' }}>{formatDate(u.joinDate || u.join_date)}</td>
+                      <td>
+                        <button
+                          onClick={() => handleDeleteStudent(u.id, u.name)}
+                          style={{ background: '#ef4444', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.85rem' }}
+                        >
+                          🗑️ حذف
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
@@ -981,9 +1033,14 @@ function AdminDashboard() {
               });
 
               const handleExportWord = async () => {
-                const html = await generateResultsWordDocument(sortedResults, users);
-                const safeName = groupName.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
-                downloadWordDocument(html, `قائمة_الأبطال_${safeName}.doc`);
+                try {
+                  const html = await generateResultsWordDocument(sortedResults, users);
+                  const safeName = groupName.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_');
+                  downloadWordDocument(html, `قائمة_الأبطال_${safeName}.doc`);
+                } catch (err) {
+                  console.error('Word export error:', err);
+                  alert('حدث خطأ أثناء تحميل كشف النتائج');
+                }
               };
 
               return (
