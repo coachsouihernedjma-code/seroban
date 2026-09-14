@@ -261,7 +261,7 @@ function EnhancedDashboard({
             </div>
             <div className="user-greeting-meta">
               <span className="user-greeting-title">مرحبا يا {currentUser?.name?.split(' ')[0] || 'البطل'} 👋</span>
-              <span className="user-greeting-level">🌟 المستوى الذهبي</span>
+              <span className="user-greeting-level">{currentLevelObj?.badge ? currentLevelObj.badge.split(' ')[0] : '⭐'} {currentLevelObj?.levelName || currentUser?.levelName || 'المستوى التحضيري'}</span>
             </div>
           </div>
 
@@ -691,7 +691,7 @@ function EnhancedDashboard({
               <div className="stat-pill-info">
                 <span className="stat-pill-label">المستوى الحالي</span>
                 <strong className="stat-pill-val">
-                  {userStats.sessionsCount >= 6 ? 'المستوى الذهبي' : userStats.sessionsCount >= 3 ? 'المستوى الفضي' : 'المستوى التمهيدي'}
+                  {currentLevelObj?.levelName || currentUser?.levelName || 'المستوى التحضيري'}
                 </strong>
               </div>
             </div>

@@ -8,6 +8,7 @@ export const levelsData = {
       categories: [
         {
           id: 'prep-1',
+          fullName: 'المستوى التحضيري',
           ageGroup: 'مواليد (2019 - 2020 - 2021)',
           minYear: 2019,
           maxYear: 2021,
@@ -36,7 +37,8 @@ export const levelsData = {
       categories: [
         {
           id: 'l1-1',
-          ageGroup: 'ف1 (2017 - 2018)',
+          fullName: 'المستوى الأول الفئة الأولى',
+          ageGroup: 'الفئة الأولى (2017 - 2018)',
           minYear: 2017,
           maxYear: 2018,
           ageMin: 8,
@@ -51,12 +53,13 @@ export const levelsData = {
           durationMinutes: 7,
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
-          details: '6 آحاد، 3 عشرات (3 إلى 6 طوابق) | 110 عملية | 07 دقائق',
+          details: 'المستوى الأول الفئة الأولى | 6 آحاد، 3 عشرات (3 إلى 6 طوابق) | 110 عملية | 07 دقائق',
           config: { categoryId: 'l1-1', count: 110, floorsMin: 3, floorsMax: 6, ops: 5, type: 'tens_easy' }
         },
         {
           id: 'l1-2',
-          ageGroup: 'ف2 (2015 - 2016)',
+          fullName: 'المستوى الأول الفئة الثانية',
+          ageGroup: 'الفئة الثانية (2015 - 2016)',
           minYear: 2015,
           maxYear: 2016,
           ageMin: 10,
@@ -76,7 +79,8 @@ export const levelsData = {
         },
         {
           id: 'l1-3',
-          ageGroup: 'ف3 (2013 - 2014)',
+          fullName: 'المستوى الأول الفئة الثالثة',
+          ageGroup: 'الفئة الثالثة (2013 - 2014)',
           minYear: 2013,
           maxYear: 2014,
           ageMin: 12,
@@ -96,7 +100,8 @@ export const levelsData = {
         },
         {
           id: 'l1-4',
-          ageGroup: 'ف4 (2010 - 2011 - 2012)',
+          fullName: 'المستوى الأول الفئة الرابعة',
+          ageGroup: 'الفئة الرابعة (2010 - 2011 - 2012)',
           minYear: 2010,
           maxYear: 2012,
           ageMin: 14,
@@ -124,7 +129,8 @@ export const levelsData = {
       categories: [
         {
           id: 'l2-1',
-          ageGroup: 'ف1 (2014 - 2019)',
+          fullName: 'المستوى الثاني الفئة الأولى',
+          ageGroup: 'الفئة الأولى (2014 - 2019)',
           minYear: 2014,
           maxYear: 2019,
           ageMin: 7,
@@ -144,7 +150,8 @@ export const levelsData = {
         },
         {
           id: 'l2-2',
-          ageGroup: 'ف2 (2008 - 2013)',
+          fullName: 'المستوى الثاني الفئة الثانية',
+          ageGroup: 'الفئة الثانية (2008 - 2013)',
           minYear: 2008,
           maxYear: 2013,
           ageMin: 13,
@@ -172,7 +179,8 @@ export const levelsData = {
       categories: [
         {
           id: 'l3-1',
-          ageGroup: 'ف1 (2014 - 2019)',
+          fullName: 'المستوى الثالث الفئة الأولى',
+          ageGroup: 'الفئة الأولى (2014 - 2019)',
           minYear: 2014,
           maxYear: 2019,
           ageMin: 7,
@@ -192,7 +200,8 @@ export const levelsData = {
         },
         {
           id: 'l3-2',
-          ageGroup: 'ف2 (2008 - 2013)',
+          fullName: 'المستوى الثالث الفئة الثانية',
+          ageGroup: 'الفئة الثانية (2008 - 2013)',
           minYear: 2008,
           maxYear: 2013,
           ageMin: 13,
@@ -220,6 +229,7 @@ export const levelsData = {
       categories: [
         {
           id: 'l4-1',
+          fullName: 'المستوى الرابع الفئة الأولى',
           ageGroup: 'الفئة الأولى (2014 - 2019)',
           minYear: 2014,
           maxYear: 2019,
@@ -247,6 +257,7 @@ export const levelsData = {
         },
         {
           id: 'l4-2',
+          fullName: 'المستوى الرابع الفئة الثانية',
           ageGroup: 'الفئة الثانية (2008 - 2013)',
           minYear: 2008,
           maxYear: 2013,
@@ -278,9 +289,9 @@ export const levelsData = {
   international: [
     {
       id: 'int-beginner',
-      name: 'المستوى التمهيدي (Beginner)',
+      name: 'المستوى التحضيري (Preparatory)',
       color: '#10b981',
-      badge: '🌱 التمهيدي',
+      badge: '🌱 المستوى التحضيري',
       categories: [
         {
           id: 'int-beg-1',
@@ -488,7 +499,8 @@ export function getEligibleCategoriesForYear(birthYear) {
       if (year >= cat.minYear && year <= cat.maxYear) {
         eligible.push({
           levelId: level.id,
-          levelName: level.name,
+          levelName: cat.fullName || level.name,
+          baseLevelName: level.name,
           color: level.color,
           badge: level.badge,
           category: cat

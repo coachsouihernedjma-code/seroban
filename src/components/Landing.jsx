@@ -341,7 +341,7 @@ function Landing({ onLogin, onExploreCompetitions }) {
 
       {/* FOOTER */}
       <footer className="landing-footer" id="contact">
-        <p>جميع الحقوق محفوظة © {new Date().getFullYear()} — تحالف سوروبان موجة البحر الأبيض المتوسط</p>
+        <p>جميع الحقوق محفوظة © 2026 coach souiher nedjma</p>
       </footer>
     </div>
   );

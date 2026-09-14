@@ -92,7 +92,7 @@ function DashboardHome({
           <span>🥇</span>
           <div>
             <small>المستوى الحالي</small>
-            <strong>المستوى الذهبي</strong>
+            <strong>{currentUser?.levelName || 'المستوى التحضيري'}</strong>
           </div>
         </article>
         <article className="dash-stat pink">
@@ -124,7 +124,7 @@ function DashboardHome({
                     onClick={() => onStartTraining({ ...level, category: level.matchedCategory })}
                   >
                     <span className="dash-course-icon">{style.icon}</span>
-                    <h3>{level.name}</h3>
+                    <h3>{level.matchedCategory?.fullName || level.name}</h3>
                     <p>{level.matchedCategory.ageGroup}</p>
                     <div className="dash-stars">★★★★★</div>
                   </button>

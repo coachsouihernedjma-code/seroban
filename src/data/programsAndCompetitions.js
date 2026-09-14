@@ -4,14 +4,14 @@
 export const initialCourses = [
   {
     id: 'course-1',
-    title: 'المستوى المبتدئ',
-    subtitle: 'أساسيات السوروبان',
+    title: 'المستوى التحضيري',
+    subtitle: 'أساسيات السوروبان والحساب الذهني',
     tone: 'green',
     color: '#10b981',
     image: '/images/course_beginner.jpg',
     rating: 5,
     stars: '★★★★★',
-    tag: 'مبتدئ',
+    tag: 'التحضيري',
   },
   {
     id: 'course-2',

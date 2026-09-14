@@ -157,6 +157,11 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
   const statsRef = useRef({ correct: 0, wrong: 0 });
   const isFinishedRef = useRef(false);
 
+  const categoryConfig = {
+    ...level.category.config,
+    categoryId: level.category.config?.categoryId || level.category.id,
+    tables: level.category.tables,
+  };
   const totalProblems = level.category.config?.count || level.category.operationsCount || 90;
   // Maximum time is 7 minutes (420 seconds) as standard
   const maxTimeSeconds = (level.category.durationMinutes || 7) * 60;
@@ -188,10 +193,12 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
 
     saveResult(finalStats, elapsed);
 
+    const displayLevelName = level.category?.fullName || level.name;
+
     setFinalResult({
       message: buildResultMessage({
         user: currentUser,
-        levelName: level.name,
+        levelName: displayLevelName,
         correct: finalStats.correct,
         wrong: finalStats.wrong,
         timeFormatted,
@@ -213,9 +220,9 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
 
   useEffect(() => {
     // Reset the PDF problem pool so each session starts fresh
-    const categoryId = level.category.config?.categoryId;
+    const categoryId = categoryConfig.categoryId;
     if (categoryId) resetPool(categoryId);
-    setCurrentProblem(generateProblem(level.category.config));
+    setCurrentProblem(generateProblem(categoryConfig));
 
     // Start timer with automatic stop at 7 minutes maximum
     timerRef.current = setInterval(() => {
@@ -256,7 +263,7 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
       userId: currentUser.id,
       userName: currentUser.name,
       levelId: level.id,
-      levelName: level.name,
+      levelName: level.category?.fullName || level.name,
       categoryId: level.category.id,
       categoryName: level.category.ageGroup,
       system: currentSystem,
@@ -275,7 +282,7 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
   const nextProblem = (newStats) => {
     if (problemIndex + 1 < totalProblems) {
       setProblemIndex((prev) => prev + 1);
-      setCurrentProblem(generateProblem(level.category.config));
+      setCurrentProblem(generateProblem(categoryConfig));
       setUserAnswer('');
       setFeedback(null);
     } else {
@@ -378,7 +385,7 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
 
           <div className="result-info">
             <p>👤 <strong>اسم البطل:</strong> {currentUser.name}</p>
-            <p>📚 <strong>المستوى:</strong> {level.name}</p>
+            <p>📚 <strong>المستوى:</strong> {level.category?.fullName || level.name}</p>
             <p>🎂 <strong>العمر:</strong> {currentUser.age} سنوات</p>
             <p>🌍 <strong>الدولة:</strong> {currentUser.country?.trim() || '—'}</p>
             <p>👩‍🏫 <strong>اسم المدرب:</strong> {currentUser.coach?.trim() || '—'}</p>
@@ -462,7 +469,7 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
           <img src="/logo.jpg" alt="شعار الأكاديمية" className="training-mini-logo" />
           <div>
             <h3 className="training-nav-title">
-              {competition ? `🏆 ${competition.title}` : level.name}
+              {competition ? `🏆 ${competition.title}` : (level.category?.fullName || level.name)}
             </h3>
             <span className="training-nav-subtitle">
               {competition
@@ -521,6 +528,26 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
                 )}
               </div>
             )}
+
+            {/* Progression stage badge: Units -> Tens -> Hundreds */}
+            <div className={`stage-badge stage-${currentProblem.stage || 'units'}`}>
+              <span className="stage-badge-icon">
+                {currentProblem.stage === 'units' && '🌱'}
+                {currentProblem.stage === 'tens' && '🚀'}
+                {currentProblem.stage === 'hundreds' && '⭐'}
+                {currentProblem.isMultiplication && '✖️'}
+              </span>
+              <span className="stage-badge-title">
+                {currentProblem.stage === 'units' && 'جدول الآحاد (وحدات)'}
+                {currentProblem.stage === 'tens' && 'جدول العشرات'}
+                {currentProblem.stage === 'hundreds' && 'جدول المئات'}
+                {currentProblem.isMultiplication && 'جدول الضرب'}
+                {!currentProblem.stage && !currentProblem.isMultiplication && 'عمليات الحساب الذهني'}
+              </span>
+              {currentProblem.id && (
+                <span className="stage-badge-id">عملية {currentProblem.id}</span>
+              )}
+            </div>
 
             {currentProblem.isMultiplication ? (
               <div

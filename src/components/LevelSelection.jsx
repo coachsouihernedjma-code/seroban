@@ -41,7 +41,7 @@ function LevelSelection({ currentSystem, userAge, onSelectLevel, onBack }) {
               <span className="level-card-emoji">{LEVEL_EMOJIS[index % LEVEL_EMOJIS.length]}</span>
               <div className="level-card-accent" style={{ backgroundColor: level.color }} />
               <div className="level-card-body">
-                <h3 className="level-card-title">{level.name}</h3>
+                <h3 className="level-card-title">{level.matchedCategory?.fullName || level.name}</h3>
                 <div className="level-card-info">
                   <span className="level-card-age">🎂 {level.matchedCategory.ageGroup}</span>
                   <p className="level-card-details">{level.matchedCategory.details}</p>
