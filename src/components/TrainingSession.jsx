@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { generateProblem, resetPool } from '../utils/mathGenerator';
+import { generateProblem, resetPool, getProblemCount } from '../utils/mathGenerator';
 import { buildResultMessage, formatClock, formatTimeInArabic, PLATFORM_NAME } from '../utils/resultMessage';
 import { syncResult } from '../services/dbSync';
 
@@ -162,6 +162,11 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
     categoryId: level.category.config?.categoryId || level.category.id,
     tables: level.category.tables,
   };
+
+  // The session always runs the official operation count from levels.js. When a
+  // category's PDF holds fewer problems than that (prep, l1-1, l1-2), the pool
+  // reshuffles and replays to fill the remainder — see mathGenerator.
+  const availableProblems = getProblemCount(categoryConfig.categoryId);
   const totalProblems = level.category.config?.count || level.category.operationsCount || 90;
   // Maximum time is 7 minutes (420 seconds) as standard
   const maxTimeSeconds = (level.category.durationMinutes || 7) * 60;
@@ -416,6 +421,23 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
     );
   }
 
+  // No official problem set for this category — say so instead of hanging on
+  // a loading message, since we never fall back to generated problems.
+  if (availableProblems === 0) {
+    return (
+      <div className="fade-in" style={{ textAlign: 'center', padding: '50px 20px' }}>
+        <div style={{ fontSize: '3rem', marginBottom: '16px' }}>📄</div>
+        <h3 style={{ color: 'var(--error-color)', marginBottom: '12px' }}>
+          لا توجد عمليات رسمية لهذه الفئة
+        </h3>
+        <p style={{ color: 'var(--text-medium)', marginBottom: '24px' }}>
+          لم يتم العثور على ملف العمليات الخاص بـ «{level.category?.fullName || level.name}».
+        </p>
+        <button className="btn btn-back" onClick={onBack}>↩️ العودة</button>
+      </div>
+    );
+  }
+
   if (!currentProblem) {
     return (
       <div className="fade-in" style={{ textAlign: 'center', padding: '60px', fontSize: '1.4rem', color: 'var(--text-medium)' }}>
@@ -550,7 +572,8 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
                 {currentProblem.stage === 'units' && 'جدول الآحاد (وحدات)'}
                 {currentProblem.stage === 'tens' && 'جدول العشرات'}
                 {currentProblem.stage === 'hundreds' && 'جدول المئات'}
-                {currentProblem.isMultiplication && 'جدول الضرب'}
+                {/* stageLabel distinguishes the three ضرب groups (1×2, 1×3, 2×2) */}
+                {currentProblem.isMultiplication && (currentProblem.stageLabel || 'جدول الضرب')}
                 {!currentProblem.stage && !currentProblem.isMultiplication && 'عمليات الحساب الذهني'}
               </span>
               {currentProblem.id && (

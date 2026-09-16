@@ -30110,8 +30110,8 @@
   "l4-1": [
     {
       "id": "Ope1_1x2",
-      "isMultiplication": true,
-      "text": "8 × 54",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -30122,12 +30122,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 432
+      "correctAnswer": 432,
+      "isMultiplication": true,
+      "text": "8 × 54"
     },
     {
       "id": "Ope2_1x2",
-      "isMultiplication": true,
-      "text": "5 × 64",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -30138,12 +30140,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 320
+      "correctAnswer": 320,
+      "isMultiplication": true,
+      "text": "5 × 64"
     },
     {
       "id": "Ope3_1x2",
-      "isMultiplication": true,
-      "text": "7 × 99",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -30154,12 +30158,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 693
+      "correctAnswer": 693,
+      "isMultiplication": true,
+      "text": "7 × 99"
     },
     {
       "id": "Ope4_1x2",
-      "isMultiplication": true,
-      "text": "6 × 77",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 6,
@@ -30170,12 +30176,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 462
+      "correctAnswer": 462,
+      "isMultiplication": true,
+      "text": "6 × 77"
     },
     {
       "id": "Ope5_1x2",
-      "isMultiplication": true,
-      "text": "2 × 86",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 2,
@@ -30186,12 +30194,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 172
+      "correctAnswer": 172,
+      "isMultiplication": true,
+      "text": "2 × 86"
     },
     {
       "id": "Ope6_1x2",
-      "isMultiplication": true,
-      "text": "7 × 96",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -30202,12 +30212,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 672
+      "correctAnswer": 672,
+      "isMultiplication": true,
+      "text": "7 × 96"
     },
     {
       "id": "Ope7_1x2",
-      "isMultiplication": true,
-      "text": "6 × 73",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 6,
@@ -30218,12 +30230,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 438
+      "correctAnswer": 438,
+      "isMultiplication": true,
+      "text": "6 × 73"
     },
     {
       "id": "Ope8_1x2",
-      "isMultiplication": true,
-      "text": "5 × 51",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -30234,12 +30248,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 255
+      "correctAnswer": 255,
+      "isMultiplication": true,
+      "text": "5 × 51"
     },
     {
       "id": "Ope9_1x2",
-      "isMultiplication": true,
-      "text": "4 × 28",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -30250,12 +30266,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 112
+      "correctAnswer": 112,
+      "isMultiplication": true,
+      "text": "4 × 28"
     },
     {
       "id": "Ope10_1x2",
-      "isMultiplication": true,
-      "text": "9 × 38",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 9,
@@ -30266,12 +30284,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 342
+      "correctAnswer": 342,
+      "isMultiplication": true,
+      "text": "9 × 38"
     },
     {
       "id": "Ope11_1x2",
-      "isMultiplication": true,
-      "text": "8 × 15",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -30282,12 +30302,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 120
+      "correctAnswer": 120,
+      "isMultiplication": true,
+      "text": "8 × 15"
     },
     {
       "id": "Ope12_1x2",
-      "isMultiplication": true,
-      "text": "5 × 25",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -30298,12 +30320,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 125
+      "correctAnswer": 125,
+      "isMultiplication": true,
+      "text": "5 × 25"
     },
     {
       "id": "Ope13_1x2",
-      "isMultiplication": true,
-      "text": "4 × 93",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -30314,12 +30338,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 372
+      "correctAnswer": 372,
+      "isMultiplication": true,
+      "text": "4 × 93"
     },
     {
       "id": "Ope14_1x2",
-      "isMultiplication": true,
-      "text": "8 × 12",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -30330,12 +30356,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 96
+      "correctAnswer": 96,
+      "isMultiplication": true,
+      "text": "8 × 12"
     },
     {
       "id": "Ope15_1x2",
-      "isMultiplication": true,
-      "text": "5 × 22",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -30346,12 +30374,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 110
+      "correctAnswer": 110,
+      "isMultiplication": true,
+      "text": "5 × 22"
     },
     {
       "id": "Ope16_1x2",
-      "isMultiplication": true,
-      "text": "7 × 75",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -30362,12 +30392,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 525
+      "correctAnswer": 525,
+      "isMultiplication": true,
+      "text": "7 × 75"
     },
     {
       "id": "Ope17_1x2",
-      "isMultiplication": true,
-      "text": "4 × 84",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -30378,12 +30410,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 336
+      "correctAnswer": 336,
+      "isMultiplication": true,
+      "text": "4 × 84"
     },
     {
       "id": "Ope18_1x2",
-      "isMultiplication": true,
-      "text": "3 × 62",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 3,
@@ -30394,12 +30428,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 186
+      "correctAnswer": 186,
+      "isMultiplication": true,
+      "text": "3 × 62"
     },
     {
       "id": "Ope19_1x2",
-      "isMultiplication": true,
-      "text": "8 × 72",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -30410,12 +30446,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 576
+      "correctAnswer": 576,
+      "isMultiplication": true,
+      "text": "8 × 72"
     },
     {
       "id": "Ope20_1x2",
-      "isMultiplication": true,
-      "text": "4 × 81",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -30426,12 +30464,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 324
+      "correctAnswer": 324,
+      "isMultiplication": true,
+      "text": "4 × 81"
     },
     {
       "id": "Ope21_1x2",
-      "isMultiplication": true,
-      "text": "7 × 44",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -30442,12 +30482,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 308
+      "correctAnswer": 308,
+      "isMultiplication": true,
+      "text": "7 × 44"
     },
     {
       "id": "Ope22_1x2",
-      "isMultiplication": true,
-      "text": "3 × 54",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 3,
@@ -30458,12 +30500,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 162
+      "correctAnswer": 162,
+      "isMultiplication": true,
+      "text": "3 × 54"
     },
     {
       "id": "Ope23_1x2",
-      "isMultiplication": true,
-      "text": "2 × 31",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 2,
@@ -30474,12 +30518,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 62
+      "correctAnswer": 62,
+      "isMultiplication": true,
+      "text": "2 × 31"
     },
     {
       "id": "Ope24_1x2",
-      "isMultiplication": true,
-      "text": "7 × 41",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -30490,12 +30536,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 287
+      "correctAnswer": 287,
+      "isMultiplication": true,
+      "text": "7 × 41"
     },
     {
       "id": "Ope25_1x2",
-      "isMultiplication": true,
-      "text": "4 × 51",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -30506,12 +30554,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 204
+      "correctAnswer": 204,
+      "isMultiplication": true,
+      "text": "4 × 51"
     },
     {
       "id": "Ope26_1x2",
-      "isMultiplication": true,
-      "text": "8 × 60",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -30522,12 +30572,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 480
+      "correctAnswer": 480,
+      "isMultiplication": true,
+      "text": "8 × 60"
     },
     {
       "id": "Ope27_1x2",
-      "isMultiplication": true,
-      "text": "8 × 55",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -30538,12 +30590,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 440
+      "correctAnswer": 440,
+      "isMultiplication": true,
+      "text": "8 × 55"
     },
     {
       "id": "Ope28_1x2",
-      "isMultiplication": true,
-      "text": "5 × 65",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -30554,12 +30608,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 325
+      "correctAnswer": 325,
+      "isMultiplication": true,
+      "text": "5 × 65"
     },
     {
       "id": "Ope29_1x2",
-      "isMultiplication": true,
-      "text": "7 × 28",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -30570,12 +30626,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 196
+      "correctAnswer": 196,
+      "isMultiplication": true,
+      "text": "7 × 28"
     },
     {
       "id": "Ope30_1x2",
-      "isMultiplication": true,
-      "text": "4 × 37",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -30586,12 +30644,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 148
+      "correctAnswer": 148,
+      "isMultiplication": true,
+      "text": "4 × 37"
     },
     {
       "id": "Ope31_1x2",
-      "isMultiplication": true,
-      "text": "8 × 47",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -30602,12 +30662,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 376
+      "correctAnswer": 376,
+      "isMultiplication": true,
+      "text": "8 × 47"
     },
     {
       "id": "Ope32_1x2",
-      "isMultiplication": true,
-      "text": "5 × 57",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -30618,12 +30680,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 285
+      "correctAnswer": 285,
+      "isMultiplication": true,
+      "text": "5 × 57"
     },
     {
       "id": "Ope33_1x2",
-      "isMultiplication": true,
-      "text": "7 × 20",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -30634,12 +30698,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 140
+      "correctAnswer": 140,
+      "isMultiplication": true,
+      "text": "7 × 20"
     },
     {
       "id": "Ope34_1x2",
-      "isMultiplication": true,
-      "text": "4 × 29",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -30650,12 +30716,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 116
+      "correctAnswer": 116,
+      "isMultiplication": true,
+      "text": "4 × 29"
     },
     {
       "id": "Ope35_1x2",
-      "isMultiplication": true,
-      "text": "7 × 89",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -30666,12 +30734,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 623
+      "correctAnswer": 623,
+      "isMultiplication": true,
+      "text": "7 × 89"
     },
     {
       "id": "Ope36_1x2",
-      "isMultiplication": true,
-      "text": "7 × 84",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -30682,12 +30752,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 588
+      "correctAnswer": 588,
+      "isMultiplication": true,
+      "text": "7 × 84"
     },
     {
       "id": "Ope37_1x2",
-      "isMultiplication": true,
-      "text": "4 × 94",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -30698,10 +30770,1148 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 376
+      "correctAnswer": 376,
+      "isMultiplication": true,
+      "text": "4 × 94"
+    },
+    {
+      "id": "Ope38_1x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 13,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 104,
+      "isMultiplication": true,
+      "text": "8 × 13"
+    },
+    {
+      "id": "Ope39_1x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 66,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 198,
+      "isMultiplication": true,
+      "text": "3 × 66"
+    },
+    {
+      "id": "Ope40_1x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 76,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 532,
+      "isMultiplication": true,
+      "text": "7 × 76"
+    },
+    {
+      "id": "Ope1_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 633,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1899,
+      "isMultiplication": true,
+      "text": "3 × 633"
+    },
+    {
+      "id": "Ope2_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 2,
+          "sign": 1
+        },
+        {
+          "val": 408,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 816,
+      "isMultiplication": true,
+      "text": "2 × 408"
+    },
+    {
+      "id": "Ope3_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 828,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3312,
+      "isMultiplication": true,
+      "text": "4 × 828"
+    },
+    {
+      "id": "Ope4_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 455,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3185,
+      "isMultiplication": true,
+      "text": "7 × 455"
+    },
+    {
+      "id": "Ope5_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 552,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1656,
+      "isMultiplication": true,
+      "text": "3 × 552"
+    },
+    {
+      "id": "Ope6_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 502,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1506,
+      "isMultiplication": true,
+      "text": "3 × 502"
+    },
+    {
+      "id": "Ope7_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 599,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4792,
+      "isMultiplication": true,
+      "text": "8 × 599"
+    },
+    {
+      "id": "Ope8_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 2,
+          "sign": 1
+        },
+        {
+          "val": 119,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 238,
+      "isMultiplication": true,
+      "text": "2 × 119"
+    },
+    {
+      "id": "Ope9_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 646,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2584,
+      "isMultiplication": true,
+      "text": "4 × 646"
+    },
+    {
+      "id": "Ope10_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 9,
+          "sign": 1
+        },
+        {
+          "val": 743,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 6687,
+      "isMultiplication": true,
+      "text": "9 × 743"
+    },
+    {
+      "id": "Ope11_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 9,
+          "sign": 1
+        },
+        {
+          "val": 693,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 6237,
+      "isMultiplication": true,
+      "text": "9 × 693"
+    },
+    {
+      "id": "Ope12_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 790,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3950,
+      "isMultiplication": true,
+      "text": "5 × 790"
+    },
+    {
+      "id": "Ope13_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 2,
+          "sign": 1
+        },
+        {
+          "val": 888,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1776,
+      "isMultiplication": true,
+      "text": "2 × 888"
+    },
+    {
+      "id": "Ope14_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 985,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 6895,
+      "isMultiplication": true,
+      "text": "7 × 985"
+    },
+    {
+      "id": "Ope15_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 358,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1432,
+      "isMultiplication": true,
+      "text": "4 × 358"
+    },
+    {
+      "id": "Ope16_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 6,
+          "sign": 1
+        },
+        {
+          "val": 885,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 5310,
+      "isMultiplication": true,
+      "text": "6 × 885"
+    },
+    {
+      "id": "Ope17_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 982,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2946,
+      "isMultiplication": true,
+      "text": "3 × 982"
+    },
+    {
+      "id": "Ope18_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 502,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2510,
+      "isMultiplication": true,
+      "text": "5 × 502"
+    },
+    {
+      "id": "Ope19_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 129,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1032,
+      "isMultiplication": true,
+      "text": "8 × 129"
+    },
+    {
+      "id": "Ope20_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 226,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 904,
+      "isMultiplication": true,
+      "text": "4 × 226"
+    },
+    {
+      "id": "Ope21_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 176,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 704,
+      "isMultiplication": true,
+      "text": "4 × 176"
+    },
+    {
+      "id": "Ope22_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 9,
+          "sign": 1
+        },
+        {
+          "val": 273,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2457,
+      "isMultiplication": true,
+      "text": "9 × 273"
+    },
+    {
+      "id": "Ope23_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 370,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1850,
+      "isMultiplication": true,
+      "text": "5 × 370"
+    },
+    {
+      "id": "Ope24_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 320,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1600,
+      "isMultiplication": true,
+      "text": "5 × 320"
+    },
+    {
+      "id": "Ope25_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 383,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2681,
+      "isMultiplication": true,
+      "text": "7 × 383"
+    },
+    {
+      "id": "Ope26_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 480,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1440,
+      "isMultiplication": true,
+      "text": "3 × 480"
+    },
+    {
+      "id": "Ope27_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 578,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4624,
+      "isMultiplication": true,
+      "text": "8 × 578"
+    },
+    {
+      "id": "Ope28_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 2,
+          "sign": 1
+        },
+        {
+          "val": 205,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 410,
+      "isMultiplication": true,
+      "text": "2 × 205"
+    },
+    {
+      "id": "Ope29_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 800,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4000,
+      "isMultiplication": true,
+      "text": "5 × 800"
+    },
+    {
+      "id": "Ope30_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 750,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3750,
+      "isMultiplication": true,
+      "text": "5 × 750"
+    },
+    {
+      "id": "Ope31_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 270,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1890,
+      "isMultiplication": true,
+      "text": "7 × 270"
+    },
+    {
+      "id": "Ope32_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 220,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1540,
+      "isMultiplication": true,
+      "text": "7 × 220"
+    },
+    {
+      "id": "Ope33_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 317,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1268,
+      "isMultiplication": true,
+      "text": "4 × 317"
+    },
+    {
+      "id": "Ope34_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 267,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1068,
+      "isMultiplication": true,
+      "text": "4 × 267"
+    },
+    {
+      "id": "Ope35_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 365,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2920,
+      "isMultiplication": true,
+      "text": "8 × 365"
+    },
+    {
+      "id": "Ope36_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 314,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2512,
+      "isMultiplication": true,
+      "text": "8 × 314"
+    },
+    {
+      "id": "Ope37_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 412,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2060,
+      "isMultiplication": true,
+      "text": "5 × 412"
+    },
+    {
+      "id": "Ope38_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 832,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 5824,
+      "isMultiplication": true,
+      "text": "7 × 832"
+    },
+    {
+      "id": "Ope39_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 9,
+          "sign": 1
+        },
+        {
+          "val": 459,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4131,
+      "isMultiplication": true,
+      "text": "9 × 459"
+    },
+    {
+      "id": "Ope40_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 879,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3516,
+      "isMultiplication": true,
+      "text": "4 × 879"
+    },
+    {
+      "id": "Ope1_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 83,
+          "sign": 1
+        },
+        {
+          "val": 92,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 7636,
+      "isMultiplication": true,
+      "text": "83 × 92"
+    },
+    {
+      "id": "Ope2_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 45,
+          "sign": 1
+        },
+        {
+          "val": 12,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 540,
+      "isMultiplication": true,
+      "text": "45 × 12"
+    },
+    {
+      "id": "Ope3_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 44,
+          "sign": 1
+        },
+        {
+          "val": 97,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4268,
+      "isMultiplication": true,
+      "text": "44 × 97"
+    },
+    {
+      "id": "Ope4_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 96,
+          "sign": 1
+        },
+        {
+          "val": 17,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1632,
+      "isMultiplication": true,
+      "text": "96 × 17"
+    },
+    {
+      "id": "Ope5_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 95,
+          "sign": 1
+        },
+        {
+          "val": 12,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1140,
+      "isMultiplication": true,
+      "text": "95 × 12"
+    },
+    {
+      "id": "Ope6_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 93,
+          "sign": 1
+        },
+        {
+          "val": 97,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 9021,
+      "isMultiplication": true,
+      "text": "93 × 97"
+    },
+    {
+      "id": "Ope7_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 55,
+          "sign": 1
+        },
+        {
+          "val": 16,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 880,
+      "isMultiplication": true,
+      "text": "55 × 16"
+    },
+    {
+      "id": "Ope8_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 26,
+          "sign": 1
+        },
+        {
+          "val": 44,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1144,
+      "isMultiplication": true,
+      "text": "26 × 44"
+    },
+    {
+      "id": "Ope9_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 51,
+          "sign": 1
+        },
+        {
+          "val": 86,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4386,
+      "isMultiplication": true,
+      "text": "51 × 86"
+    },
+    {
+      "id": "Ope10_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 77,
+          "sign": 1
+        },
+        {
+          "val": 48,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3696,
+      "isMultiplication": true,
+      "text": "77 × 48"
+    },
+    {
+      "id": "Ope11_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 12,
+          "sign": 1
+        },
+        {
+          "val": 90,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1080,
+      "isMultiplication": true,
+      "text": "12 × 90"
+    },
+    {
+      "id": "Ope12_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 10,
+          "sign": 1
+        },
+        {
+          "val": 85,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 850,
+      "isMultiplication": true,
+      "text": "10 × 85"
+    },
+    {
+      "id": "Ope13_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 99,
+          "sign": 1
+        },
+        {
+          "val": 80,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 7920,
+      "isMultiplication": true,
+      "text": "99 × 80"
+    },
+    {
+      "id": "Ope14_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 61,
+          "sign": 1
+        },
+        {
+          "val": 90,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 5490,
+      "isMultiplication": true,
+      "text": "61 × 90"
+    },
+    {
+      "id": "Ope15_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 86,
+          "sign": 1
+        },
+        {
+          "val": 42,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3612,
+      "isMultiplication": true,
+      "text": "86 × 42"
+    },
+    {
+      "id": "Ope16_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 84,
+          "sign": 1
+        },
+        {
+          "val": 37,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3108,
+      "isMultiplication": true,
+      "text": "84 × 37"
+    },
+    {
+      "id": "Ope17_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 83,
+          "sign": 1
+        },
+        {
+          "val": 32,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2656,
+      "isMultiplication": true,
+      "text": "83 × 32"
+    },
+    {
+      "id": "Ope18_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 18,
+          "sign": 1
+        },
+        {
+          "val": 74,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1332,
+      "isMultiplication": true,
+      "text": "18 × 74"
+    },
+    {
+      "id": "Ope19_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 16,
+          "sign": 1
+        },
+        {
+          "val": 69,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1104,
+      "isMultiplication": true,
+      "text": "16 × 69"
+    },
+    {
+      "id": "Ope20_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 15,
+          "sign": 1
+        },
+        {
+          "val": 64,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 960,
+      "isMultiplication": true,
+      "text": "15 × 64"
     },
     {
       "id": "A1",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 3,
@@ -30729,6 +31939,8 @@
     },
     {
       "id": "A2",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 7,
@@ -30756,6 +31968,8 @@
     },
     {
       "id": "A3",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 6,
@@ -30783,6 +31997,8 @@
     },
     {
       "id": "A4",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 7,
@@ -30810,6 +32026,8 @@
     },
     {
       "id": "A5",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 1,
@@ -30837,6 +32055,8 @@
     },
     {
       "id": "A6",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 2,
@@ -30864,6 +32084,8 @@
     },
     {
       "id": "A7",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 4,
@@ -30891,6 +32113,8 @@
     },
     {
       "id": "A8",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 2,
@@ -30918,6 +32142,8 @@
     },
     {
       "id": "A9",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 5,
@@ -30945,6 +32171,8 @@
     },
     {
       "id": "A10",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 6,
@@ -30972,6 +32200,8 @@
     },
     {
       "id": "A11",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 6,
@@ -31003,6 +32233,8 @@
     },
     {
       "id": "A12",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 5,
@@ -31034,6 +32266,8 @@
     },
     {
       "id": "A13",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 9,
@@ -31065,6 +32299,8 @@
     },
     {
       "id": "A14",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 8,
@@ -31096,6 +32332,8 @@
     },
     {
       "id": "A15",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 3,
@@ -31127,6 +32365,8 @@
     },
     {
       "id": "A16",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 4,
@@ -31158,6 +32398,8 @@
     },
     {
       "id": "A17",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 3,
@@ -31189,6 +32431,8 @@
     },
     {
       "id": "A18",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 5,
@@ -31220,6 +32464,8 @@
     },
     {
       "id": "A19",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 6,
@@ -31251,6 +32497,8 @@
     },
     {
       "id": "A20",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 1,
@@ -31282,6 +32530,8 @@
     },
     {
       "id": "B1",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 44,
@@ -31309,6 +32559,8 @@
     },
     {
       "id": "B2",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 47,
@@ -31336,6 +32588,8 @@
     },
     {
       "id": "B3",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 59,
@@ -31363,6 +32617,8 @@
     },
     {
       "id": "B4",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 28,
@@ -31390,6 +32646,8 @@
     },
     {
       "id": "B5",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 97,
@@ -31417,6 +32675,8 @@
     },
     {
       "id": "B6",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 84,
@@ -31444,6 +32704,8 @@
     },
     {
       "id": "B7",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 13,
@@ -31471,6 +32733,8 @@
     },
     {
       "id": "B8",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 88,
@@ -31498,6 +32762,8 @@
     },
     {
       "id": "B9",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 15,
@@ -31525,6 +32791,8 @@
     },
     {
       "id": "B10",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 47,
@@ -31554,8 +32822,8 @@
   "l4-2": [
     {
       "id": "Ope1_1x2",
-      "isMultiplication": true,
-      "text": "8 × 54",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -31566,12 +32834,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 432
+      "correctAnswer": 432,
+      "isMultiplication": true,
+      "text": "8 × 54"
     },
     {
       "id": "Ope2_1x2",
-      "isMultiplication": true,
-      "text": "5 × 64",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -31582,12 +32852,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 320
+      "correctAnswer": 320,
+      "isMultiplication": true,
+      "text": "5 × 64"
     },
     {
       "id": "Ope3_1x2",
-      "isMultiplication": true,
-      "text": "7 × 99",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -31598,12 +32870,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 693
+      "correctAnswer": 693,
+      "isMultiplication": true,
+      "text": "7 × 99"
     },
     {
       "id": "Ope4_1x2",
-      "isMultiplication": true,
-      "text": "6 × 77",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 6,
@@ -31614,12 +32888,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 462
+      "correctAnswer": 462,
+      "isMultiplication": true,
+      "text": "6 × 77"
     },
     {
       "id": "Ope5_1x2",
-      "isMultiplication": true,
-      "text": "2 × 86",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 2,
@@ -31630,12 +32906,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 172
+      "correctAnswer": 172,
+      "isMultiplication": true,
+      "text": "2 × 86"
     },
     {
       "id": "Ope6_1x2",
-      "isMultiplication": true,
-      "text": "7 × 96",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -31646,12 +32924,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 672
+      "correctAnswer": 672,
+      "isMultiplication": true,
+      "text": "7 × 96"
     },
     {
       "id": "Ope7_1x2",
-      "isMultiplication": true,
-      "text": "6 × 73",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 6,
@@ -31662,12 +32942,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 438
+      "correctAnswer": 438,
+      "isMultiplication": true,
+      "text": "6 × 73"
     },
     {
       "id": "Ope8_1x2",
-      "isMultiplication": true,
-      "text": "5 × 51",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -31678,12 +32960,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 255
+      "correctAnswer": 255,
+      "isMultiplication": true,
+      "text": "5 × 51"
     },
     {
       "id": "Ope9_1x2",
-      "isMultiplication": true,
-      "text": "4 × 28",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -31694,12 +32978,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 112
+      "correctAnswer": 112,
+      "isMultiplication": true,
+      "text": "4 × 28"
     },
     {
       "id": "Ope10_1x2",
-      "isMultiplication": true,
-      "text": "9 × 38",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 9,
@@ -31710,12 +32996,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 342
+      "correctAnswer": 342,
+      "isMultiplication": true,
+      "text": "9 × 38"
     },
     {
       "id": "Ope11_1x2",
-      "isMultiplication": true,
-      "text": "8 × 15",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -31726,12 +33014,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 120
+      "correctAnswer": 120,
+      "isMultiplication": true,
+      "text": "8 × 15"
     },
     {
       "id": "Ope12_1x2",
-      "isMultiplication": true,
-      "text": "5 × 25",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -31742,12 +33032,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 125
+      "correctAnswer": 125,
+      "isMultiplication": true,
+      "text": "5 × 25"
     },
     {
       "id": "Ope13_1x2",
-      "isMultiplication": true,
-      "text": "4 × 93",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -31758,12 +33050,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 372
+      "correctAnswer": 372,
+      "isMultiplication": true,
+      "text": "4 × 93"
     },
     {
       "id": "Ope14_1x2",
-      "isMultiplication": true,
-      "text": "8 × 12",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -31774,12 +33068,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 96
+      "correctAnswer": 96,
+      "isMultiplication": true,
+      "text": "8 × 12"
     },
     {
       "id": "Ope15_1x2",
-      "isMultiplication": true,
-      "text": "5 × 22",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -31790,12 +33086,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 110
+      "correctAnswer": 110,
+      "isMultiplication": true,
+      "text": "5 × 22"
     },
     {
       "id": "Ope16_1x2",
-      "isMultiplication": true,
-      "text": "7 × 75",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -31806,12 +33104,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 525
+      "correctAnswer": 525,
+      "isMultiplication": true,
+      "text": "7 × 75"
     },
     {
       "id": "Ope17_1x2",
-      "isMultiplication": true,
-      "text": "4 × 84",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -31822,12 +33122,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 336
+      "correctAnswer": 336,
+      "isMultiplication": true,
+      "text": "4 × 84"
     },
     {
       "id": "Ope18_1x2",
-      "isMultiplication": true,
-      "text": "3 × 62",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 3,
@@ -31838,12 +33140,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 186
+      "correctAnswer": 186,
+      "isMultiplication": true,
+      "text": "3 × 62"
     },
     {
       "id": "Ope19_1x2",
-      "isMultiplication": true,
-      "text": "8 × 72",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -31854,12 +33158,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 576
+      "correctAnswer": 576,
+      "isMultiplication": true,
+      "text": "8 × 72"
     },
     {
       "id": "Ope20_1x2",
-      "isMultiplication": true,
-      "text": "4 × 81",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -31870,12 +33176,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 324
+      "correctAnswer": 324,
+      "isMultiplication": true,
+      "text": "4 × 81"
     },
     {
       "id": "Ope21_1x2",
-      "isMultiplication": true,
-      "text": "7 × 44",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -31886,12 +33194,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 308
+      "correctAnswer": 308,
+      "isMultiplication": true,
+      "text": "7 × 44"
     },
     {
       "id": "Ope22_1x2",
-      "isMultiplication": true,
-      "text": "3 × 54",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 3,
@@ -31902,12 +33212,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 162
+      "correctAnswer": 162,
+      "isMultiplication": true,
+      "text": "3 × 54"
     },
     {
       "id": "Ope23_1x2",
-      "isMultiplication": true,
-      "text": "2 × 31",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 2,
@@ -31918,12 +33230,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 62
+      "correctAnswer": 62,
+      "isMultiplication": true,
+      "text": "2 × 31"
     },
     {
       "id": "Ope24_1x2",
-      "isMultiplication": true,
-      "text": "7 × 41",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -31934,12 +33248,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 287
+      "correctAnswer": 287,
+      "isMultiplication": true,
+      "text": "7 × 41"
     },
     {
       "id": "Ope25_1x2",
-      "isMultiplication": true,
-      "text": "4 × 51",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -31950,12 +33266,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 204
+      "correctAnswer": 204,
+      "isMultiplication": true,
+      "text": "4 × 51"
     },
     {
       "id": "Ope26_1x2",
-      "isMultiplication": true,
-      "text": "8 × 60",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -31966,12 +33284,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 480
+      "correctAnswer": 480,
+      "isMultiplication": true,
+      "text": "8 × 60"
     },
     {
       "id": "Ope27_1x2",
-      "isMultiplication": true,
-      "text": "8 × 55",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -31982,12 +33302,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 440
+      "correctAnswer": 440,
+      "isMultiplication": true,
+      "text": "8 × 55"
     },
     {
       "id": "Ope28_1x2",
-      "isMultiplication": true,
-      "text": "5 × 65",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -31998,12 +33320,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 325
+      "correctAnswer": 325,
+      "isMultiplication": true,
+      "text": "5 × 65"
     },
     {
       "id": "Ope29_1x2",
-      "isMultiplication": true,
-      "text": "7 × 28",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -32014,12 +33338,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 196
+      "correctAnswer": 196,
+      "isMultiplication": true,
+      "text": "7 × 28"
     },
     {
       "id": "Ope30_1x2",
-      "isMultiplication": true,
-      "text": "4 × 37",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -32030,12 +33356,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 148
+      "correctAnswer": 148,
+      "isMultiplication": true,
+      "text": "4 × 37"
     },
     {
       "id": "Ope31_1x2",
-      "isMultiplication": true,
-      "text": "8 × 47",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 8,
@@ -32046,12 +33374,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 376
+      "correctAnswer": 376,
+      "isMultiplication": true,
+      "text": "8 × 47"
     },
     {
       "id": "Ope32_1x2",
-      "isMultiplication": true,
-      "text": "5 × 57",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 5,
@@ -32062,12 +33392,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 285
+      "correctAnswer": 285,
+      "isMultiplication": true,
+      "text": "5 × 57"
     },
     {
       "id": "Ope33_1x2",
-      "isMultiplication": true,
-      "text": "7 × 20",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -32078,12 +33410,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 140
+      "correctAnswer": 140,
+      "isMultiplication": true,
+      "text": "7 × 20"
     },
     {
       "id": "Ope34_1x2",
-      "isMultiplication": true,
-      "text": "4 × 29",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -32094,12 +33428,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 116
+      "correctAnswer": 116,
+      "isMultiplication": true,
+      "text": "4 × 29"
     },
     {
       "id": "Ope35_1x2",
-      "isMultiplication": true,
-      "text": "7 × 89",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -32110,12 +33446,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 623
+      "correctAnswer": 623,
+      "isMultiplication": true,
+      "text": "7 × 89"
     },
     {
       "id": "Ope36_1x2",
-      "isMultiplication": true,
-      "text": "7 × 84",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 7,
@@ -32126,12 +33464,14 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 588
+      "correctAnswer": 588,
+      "isMultiplication": true,
+      "text": "7 × 84"
     },
     {
       "id": "Ope37_1x2",
-      "isMultiplication": true,
-      "text": "4 × 94",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
       "numbers": [
         {
           "val": 4,
@@ -32142,10 +33482,1328 @@
           "sign": 1
         }
       ],
-      "correctAnswer": 376
+      "correctAnswer": 376,
+      "isMultiplication": true,
+      "text": "4 × 94"
+    },
+    {
+      "id": "Ope38_1x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 13,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 104,
+      "isMultiplication": true,
+      "text": "8 × 13"
+    },
+    {
+      "id": "Ope39_1x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 66,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 198,
+      "isMultiplication": true,
+      "text": "3 × 66"
+    },
+    {
+      "id": "Ope40_1x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × رقمين",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 76,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 532,
+      "isMultiplication": true,
+      "text": "7 × 76"
+    },
+    {
+      "id": "Ope1_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 633,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1899,
+      "isMultiplication": true,
+      "text": "3 × 633"
+    },
+    {
+      "id": "Ope2_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 2,
+          "sign": 1
+        },
+        {
+          "val": 408,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 816,
+      "isMultiplication": true,
+      "text": "2 × 408"
+    },
+    {
+      "id": "Ope3_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 828,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3312,
+      "isMultiplication": true,
+      "text": "4 × 828"
+    },
+    {
+      "id": "Ope4_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 455,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3185,
+      "isMultiplication": true,
+      "text": "7 × 455"
+    },
+    {
+      "id": "Ope5_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 552,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1656,
+      "isMultiplication": true,
+      "text": "3 × 552"
+    },
+    {
+      "id": "Ope6_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 502,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1506,
+      "isMultiplication": true,
+      "text": "3 × 502"
+    },
+    {
+      "id": "Ope7_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 599,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4792,
+      "isMultiplication": true,
+      "text": "8 × 599"
+    },
+    {
+      "id": "Ope8_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 2,
+          "sign": 1
+        },
+        {
+          "val": 119,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 238,
+      "isMultiplication": true,
+      "text": "2 × 119"
+    },
+    {
+      "id": "Ope9_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 646,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2584,
+      "isMultiplication": true,
+      "text": "4 × 646"
+    },
+    {
+      "id": "Ope10_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 9,
+          "sign": 1
+        },
+        {
+          "val": 743,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 6687,
+      "isMultiplication": true,
+      "text": "9 × 743"
+    },
+    {
+      "id": "Ope11_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 9,
+          "sign": 1
+        },
+        {
+          "val": 693,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 6237,
+      "isMultiplication": true,
+      "text": "9 × 693"
+    },
+    {
+      "id": "Ope12_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 790,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3950,
+      "isMultiplication": true,
+      "text": "5 × 790"
+    },
+    {
+      "id": "Ope13_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 2,
+          "sign": 1
+        },
+        {
+          "val": 888,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1776,
+      "isMultiplication": true,
+      "text": "2 × 888"
+    },
+    {
+      "id": "Ope14_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 985,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 6895,
+      "isMultiplication": true,
+      "text": "7 × 985"
+    },
+    {
+      "id": "Ope15_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 358,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1432,
+      "isMultiplication": true,
+      "text": "4 × 358"
+    },
+    {
+      "id": "Ope16_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 6,
+          "sign": 1
+        },
+        {
+          "val": 885,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 5310,
+      "isMultiplication": true,
+      "text": "6 × 885"
+    },
+    {
+      "id": "Ope17_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 982,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2946,
+      "isMultiplication": true,
+      "text": "3 × 982"
+    },
+    {
+      "id": "Ope18_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 502,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2510,
+      "isMultiplication": true,
+      "text": "5 × 502"
+    },
+    {
+      "id": "Ope19_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 129,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1032,
+      "isMultiplication": true,
+      "text": "8 × 129"
+    },
+    {
+      "id": "Ope20_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 226,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 904,
+      "isMultiplication": true,
+      "text": "4 × 226"
+    },
+    {
+      "id": "Ope21_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 176,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 704,
+      "isMultiplication": true,
+      "text": "4 × 176"
+    },
+    {
+      "id": "Ope22_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 9,
+          "sign": 1
+        },
+        {
+          "val": 273,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2457,
+      "isMultiplication": true,
+      "text": "9 × 273"
+    },
+    {
+      "id": "Ope23_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 370,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1850,
+      "isMultiplication": true,
+      "text": "5 × 370"
+    },
+    {
+      "id": "Ope24_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 320,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1600,
+      "isMultiplication": true,
+      "text": "5 × 320"
+    },
+    {
+      "id": "Ope25_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 383,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2681,
+      "isMultiplication": true,
+      "text": "7 × 383"
+    },
+    {
+      "id": "Ope26_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 3,
+          "sign": 1
+        },
+        {
+          "val": 480,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1440,
+      "isMultiplication": true,
+      "text": "3 × 480"
+    },
+    {
+      "id": "Ope27_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 578,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4624,
+      "isMultiplication": true,
+      "text": "8 × 578"
+    },
+    {
+      "id": "Ope28_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 2,
+          "sign": 1
+        },
+        {
+          "val": 205,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 410,
+      "isMultiplication": true,
+      "text": "2 × 205"
+    },
+    {
+      "id": "Ope29_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 800,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4000,
+      "isMultiplication": true,
+      "text": "5 × 800"
+    },
+    {
+      "id": "Ope30_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 750,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3750,
+      "isMultiplication": true,
+      "text": "5 × 750"
+    },
+    {
+      "id": "Ope31_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 270,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1890,
+      "isMultiplication": true,
+      "text": "7 × 270"
+    },
+    {
+      "id": "Ope32_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 220,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1540,
+      "isMultiplication": true,
+      "text": "7 × 220"
+    },
+    {
+      "id": "Ope33_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 317,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1268,
+      "isMultiplication": true,
+      "text": "4 × 317"
+    },
+    {
+      "id": "Ope34_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 267,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1068,
+      "isMultiplication": true,
+      "text": "4 × 267"
+    },
+    {
+      "id": "Ope35_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 365,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2920,
+      "isMultiplication": true,
+      "text": "8 × 365"
+    },
+    {
+      "id": "Ope36_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 8,
+          "sign": 1
+        },
+        {
+          "val": 314,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2512,
+      "isMultiplication": true,
+      "text": "8 × 314"
+    },
+    {
+      "id": "Ope37_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 5,
+          "sign": 1
+        },
+        {
+          "val": 412,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2060,
+      "isMultiplication": true,
+      "text": "5 × 412"
+    },
+    {
+      "id": "Ope38_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 7,
+          "sign": 1
+        },
+        {
+          "val": 832,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 5824,
+      "isMultiplication": true,
+      "text": "7 × 832"
+    },
+    {
+      "id": "Ope39_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 9,
+          "sign": 1
+        },
+        {
+          "val": 459,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4131,
+      "isMultiplication": true,
+      "text": "9 × 459"
+    },
+    {
+      "id": "Ope40_1x3",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقم × 3 أرقام",
+      "numbers": [
+        {
+          "val": 4,
+          "sign": 1
+        },
+        {
+          "val": 879,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3516,
+      "isMultiplication": true,
+      "text": "4 × 879"
+    },
+    {
+      "id": "Ope1_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 83,
+          "sign": 1
+        },
+        {
+          "val": 92,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 7636,
+      "isMultiplication": true,
+      "text": "83 × 92"
+    },
+    {
+      "id": "Ope2_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 45,
+          "sign": 1
+        },
+        {
+          "val": 12,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 540,
+      "isMultiplication": true,
+      "text": "45 × 12"
+    },
+    {
+      "id": "Ope3_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 44,
+          "sign": 1
+        },
+        {
+          "val": 97,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4268,
+      "isMultiplication": true,
+      "text": "44 × 97"
+    },
+    {
+      "id": "Ope4_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 96,
+          "sign": 1
+        },
+        {
+          "val": 17,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1632,
+      "isMultiplication": true,
+      "text": "96 × 17"
+    },
+    {
+      "id": "Ope5_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 95,
+          "sign": 1
+        },
+        {
+          "val": 12,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1140,
+      "isMultiplication": true,
+      "text": "95 × 12"
+    },
+    {
+      "id": "Ope6_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 93,
+          "sign": 1
+        },
+        {
+          "val": 97,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 9021,
+      "isMultiplication": true,
+      "text": "93 × 97"
+    },
+    {
+      "id": "Ope7_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 55,
+          "sign": 1
+        },
+        {
+          "val": 16,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 880,
+      "isMultiplication": true,
+      "text": "55 × 16"
+    },
+    {
+      "id": "Ope8_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 26,
+          "sign": 1
+        },
+        {
+          "val": 44,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1144,
+      "isMultiplication": true,
+      "text": "26 × 44"
+    },
+    {
+      "id": "Ope9_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 51,
+          "sign": 1
+        },
+        {
+          "val": 86,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4386,
+      "isMultiplication": true,
+      "text": "51 × 86"
+    },
+    {
+      "id": "Ope10_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 77,
+          "sign": 1
+        },
+        {
+          "val": 48,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3696,
+      "isMultiplication": true,
+      "text": "77 × 48"
+    },
+    {
+      "id": "Ope11_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 12,
+          "sign": 1
+        },
+        {
+          "val": 90,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1080,
+      "isMultiplication": true,
+      "text": "12 × 90"
+    },
+    {
+      "id": "Ope12_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 10,
+          "sign": 1
+        },
+        {
+          "val": 85,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 850,
+      "isMultiplication": true,
+      "text": "10 × 85"
+    },
+    {
+      "id": "Ope13_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 99,
+          "sign": 1
+        },
+        {
+          "val": 80,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 7920,
+      "isMultiplication": true,
+      "text": "99 × 80"
+    },
+    {
+      "id": "Ope14_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 61,
+          "sign": 1
+        },
+        {
+          "val": 90,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 5490,
+      "isMultiplication": true,
+      "text": "61 × 90"
+    },
+    {
+      "id": "Ope15_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 86,
+          "sign": 1
+        },
+        {
+          "val": 42,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3612,
+      "isMultiplication": true,
+      "text": "86 × 42"
+    },
+    {
+      "id": "Ope16_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 84,
+          "sign": 1
+        },
+        {
+          "val": 37,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3108,
+      "isMultiplication": true,
+      "text": "84 × 37"
+    },
+    {
+      "id": "Ope17_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 83,
+          "sign": 1
+        },
+        {
+          "val": 32,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2656,
+      "isMultiplication": true,
+      "text": "83 × 32"
+    },
+    {
+      "id": "Ope18_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 18,
+          "sign": 1
+        },
+        {
+          "val": 74,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1332,
+      "isMultiplication": true,
+      "text": "18 × 74"
+    },
+    {
+      "id": "Ope19_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 16,
+          "sign": 1
+        },
+        {
+          "val": 69,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1104,
+      "isMultiplication": true,
+      "text": "16 × 69"
+    },
+    {
+      "id": "Ope20_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 15,
+          "sign": 1
+        },
+        {
+          "val": 64,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 960,
+      "isMultiplication": true,
+      "text": "15 × 64"
+    },
+    {
+      "id": "Ope21_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 26,
+          "sign": 1
+        },
+        {
+          "val": 92,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2392,
+      "isMultiplication": true,
+      "text": "26 × 92"
+    },
+    {
+      "id": "Ope22_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 21,
+          "sign": 1
+        },
+        {
+          "val": 90,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1890,
+      "isMultiplication": true,
+      "text": "21 × 90"
+    },
+    {
+      "id": "Ope23_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 16,
+          "sign": 1
+        },
+        {
+          "val": 89,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1424,
+      "isMultiplication": true,
+      "text": "16 × 89"
+    },
+    {
+      "id": "Ope24_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 25,
+          "sign": 1
+        },
+        {
+          "val": 51,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 1275,
+      "isMultiplication": true,
+      "text": "25 × 51"
+    },
+    {
+      "id": "Ope25_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 20,
+          "sign": 1
+        },
+        {
+          "val": 49,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 980,
+      "isMultiplication": true,
+      "text": "20 × 49"
+    },
+    {
+      "id": "Ope26_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 62,
+          "sign": 1
+        },
+        {
+          "val": 74,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4588,
+      "isMultiplication": true,
+      "text": "62 × 74"
+    },
+    {
+      "id": "Ope27_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 90,
+          "sign": 1
+        },
+        {
+          "val": 45,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 4050,
+      "isMultiplication": true,
+      "text": "90 × 45"
+    },
+    {
+      "id": "Ope28_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 85,
+          "sign": 1
+        },
+        {
+          "val": 44,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 3740,
+      "isMultiplication": true,
+      "text": "85 × 44"
+    },
+    {
+      "id": "Ope29_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 37,
+          "sign": 1
+        },
+        {
+          "val": 68,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2516,
+      "isMultiplication": true,
+      "text": "37 × 68"
+    },
+    {
+      "id": "Ope30_2x2",
+      "stage": "mul",
+      "stageLabel": "ضرب: رقمين × رقمين",
+      "numbers": [
+        {
+          "val": 32,
+          "sign": 1
+        },
+        {
+          "val": 67,
+          "sign": 1
+        }
+      ],
+      "correctAnswer": 2144,
+      "isMultiplication": true,
+      "text": "32 × 67"
     },
     {
       "id": "A1",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 3,
@@ -32173,6 +34831,8 @@
     },
     {
       "id": "A2",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 7,
@@ -32200,6 +34860,8 @@
     },
     {
       "id": "A3",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 6,
@@ -32227,6 +34889,8 @@
     },
     {
       "id": "A4",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 7,
@@ -32254,6 +34918,8 @@
     },
     {
       "id": "A5",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 1,
@@ -32281,6 +34947,8 @@
     },
     {
       "id": "A6",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 2,
@@ -32308,6 +34976,8 @@
     },
     {
       "id": "A7",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 4,
@@ -32335,6 +35005,8 @@
     },
     {
       "id": "A8",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 2,
@@ -32362,6 +35034,8 @@
     },
     {
       "id": "A9",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 5,
@@ -32389,6 +35063,8 @@
     },
     {
       "id": "A10",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 6,
@@ -32416,6 +35092,8 @@
     },
     {
       "id": "A11",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 6,
@@ -32447,6 +35125,8 @@
     },
     {
       "id": "A12",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 5,
@@ -32478,6 +35158,8 @@
     },
     {
       "id": "A13",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 9,
@@ -32509,6 +35191,8 @@
     },
     {
       "id": "A14",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 8,
@@ -32540,6 +35224,8 @@
     },
     {
       "id": "A15",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 3,
@@ -32571,6 +35257,8 @@
     },
     {
       "id": "A16",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 4,
@@ -32602,6 +35290,8 @@
     },
     {
       "id": "A17",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 3,
@@ -32633,6 +35323,8 @@
     },
     {
       "id": "A18",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 5,
@@ -32664,6 +35356,8 @@
     },
     {
       "id": "A19",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 6,
@@ -32695,6 +35389,8 @@
     },
     {
       "id": "A20",
+      "stage": "units",
+      "stageLabel": "آحاد (وحدات)",
       "numbers": [
         {
           "val": 1,
@@ -32726,6 +35422,8 @@
     },
     {
       "id": "B1",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 44,
@@ -32753,6 +35451,8 @@
     },
     {
       "id": "B2",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 47,
@@ -32780,6 +35480,8 @@
     },
     {
       "id": "B3",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 59,
@@ -32807,6 +35509,8 @@
     },
     {
       "id": "B4",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 28,
@@ -32834,6 +35538,8 @@
     },
     {
       "id": "B5",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 97,
@@ -32861,6 +35567,8 @@
     },
     {
       "id": "B6",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 84,
@@ -32888,6 +35596,8 @@
     },
     {
       "id": "B7",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 13,
@@ -32915,6 +35625,8 @@
     },
     {
       "id": "B8",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 88,
@@ -32942,6 +35654,8 @@
     },
     {
       "id": "B9",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 15,
@@ -32969,6 +35683,8 @@
     },
     {
       "id": "B10",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 47,
@@ -32996,6 +35712,8 @@
     },
     {
       "id": "B11",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 95,
@@ -33027,6 +35745,8 @@
     },
     {
       "id": "B12",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 40,
@@ -33058,6 +35778,8 @@
     },
     {
       "id": "B13",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 91,
@@ -33089,6 +35811,8 @@
     },
     {
       "id": "B14",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 27,
@@ -33120,6 +35844,8 @@
     },
     {
       "id": "B15",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 57,
@@ -33151,6 +35877,8 @@
     },
     {
       "id": "B16",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 17,
@@ -33182,6 +35910,8 @@
     },
     {
       "id": "B17",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 98,
@@ -33213,6 +35943,8 @@
     },
     {
       "id": "B18",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 90,
@@ -33244,6 +35976,8 @@
     },
     {
       "id": "B19",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 68,
@@ -33275,6 +36009,8 @@
     },
     {
       "id": "B20",
+      "stage": "tens",
+      "stageLabel": "عشرات",
       "numbers": [
         {
           "val": 34,

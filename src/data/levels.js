@@ -311,7 +311,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '7 جداول آحاد (3 إلى 5 طوابق) | 90 عملية',
-          config: { count: 90, floorsMin: 3, floorsMax: 5, ops: 4, type: 'units_only' }
+          config: { categoryId: 'int-beg-1', count: 90, floorsMin: 3, floorsMax: 5, ops: 4, type: 'units_only' }
         }
       ]
     },
@@ -339,7 +339,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: '6 عمليات، آحاد وعشرات | 120 عملية',
-          config: { count: 120, floorsMin: 3, floorsMax: 6, ops: 5, type: 'tens_medium' }
+          config: { categoryId: 'int-int-1', count: 120, floorsMin: 3, floorsMax: 6, ops: 5, type: 'tens_medium' }
         },
         {
           id: 'int-int-2',
@@ -359,7 +359,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: 'آحاد وعشرات ومئات متقدم | 140 عملية',
-          config: { count: 140, floorsMin: 3, floorsMax: 6, ops: 6, type: 'tens_hard' }
+          config: { categoryId: 'int-int-2', count: 140, floorsMin: 3, floorsMax: 6, ops: 6, type: 'tens_hard' }
         }
       ]
     },
@@ -387,7 +387,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: 'قاعدة الـ5 والـ10 | 130 عملية',
-          config: { count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'rule_10' }
+          config: { categoryId: 'int-adv-1', count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'rule_10' }
         },
         {
           id: 'int-adv-2',
@@ -407,7 +407,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: 'قاعدة الـ5 والـ10 (متقدم) | 150 عملية',
-          config: { count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'rule_10' }
+          config: { categoryId: 'int-adv-2', count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'rule_10' }
         }
       ]
     },
@@ -435,7 +435,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: 'عمليات مركّبة ومتنوعة | 130 عملية',
-          config: { count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'mixed_1' }
+          config: { categoryId: 'int-cha-1', count: 130, floorsMin: 3, floorsMax: 6, ops: 5, type: 'mixed_1' }
         },
         {
           id: 'int-cha-2',
@@ -455,7 +455,7 @@ export const levelsData = {
           durationText: '07 دقائق',
           solutionMethod: 'حساب ذهني / سوروبان',
           details: 'عمليات مركّبة ومتنوعة (صعبة) | 150 عملية',
-          config: { count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'mixed_2' }
+          config: { categoryId: 'int-cha-2', count: 150, floorsMin: 3, floorsMax: 6, ops: 6, type: 'mixed_2' }
         }
       ]
     }
@@ -484,6 +484,48 @@ export function getFilteredLevels(system, ageOrYear) {
     }
     return acc;
   }, []);
+}
+
+/**
+ * Every category of a system as its own selectable entry — nothing is hidden.
+ *
+ * Unlike getFilteredLevels (one card per level, age-matched), this returns one
+ * entry per category and marks the age-appropriate ones with `isRecommended`
+ * so the UI can highlight them while leaving the rest selectable.
+ *
+ * Age matching stays identical to getFilteredLevels: birth year takes
+ * precedence, with the age range as a fallback.
+ *
+ * @returns {Array<{...level, category, isRecommended}>} recommended first
+ */
+export function getAllCategories(system, ageOrYear) {
+  const levels = levelsData[system] || [];
+  const val = Number(ageOrYear) || 2019;
+  const currentYear = 2026;
+  const age = val > 1900 ? (currentYear - val) : val;
+  const birthYear = val > 1900 ? val : (currentYear - val);
+
+  const entries = [];
+  levels.forEach(level => {
+    level.categories.forEach(category => {
+      const matchesYear =
+        category.minYear && category.maxYear &&
+        birthYear >= category.minYear && birthYear <= category.maxYear;
+      const matchesAge = age >= category.ageMin && age <= category.ageMax;
+
+      entries.push({
+        ...level,
+        category,
+        isRecommended: Boolean(matchesYear || matchesAge),
+      });
+    });
+  });
+
+  // Recommended categories first, original order preserved within each group.
+  return [
+    ...entries.filter(e => e.isRecommended),
+    ...entries.filter(e => !e.isRecommended),
+  ];
 }
 
 /**

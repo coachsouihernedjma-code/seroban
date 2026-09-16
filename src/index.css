@@ -354,7 +354,10 @@ header::after {
 /* ===== USER NAVIGATION ===== */
 .user-nav {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 6px;
+  min-width: 0;
 }
 
 .user-nav-btn {
@@ -390,10 +393,12 @@ header::after {
 /* ===== USER BAR ===== */
 .user-bar {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  padding: 14px 22px;
+  padding: 14px clamp(12px, 3vw, 22px);
   background: white;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-sm);
@@ -1751,6 +1756,44 @@ header::after {
   box-shadow: var(--shadow-lg);
 }
 
+/* The category matching the student's age — highlighted but not exclusive:
+   every other category stays fully selectable. */
+.level-card-recommended {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.25), var(--shadow-md);
+}
+
+/* In normal flow above the title, so it can never overlap a long category name */
+.level-recommended-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35);
+  white-space: nowrap;
+}
+
+/* Parent level name, shown under the category title */
+.level-card-parent {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-medium);
+  margin-bottom: 10px;
+}
+
+.levels-grid-footer {
+  margin-top: 22px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-medium);
+}
+
 .level-card-accent {
   height: 10px;
   width: 100%;
@@ -1764,8 +1807,10 @@ header::after {
   color: var(--text-dark);
   font-size: 1.2rem;
   font-weight: 800;
-  margin-bottom: 14px;
+  margin-bottom: 6px;
   font-family: var(--font-playful);
+  /* Clear the absolutely-positioned .level-card-emoji (physical left = RTL end) */
+  padding-inline-end: 44px;
 }
 
 .level-card-info {
@@ -4209,5 +4254,27 @@ html, body, #root {
   .user-greeting-title,
   .user-greeting-sub {
     max-width: 34vw;
+  }
+}
+
+/* --- Sub-view user bar (levels / courses / competitions) on small screens --- */
+@media (max-width: 640px) {
+  .user-nav-btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+  }
+
+  .user-bar-info,
+  .user-nav,
+  .user-bar .btn-logout {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .user-nav-btn {
+    font-size: 0.78rem;
+    padding: 7px 9px;
   }
 }
