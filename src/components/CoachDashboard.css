@@ -1,7 +1,9 @@
 .coach-dashboard-wrapper {
   max-width: 1200px;
+  width: 100%;
+  min-width: 0; /* flex item of .app-container — must be allowed to shrink */
   margin: 0 auto;
-  padding: 24px;
+  padding: clamp(10px, 3vw, 24px);
   direction: rtl;
   font-family: 'Cairo', 'Tajawal', system-ui, sans-serif;
 }
@@ -220,7 +222,7 @@
   border: 1.5px solid #cbd5e1;
   border-radius: 10px;
   font-size: 0.95rem;
-  width: 260px;
+  width: min(260px, 100%);
   outline: none;
   transition: border-color 0.2s;
 }

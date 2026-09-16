@@ -57,12 +57,18 @@ body {
 .app-container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 16px 20px;
+  padding: 16px clamp(10px, 2.5vw, 20px);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
   z-index: 1;
+}
+
+/* Flex items default to min-width:auto, so a single wide descendant can pin a
+   whole page past the viewport. Direct children of the app shell may shrink. */
+.app-container > * {
+  min-width: 0;
 }
 
 /* ===== ANIMATIONS ===== */
@@ -282,8 +288,9 @@ header::after {
 }
 
 .logo-img {
-  height: 140px;
-  width: 140px;
+  height: clamp(64px, 14vw, 140px);
+  width: clamp(64px, 14vw, 140px);
+  flex: none;
   object-fit: cover;
   border-radius: 50%;
   border: 3.5px solid rgba(255, 255, 255, 0.4);
@@ -304,7 +311,7 @@ header::after {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 40px;
   padding: 5px;
-  width: 380px;
+  width: min(380px, 100%);
   border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
@@ -592,7 +599,7 @@ header::after {
 
 .dashboard-search {
   position: relative;
-  width: 300px;
+  width: min(300px, 100%);
 }
 
 .search-input {
@@ -729,7 +736,8 @@ header::after {
 }
 
 .dashboard-sidebar {
-  width: 280px;
+  width: min(280px, 100%);
+  flex: none;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -1155,7 +1163,7 @@ header::after {
 
 .competitions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: 16px;
 }
 
@@ -1327,7 +1335,7 @@ header::after {
 
 .admin-charts-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 20px;
 }
 
@@ -1725,7 +1733,7 @@ header::after {
 
 .levels-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 22px;
 }
 
@@ -1818,9 +1826,11 @@ header::after {
 
 .training-navbar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  gap: 10px;
+  padding: 10px clamp(12px, 3vw, 20px);
   border-radius: var(--radius-md);
   margin-bottom: 4px;
   background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
@@ -1831,12 +1841,15 @@ header::after {
 .training-navbar-right {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: clamp(8px, 2vw, 14px);
+  min-width: 0; /* allow the title to ellipsize instead of forcing overflow */
+  flex: 1 1 auto;
 }
 
 .training-mini-logo {
-  height: 80px;
-  width: 80px;
+  height: clamp(44px, 9vw, 80px);
+  width: clamp(44px, 9vw, 80px);
+  flex: none;
   object-fit: cover;
   border-radius: 50%;
   border: 2.5px solid rgba(255, 255, 255, 0.4);
@@ -1846,21 +1859,26 @@ header::after {
 
 .training-nav-title {
   color: white;
-  font-size: 1.2rem;
+  font-size: clamp(0.95rem, 2.6vw, 1.2rem);
   font-weight: 800;
   margin: 0;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .training-nav-subtitle {
   color: rgba(255,255,255,0.78);
-  font-size: 0.84rem;
+  font-size: clamp(0.72rem, 1.9vw, 0.84rem);
+  display: block;
+  overflow-wrap: anywhere;
 }
 
 .training-navbar-left {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  justify-content: flex-end;
+  gap: clamp(6px, 1.5vw, 12px);
 }
 
 .training-student-pill {
@@ -1907,21 +1925,23 @@ header::after {
 /* Training main grid */
 .training-grid {
   display: grid;
-  grid-template-columns: 1fr 270px;
-  gap: 22px;
+  /* minmax(0, …) stops the board column from blowing out the grid on narrow screens */
+  grid-template-columns: minmax(0, 1fr) clamp(200px, 22vw, 270px);
+  gap: clamp(12px, 2vw, 22px);
   align-items: start;
 }
 
 .training-board-area {
   display: flex;
   justify-content: center;
+  min-width: 0;
 }
 
 /* Problem board */
 .problem-board {
   width: 100%;
   max-width: 480px;
-  padding: 28px 32px 24px;
+  padding: clamp(16px, 4vw, 28px) clamp(12px, 4vw, 32px) clamp(16px, 3vw, 24px);
   text-align: center;
   background: white;
   border-radius: var(--radius-lg);
@@ -2029,24 +2049,63 @@ header::after {
   border: 1px solid rgba(231, 76, 60, 0.2);
 }
 
+/* ===== PROBLEM STACK (the operation "floors") =====
+   --floors / --digits are set inline by TrainingSession.jsx from the current
+   problem, so the type scales down as the stack grows taller or wider instead
+   of overflowing the board. The fallbacks keep this usable without the vars. */
 .problem-stack {
-  font-size: 2.5rem;
+  --floors: 4;
+  --digits: 1;
+
+  /* Shrink ~0.16rem per floor past 3, and ~0.1rem per digit past 1,
+     but never below 1.05rem (still readable) nor above 2.6rem. */
+  font-size: clamp(
+    1.05rem,
+    calc(2.6rem - (var(--floors) - 3) * 0.16rem - (var(--digits) - 1) * 0.1rem),
+    2.6rem
+  );
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
   margin-bottom: 24px;
   direction: ltr;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: var(--text-dark);
+
+  /* Never let a tall stack push the answer input off-screen — scroll instead. */
+  width: 100%;
+  max-height: min(46vh, 430px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(37, 99, 235, 0.35) transparent;
 }
 
+.problem-stack::-webkit-scrollbar {
+  width: 6px;
+}
+
+.problem-stack::-webkit-scrollbar-thumb {
+  background: rgba(37, 99, 235, 0.35);
+  border-radius: 999px;
+}
+
+/* Width follows the font-size via `ch`, so digits always fit and every
+   floor stays aligned regardless of how many rows there are. */
 .problem-line {
-  width: 130px;
+  width: calc(var(--digits, 1) * 1ch + 3.2ch);
+  min-width: 4.2ch;
+  max-width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  gap: 0.35em;
   padding: 2px 0;
   line-height: 1.3;
+  flex: none; /* don't let a tall stack squash rows inside the scroller */
 }
 
 .problem-line:last-child {
@@ -2058,13 +2117,27 @@ header::after {
 .op-sign {
   color: var(--primary-color);
   font-weight: 700;
-  width: 28px;
+  width: 1.1em;
+  flex: none;
   text-align: left;
 }
 
 .op-val {
   text-align: right;
   flex: 1;
+  white-space: nowrap;
+}
+
+/* Multiplication problems render as a single inline expression */
+.problem-multiplication {
+  font-size: clamp(1.4rem, 8vw, 3.2rem);
+  font-weight: 900;
+  color: #1e3a8a;
+  padding: clamp(16px, 4vw, 30px) 10px;
+  direction: ltr;
+  text-align: center;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
 }
 
 .answer-form {
@@ -2631,7 +2704,7 @@ header::after {
 
 .competitions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr));
   gap: 22px;
 }
 
@@ -2808,13 +2881,8 @@ header::after {
     gap: 10px;
   }
 
-  .problem-stack {
-    font-size: 2rem;
-  }
-
-  .problem-line {
-    width: 105px;
-  }
+  /* .problem-stack / .problem-line size themselves from --floors/--digits
+     (see the PROBLEM STACK block above) — no fixed overrides here. */
 
   .form-row {
     flex-direction: column;
@@ -3110,7 +3178,7 @@ header::after {
 /* --- PORTAL BODY LAYOUT --- */
 .portal-body-layout {
   display: grid;
-  grid-template-columns: 210px 1fr 280px;
+  grid-template-columns: 210px minmax(0, 1fr) 280px;
   gap: 22px;
   align-items: start;
 }
@@ -3916,8 +3984,230 @@ html, body, #root {
     padding: 10px 8px;
   }
 
-  /* Prevent any element exceeding screen width */
-  * {
+  /* Keep media and embeds inside the viewport. This replaces a blanket
+     `* { max-width: 100% }`, which also clamped elements that legitimately
+     need to be wider than their scroll container (e.g. wide tables). */
+  img,
+  video,
+  canvas,
+  svg:not(.icon),
+  iframe {
     max-width: 100%;
+    height: auto;
+  }
+}
+
+/* =========================================================
+   TRAINING SESSION — RESPONSIVE LAYERS
+   The problem stack itself is fluid (see .problem-stack, which scales from
+   the --floors / --digits custom properties). These rules adapt the
+   surrounding chrome so the stack always has room on smaller screens.
+   ========================================================= */
+
+/* --- Tablet (≤1024px): narrow the stats column --- */
+@media (max-width: 1024px) {
+  .app-container.training-mode {
+    padding: 12px 14px;
+  }
+
+  .training-grid {
+    grid-template-columns: minmax(0, 1fr) clamp(180px, 26vw, 230px);
+  }
+
+  .training-stats-sidebar {
+    padding: 14px;
+    gap: 10px;
+  }
+}
+
+/* --- Small tablet / large phone (≤860px): stats move under the board --- */
+@media (max-width: 860px) {
+  .training-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Stats become a compact horizontal strip instead of a tall column */
+  .training-stats-sidebar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .training-stats-sidebar .btn-block {
+    grid-column: 1 / -1;
+  }
+
+  /* Give the board the full width now that nothing sits beside it */
+  .problem-board {
+    max-width: 560px;
+  }
+}
+
+/* --- Phone (≤640px): compact chrome, more room for the numbers --- */
+@media (max-width: 640px) {
+  .training-navbar {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .training-navbar-left {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .training-student-pill {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .btn-finish-early {
+    flex: 1 1 auto;
+    font-size: 0.85rem;
+    padding: 9px 12px;
+  }
+
+  .stage-badge {
+    font-size: 0.78rem;
+    padding: 5px 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+
+  .stage-badge-id {
+    font-size: 0.72rem;
+  }
+
+  /* The feedback overlay is absolutely positioned — keep it off the digits */
+  .problem-feedback-side {
+    right: 8px;
+    padding: 8px;
+  }
+
+  .feedback-icon {
+    font-size: 2.2rem;
+  }
+
+  .feedback-correct-answer {
+    font-size: 1rem;
+    padding: 3px 8px;
+  }
+
+  .training-input {
+    font-size: 1.5rem;
+    padding: 12px;
+    letter-spacing: 2px;
+  }
+}
+
+/* --- Very small phones (≤380px) --- */
+@media (max-width: 380px) {
+  .app-container.training-mode {
+    padding: 8px 6px;
+  }
+
+  .training-stats-sidebar {
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+  }
+
+  .timer-val {
+    font-size: 1.3rem;
+  }
+
+  .stat-box-val {
+    font-size: 1.2rem;
+  }
+}
+
+/* --- Landscape phones: viewport height is the scarce resource here.
+       Cap the stack harder so the answer input stays reachable. --- */
+@media (max-height: 560px) and (orientation: landscape) {
+  .problem-stack {
+    max-height: 38vh;
+    margin-bottom: 12px;
+  }
+
+  .training-mini-logo {
+    height: 40px;
+    width: 40px;
+  }
+
+  .stage-badge {
+    margin-bottom: 8px;
+  }
+
+  .training-input {
+    font-size: 1.4rem;
+    padding: 10px;
+  }
+}
+
+/* --- Respect reduced-motion preferences across the app --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========================================================
+   PORTAL TOPBAR — MOBILE OVERRIDES
+   NOTE: index.css re-declares .portal-topbar / .topbar-left (the legacy
+   "portal" section above) at the same specificity as EnhancedDashboard.css,
+   and this file is injected last — so the component's own @media rules lose
+   the cascade. These overrides live here to reliably win. If that duplicate
+   block is ever removed, these can move back into EnhancedDashboard.css.
+   ========================================================= */
+.topbar-left {
+  min-width: 0; /* let the greeting ellipsize instead of stretching the bar */
+}
+
+.mobile-hamburger-btn {
+  flex: none;
+}
+
+@media (max-width: 640px) {
+  .portal-topbar {
+    padding: 8px 12px;
+    gap: 8px;
+    border-radius: 14px;
+    margin-bottom: 12px;
+  }
+
+  .topbar-left {
+    flex: 1 1 auto;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  .user-greeting-chip {
+    min-width: 0;
+    padding: 4px 10px;
+  }
+
+  .user-greeting-title,
+  .user-greeting-sub {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: min(140px, 42vw);
+  }
+}
+
+@media (max-width: 380px) {
+  .portal-topbar {
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .user-greeting-title,
+  .user-greeting-sub {
+    max-width: 34vw;
   }
 }

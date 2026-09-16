@@ -253,7 +253,8 @@
 /* --- MAIN 3-COLUMN BODY LAYOUT --- */
 .portal-layout-grid {
   display: grid;
-  grid-template-columns: 210px 1fr 270px;
+  /* minmax(0, …) keeps wide content (tables, cards) from blowing out the grid */
+  grid-template-columns: 210px minmax(0, 1fr) 270px;
   gap: 20px;
   align-items: start;
 }
@@ -334,6 +335,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0; /* allow the column to shrink below its content's min-content */
 }
 
 /* HERO BANNER */
@@ -750,6 +752,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
 }
 
 .widget-box {
@@ -814,6 +817,7 @@
   flex-direction: column;
   flex: 1;
   line-height: 1.2;
+  min-width: 0; /* long Arabic names must ellipsize, not stretch the row */
 }
 
 .leader-name-text {
@@ -899,7 +903,7 @@
 /* Tablet (≤1200px): Drop widgets column below */
 @media (max-width: 1200px) {
   .portal-layout-grid {
-    grid-template-columns: 190px 1fr;
+    grid-template-columns: 190px minmax(0, 1fr);
   }
   .portal-widgets-column {
     grid-column: span 2;
@@ -915,7 +919,10 @@
     padding: 12px 14px 100px 14px; /* bottom padding for nav bar */
   }
   .portal-layout-grid {
-    grid-template-columns: 1fr;
+    /* minmax(0, …) — plain `1fr` is minmax(auto, 1fr), which lets the wide
+       tech-specs table force the column past the viewport instead of
+       scrolling inside its own container. */
+    grid-template-columns: minmax(0, 1fr);
   }
   .portal-sidebar-column {
     display: none; /* hidden — replaced by bottom nav */

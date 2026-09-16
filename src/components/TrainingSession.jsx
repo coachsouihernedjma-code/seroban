@@ -430,6 +430,15 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
       ? Math.round((stats.correct / (stats.correct + stats.wrong)) * 100)
       : 100;
 
+  // Layout hints for the problem stack: the number of floors (rows) and the
+  // widest value decide how much the CSS may shrink the font before scrolling.
+  const stackNumbers = Array.isArray(currentProblem.numbers) ? currentProblem.numbers : [];
+  const stackFloors = Math.max(stackNumbers.length, 1);
+  const stackDigits = stackNumbers.reduce(
+    (max, n) => Math.max(max, String(Math.abs(n.val)).length),
+    1
+  );
+
   return (
     <div className="training-container fade-in">
       {/* Early submit confirmation modal */}
@@ -550,22 +559,15 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
             </div>
 
             {currentProblem.isMultiplication ? (
-              <div
-                style={{
-                  fontSize: '3.2rem',
-                  fontWeight: 900,
-                  color: '#1e3a8a',
-                  padding: '30px 10px',
-                  direction: 'ltr',
-                  textAlign: 'center',
-                  letterSpacing: '2px',
-                }}
-              >
+              <div className="problem-multiplication">
                 {currentProblem.text} = ؟
               </div>
             ) : (
-              <div className="problem-stack">
-                {currentProblem.numbers.map((n, i) => (
+              <div
+                className="problem-stack"
+                style={{ '--floors': stackFloors, '--digits': stackDigits }}
+              >
+                {stackNumbers.map((n, i) => (
                   <div key={i} className="problem-line">
                     <span className="op-sign">{n.sign < 0 ? '−' : (i > 0 ? '+' : '')}</span>
                     <span className="op-val">{n.val}</span>

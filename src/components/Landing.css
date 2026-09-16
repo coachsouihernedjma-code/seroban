@@ -48,12 +48,21 @@
 
 .landing-navbar {
   max-width: 1320px;
+  width: 100%;
   margin: 0 auto;
-  padding: 16px 36px;
+  padding: 16px clamp(14px, 3vw, 36px);
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: clamp(10px, 2vw, 20px);
+  /* As a flex item its default min-width:auto would pin it to the
+     min-content width of the nav links and push past the viewport. */
+  min-width: 0;
+}
+
+.landing-navbar > * {
+  min-width: 0;
 }
 
 .landing-brand {
@@ -98,11 +107,14 @@
 
 .landing-nav-links {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: 26px;
+  gap: clamp(12px, 2vw, 26px);
   list-style: none;
   margin: 0;
   padding: 0;
+  min-width: 0;
 }
 
 .landing-nav-link {
@@ -139,8 +151,18 @@
 
 .landing-nav-actions {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   align-items: center;
-  gap: 12px;
+  gap: clamp(6px, 1.5vw, 12px);
+  min-width: 0;
+}
+
+/* Nav buttons trade horizontal padding for space on narrow screens */
+.landing-nav-actions .landing-btn-primary,
+.landing-nav-actions .landing-btn-outline {
+  padding-inline: clamp(10px, 3.5vw, 24px);
+  white-space: nowrap;
 }
 
 .landing-btn-outline {
