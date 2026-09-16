@@ -1,0 +1,149 @@
+/*
+  On-screen numeric keypad (mobile training session).
+  Uses the app's existing design tokens from index.css so it matches the
+  rest of the UI without introducing new colours or fonts.
+*/
+
+.numpad {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  /* The keypad is LTR (digits), even though the app is RTL. */
+  direction: ltr;
+}
+
+.numpad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(6px, 2vw, 10px);
+}
+
+.numpad-key {
+  /* Comfortably above the 44px minimum touch target, even on a 320px screen. */
+  min-height: clamp(52px, 13vw, 64px);
+  font-family: 'Tajawal', system-ui, sans-serif;
+  font-size: clamp(1.35rem, 6vw, 1.75rem);
+  font-weight: 800;
+  color: var(--text-dark);
+  background: #ffffff;
+  border: 2px solid var(--bg-light);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 0 rgba(26, 58, 143, 0.12);
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.15s ease, border-color 0.15s ease;
+
+  /* Stop the double-tap-to-zoom delay and the blue tap flash on mobile. */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.numpad-key:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: none;
+  background: var(--bg-light);
+  border-color: var(--primary-light);
+}
+
+.numpad-key-action {
+  background: var(--bg-color);
+  color: var(--primary-color);
+  font-size: clamp(1.15rem, 5vw, 1.45rem);
+}
+
+.numpad-submit {
+  min-height: clamp(54px, 13vw, 62px);
+  font-family: 'Tajawal', system-ui, sans-serif;
+  font-size: clamp(1.05rem, 4.5vw, 1.25rem);
+  font-weight: 900;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--success-color), #16a34a);
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 0 #15803d;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.numpad-submit:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: none;
+}
+
+.numpad-key:disabled,
+.numpad-submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/*
+  Read-only answer display used in place of <input> on mobile.
+  It is a <div>, not a form control, so no OS keyboard can ever open.
+*/
+.training-answer-display {
+  width: 100%;
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 14px;
+  font-size: clamp(1.6rem, 8vw, 2rem);
+  font-weight: 800;
+  letter-spacing: 4px;
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  color: var(--text-dark);
+  background: #ffffff;
+  border: 2.5px solid var(--bg-light);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  /* Not selectable or focusable — purely a display surface. */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: default;
+}
+
+.training-answer-display.is-placeholder {
+  color: var(--text-medium);
+  font-size: clamp(0.95rem, 4vw, 1.1rem);
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+.training-answer-display.input-correct {
+  border-color: var(--success-color);
+  background: var(--success-light);
+  animation: correctPulse 0.5s ease;
+}
+
+.training-answer-display.input-wrong {
+  border-color: var(--error-color);
+  background: var(--error-light);
+  animation: shake 0.4s ease;
+}
+
+/* In landscape the stack already competes for height — tighten the keys. */
+@media (max-height: 560px) and (orientation: landscape) {
+  .numpad-key {
+    min-height: 42px;
+    font-size: 1.2rem;
+  }
+
+  .numpad-submit {
+    min-height: 44px;
+    font-size: 1rem;
+  }
+
+  .training-answer-display {
+    min-height: 48px;
+    font-size: 1.4rem;
+  }
+}

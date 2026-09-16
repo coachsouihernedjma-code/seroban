@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { generateProblem, resetPool, getProblemCount } from '../utils/mathGenerator';
+import NumericKeypad from './NumericKeypad';
 import { buildResultMessage, formatClock, formatTimeInArabic, PLATFORM_NAME } from '../utils/resultMessage';
 import { syncResult } from '../services/dbSync';
 
@@ -140,6 +141,30 @@ function ConfettiCanvas() {
   );
 }
 
+// Longest official answer is 4 digits (max 9021); one spare digit for typos.
+const MAX_ANSWER_LENGTH = 5;
+
+/**
+ * True on touch-sized screens. Checked in JS rather than CSS because CSS
+ * cannot stop an <input> from taking focus and opening the OS keyboard —
+ * on mobile we must not render an input at all.
+ */
+function useIsMobile(query = '(max-width: 768px)') {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(query).matches
+  );
+
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const onChange = (e) => setIsMobile(e.matches);
+    mql.addEventListener('change', onChange);
+    setIsMobile(mql.matches);
+    return () => mql.removeEventListener('change', onChange);
+  }, [query]);
+
+  return isMobile;
+}
+
 function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack, competition = null }) {
   const [problemIndex, setProblemIndex] = useState(0);
   const [currentProblem, setCurrentProblem] = useState(null);
@@ -150,6 +175,8 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
   const [finalResult, setFinalResult] = useState(null);
   const [copied, setCopied] = useState(false);
   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
+
+  const isMobile = useIsMobile();
 
   const inputRef = useRef(null);
   const timerRef = useRef(null);
@@ -255,12 +282,15 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
     };
   }, [level, maxTimeSeconds]);
 
-  // Auto focus input when feedback clears
+  // Auto focus input when feedback clears.
+  // Skipped on mobile: there is no input there, and focusing one would be
+  // exactly what re-opens the OS keyboard after every answer.
   useEffect(() => {
+    if (isMobile) return;
     if (!feedback && inputRef.current && !finalResult && !showConfirmSubmit) {
       inputRef.current.focus();
     }
-  }, [feedback, problemIndex, finalResult, showConfirmSubmit]);
+  }, [feedback, problemIndex, finalResult, showConfirmSubmit, isMobile]);
 
   const saveResult = async (finalStats, finalTimeSeconds) => {
     const result = {
@@ -296,8 +326,9 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
     }
   };
 
+  // `e` is optional so the keypad's confirm button can call this directly.
   const handleAnswer = (e) => {
-    e.preventDefault();
+    e?.preventDefault?.();
     if (feedback || isFinishedRef.current) return;
     if (userAnswer === '' || userAnswer === null) return;
 
@@ -317,6 +348,28 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
       setFeedback({ type: 'wrong', correctAnswer: currentProblem.correctAnswer });
       setTimeout(() => nextProblem(newStats), 1100);
     }
+  };
+
+  // ── Keypad handlers (mobile). They only edit `userAnswer`; the checking
+  //    itself still goes through the same handleAnswer used by the keyboard.
+  const handleKeypadDigit = (digit) => {
+    if (feedback || isFinishedRef.current) return;
+    setUserAnswer((prev) => {
+      const next = `${prev}${digit}`;
+      if (next.length > MAX_ANSWER_LENGTH) return prev;
+      // Avoid leading zeros like "007" while still allowing a plain "0".
+      return next.replace(/^0+(?=\d)/, '');
+    });
+  };
+
+  const handleKeypadBackspace = () => {
+    if (feedback || isFinishedRef.current) return;
+    setUserAnswer((prev) => prev.slice(0, -1));
+  };
+
+  const handleKeypadClear = () => {
+    if (feedback || isFinishedRef.current) return;
+    setUserAnswer('');
   };
 
   const copyResult = async () => {
@@ -599,26 +652,49 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
               </div>
             )}
 
-            {/* Answer — submit on Enter */}
-            <form onSubmit={handleAnswer} className="answer-form">
-              <input
-                ref={inputRef}
-                type="number"
-                value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') handleAnswer(e);
-                }}
-                autoFocus
-                disabled={!!feedback}
-                className={`form-input training-input${feedback ? (feedback.type === 'correct' ? ' input-correct' : ' input-wrong') : ''}`}
-                placeholder="اكتب الناتج..."
-                style={{ marginBottom: 0 }}
-              />
-              <p style={{ marginTop: '10px', fontSize: '0.85rem', color: 'var(--text-medium)', textAlign: 'center' }}>
-                اضغط <strong>Enter</strong> لتأكيد الإجابة
-              </p>
-            </form>
+            {/* Answer input.
+                Mobile renders a non-focusable <div> plus the on-screen keypad,
+                so the device keyboard can never open. Desktop keeps the real
+                input and the physical Enter key, unchanged. */}
+            {isMobile ? (
+              <div className="answer-form">
+                <div
+                  className={`training-answer-display${userAnswer === '' ? ' is-placeholder' : ''}${feedback ? (feedback.type === 'correct' ? ' input-correct' : ' input-wrong') : ''}`}
+                  aria-live="polite"
+                  aria-label="الإجابة"
+                >
+                  {userAnswer === '' ? 'اضغط الأرقام بالأسفل...' : userAnswer}
+                </div>
+
+                <NumericKeypad
+                  onDigit={handleKeypadDigit}
+                  onBackspace={handleKeypadBackspace}
+                  onClear={handleKeypadClear}
+                  onSubmit={handleAnswer}
+                  disabled={!!feedback}
+                />
+              </div>
+            ) : (
+              <form onSubmit={handleAnswer} className="answer-form">
+                <input
+                  ref={inputRef}
+                  type="number"
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleAnswer(e);
+                  }}
+                  autoFocus
+                  disabled={!!feedback}
+                  className={`form-input training-input${feedback ? (feedback.type === 'correct' ? ' input-correct' : ' input-wrong') : ''}`}
+                  placeholder="اكتب الناتج..."
+                  style={{ marginBottom: 0 }}
+                />
+                <p style={{ marginTop: '10px', fontSize: '0.85rem', color: 'var(--text-medium)', textAlign: 'center' }}>
+                  اضغط <strong>Enter</strong> لتأكيد الإجابة
+                </p>
+              </form>
+            )}
           </div>
         </div>
 
