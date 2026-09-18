@@ -1995,6 +1995,37 @@ header::after {
   position: relative;
 }
 
+/* ── Keyboard-open compact mode ──────────────────────────────────────────
+   Added when visualViewport detects the soft keyboard is open (height drops
+   >25%). Hides non-essential chrome and shrinks the stack so the numbers +
+   input both fit in the ~350-370px that remains above the keyboard on a
+   typical 667px phone. Reverts automatically when the keyboard closes.
+   Only visual — no timer, score, or logic state is touched.
+   ──────────────────────────────────────────────────────────────────────── */
+.problem-board.keyboard-open {
+  padding: 10px 14px 12px;
+}
+
+.problem-board.keyboard-open .stage-badge {
+  display: none;
+}
+
+.problem-board.keyboard-open .problem-stack {
+  /* Tighter font so 3-7 floors fit without internal scroll (~244px max) */
+  font-size: clamp(1.05rem, calc(1.9rem - (var(--floors) - 3) * 0.14rem), 1.9rem) !important;
+  max-height: 250px;
+  margin-bottom: 10px;
+}
+
+.problem-board.keyboard-open .answer-form > p {
+  display: none;
+}
+
+.problem-board.keyboard-open .training-input {
+  padding: 10px;
+  font-size: 1.6rem;
+}
+
 /* Stage progression badge inside problem board */
 .stage-badge {
   display: inline-flex;

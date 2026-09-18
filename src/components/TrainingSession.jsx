@@ -150,12 +150,29 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
   const [finalResult, setFinalResult] = useState(null);
   const [copied, setCopied] = useState(false);
   const [showConfirmSubmit, setShowConfirmSubmit] = useState(false);
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
 
   const inputRef = useRef(null);
+  const boardRef = useRef(null);
   const timerRef = useRef(null);
   const timeRef = useRef(0);
   const statsRef = useRef({ correct: 0, wrong: 0 });
   const isFinishedRef = useRef(false);
+
+  // Detect soft keyboard open/close via visualViewport.
+  // When keyboard appears it shrinks the visual viewport by >25%; we add the
+  // keyboard-open class so the problem board compresses to stay fully visible.
+  // Pure display effect — no timer/score state touched.
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const baseline = vv.height;
+    const onVVResize = () => {
+      setKeyboardOpen(vv.height < baseline * 0.75);
+    };
+    vv.addEventListener('resize', onVVResize);
+    return () => vv.removeEventListener('resize', onVVResize);
+  }, []);
 
   const categoryConfig = {
     ...level.category.config,
@@ -546,7 +563,11 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
       <div className="training-grid">
         {/* Problem board */}
         <div className="training-board-area">
-          <div className="problem-board" style={{ position: 'relative' }}>
+          <div
+            ref={boardRef}
+            className={`problem-board${keyboardOpen ? ' keyboard-open' : ''}`}
+            style={{ position: 'relative' }}
+          >
             {/* Feedback overlay */}
             {feedback && (
               <div className={`problem-feedback-side ${feedback.type}`}>
