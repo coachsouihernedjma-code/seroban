@@ -2102,11 +2102,11 @@ header::after {
   --floors: 4;
   --digits: 1;
 
-  /* Shrink ~0.16rem per floor past 3, and ~0.1rem per digit past 1,
+  /* Shrink ~0.22rem per floor past 3, and ~0.1rem per digit past 1,
      but never below 1.05rem (still readable) nor above 2.6rem. */
   font-size: clamp(
     1.05rem,
-    calc(2.6rem - (var(--floors) - 3) * 0.16rem - (var(--digits) - 1) * 0.1rem),
+    calc(2.6rem - (var(--floors) - 3) * 0.22rem - (var(--digits) - 1) * 0.1rem),
     2.6rem
   );
   font-weight: 800;
