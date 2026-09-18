@@ -154,21 +154,42 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
 
   const inputRef = useRef(null);
   const boardRef = useRef(null);
+  const containerRef = useRef(null);
   const timerRef = useRef(null);
   const timeRef = useRef(0);
   const statsRef = useRef({ correct: 0, wrong: 0 });
   const isFinishedRef = useRef(false);
 
-  // Detect soft keyboard open/close via visualViewport.
-  // When keyboard appears it shrinks the visual viewport by >25%; we add the
-  // keyboard-open class so the problem board compresses to stay fully visible.
-  // Pure display effect — no timer/score state touched.
+  // Detect soft keyboard via visualViewport. When the keyboard opens it shrinks
+  // the visual viewport by >25%; we:
+  //  1. Set --vv-height on the container so CSS can size the board exactly.
+  //  2. Add keyboard-open class (via state) which collapses the navbar and
+  //     re-sizes the board to fill the remaining viewport precisely.
+  //  3. Scroll so the container top aligns with the visual-viewport top, then
+  //     reset the problem-stack scroll to show the first number.
+  // Everything reverts when the keyboard closes. Pure display — no logic touched.
   useEffect(() => {
     const vv = window.visualViewport;
     if (!vv) return;
     const baseline = vv.height;
     const onVVResize = () => {
-      setKeyboardOpen(vv.height < baseline * 0.75);
+      const isKB = vv.height < baseline * 0.75;
+      setKeyboardOpen(isKB);
+      const el = containerRef.current;
+      if (!el) return;
+      if (isKB) {
+        el.style.setProperty('--vv-height', `${vv.height}px`);
+        // After the browser's own auto-scroll finishes, pin the container top
+        // to the visual-viewport top so the first number is not off-screen.
+        setTimeout(() => {
+          if (!containerRef.current) return;
+          containerRef.current.scrollIntoView({ block: 'start', behavior: 'instant' });
+          const stack = containerRef.current.querySelector('.problem-stack');
+          if (stack) stack.scrollTop = 0;
+        }, 120);
+      } else {
+        el.style.removeProperty('--vv-height');
+      }
     };
     vv.addEventListener('resize', onVVResize);
     return () => vv.removeEventListener('resize', onVVResize);
@@ -480,7 +501,10 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
   );
 
   return (
-    <div className="training-container fade-in">
+    <div
+      className={`training-container fade-in${keyboardOpen ? ' keyboard-open' : ''}`}
+      ref={containerRef}
+    >
       {/* Early submit confirmation modal */}
       {showConfirmSubmit && (
         <div className="confirm-modal-backdrop fade-in">
@@ -565,7 +589,7 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
         <div className="training-board-area">
           <div
             ref={boardRef}
-            className={`problem-board${keyboardOpen ? ' keyboard-open' : ''}`}
+            className="problem-board"
             style={{ position: 'relative' }}
           >
             {/* Feedback overlay */}

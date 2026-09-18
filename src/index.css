@@ -1996,33 +1996,113 @@ header::after {
 }
 
 /* ── Keyboard-open compact mode ──────────────────────────────────────────
-   Added when visualViewport detects the soft keyboard is open (height drops
-   >25%). Hides non-essential chrome and shrinks the stack so the numbers +
-   input both fit in the ~350-370px that remains above the keyboard on a
-   typical 667px phone. Reverts automatically when the keyboard closes.
-   Only visual — no timer, score, or logic state is touched.
+   Class applied to .training-container when visualViewport detects the soft
+   keyboard (height shrinks >25%). JS also sets --vv-height to the exact
+   remaining pixels so the board fills them precisely. Fully reverts on close.
+   Pure display — no timer, score, or logic state is touched.
+
+   Overhead when collapsed (verified in CSS):
+     container padding-top : 12px   (from ≤640px media rule)
+     navbar (single row)   : 38px   (5px×2 padding + 28px logo)
+     gap + margin-bottom   : 16px   (12px gap + 4px navbar margin)
+     progress (hidden)     :  0px
+     ─────────────────────────────
+     Total overhead        : 66px
+   Board max-height = var(--vv-height) - 66px
    ──────────────────────────────────────────────────────────────────────── */
-.problem-board.keyboard-open {
-  padding: 10px 14px 12px;
+
+/* 1 ── Collapse the navbar to a single thin strip (~38px) */
+.training-container.keyboard-open .training-navbar {
+  padding: 5px 10px;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+.training-container.keyboard-open .training-mini-logo {
+  height: 28px;
+  width: 28px;
+}
+/* Keep title readable but compact */
+.training-container.keyboard-open .training-nav-title {
+  font-size: 0.82rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Hide subtitle and non-critical navbar items */
+.training-container.keyboard-open .training-nav-subtitle,
+.training-container.keyboard-open .training-student-pill {
+  display: none;
+}
+/* btn-finish-early: hidden — student can close keyboard first to use it */
+.training-container.keyboard-open .btn-finish-early {
+  display: none;
+}
+/* btn-back (خروج): keep it — one tap to exit even with keyboard open */
+.training-container.keyboard-open .training-navbar-left {
+  /* Undo the ≤640px width:100% override so it stays in the same row */
+  width: auto !important;
+  flex: 0 0 auto;
+}
+.training-container.keyboard-open .training-navbar-right {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-.problem-board.keyboard-open .stage-badge {
+/* 2 ── Hide progress track (saves 8px + gap) */
+.training-container.keyboard-open .training-progress-track {
   display: none;
 }
 
-.problem-board.keyboard-open .problem-stack {
-  /* Tighter font so 3-7 floors fit without internal scroll (~244px max) */
+/* 3 ── Hide stats sidebar — numbers + input need all the space */
+.training-container.keyboard-open .training-stats-sidebar {
+  display: none;
+}
+
+/* 4 ── Board: fill exactly the remaining visual-viewport space */
+.training-container.keyboard-open .problem-board {
+  padding: 8px 12px 10px;
+  /* --vv-height is set by JS; fallback to 50vh for browsers without vv API */
+  max-height: calc(var(--vv-height, 50vh) - 66px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 5 ── Stage badge: hide */
+.training-container.keyboard-open .stage-badge {
+  display: none;
+}
+
+/* 6 ── Stack: flex-fill available height, scroll from the top (first number
+         always visible after JS resets scrollTop to 0) */
+.training-container.keyboard-open .problem-stack {
   font-size: clamp(1.05rem, calc(1.9rem - (var(--floors) - 3) * 0.14rem), 1.9rem) !important;
-  max-height: 250px;
-  margin-bottom: 10px;
+  /* Let flex decide height; override the fixed max-height from the base rule */
+  max-height: none !important;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  margin-bottom: 8px;
 }
 
-.problem-board.keyboard-open .answer-form > p {
+/* 7 ── Multiplication text: same flex treatment */
+.training-container.keyboard-open .problem-multiplication {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 8 ── Input form: never shrinks — always pinned at board bottom */
+.training-container.keyboard-open .answer-form {
+  flex-shrink: 0;
+}
+.training-container.keyboard-open .answer-form > p {
   display: none;
 }
-
-.problem-board.keyboard-open .training-input {
-  padding: 10px;
+.training-container.keyboard-open .training-input {
+  padding: 9px;
   font-size: 1.6rem;
 }
 
