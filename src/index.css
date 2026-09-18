@@ -1997,18 +1997,19 @@ header::after {
 
 /* ── Keyboard-open compact mode ──────────────────────────────────────────
    Class applied to .training-container when visualViewport detects the soft
-   keyboard (height shrinks >25%). JS also sets --vv-height to the exact
-   remaining pixels so the board fills them precisely. Fully reverts on close.
-   Pure display — no timer, score, or logic state is touched.
+   keyboard (height shrinks >25%). JS sets --vv-height immediately, then after
+   200ms measures the board's exact offset from the visual-viewport top and
+   stores it in --board-height (no hardcoded constant needed at runtime).
+   Fully reverts when keyboard closes. Pure display — no logic touched.
 
-   Overhead when collapsed (verified in CSS):
-     container padding-top : 12px   (from ≤640px media rule)
-     navbar (single row)   : 38px   (5px×2 padding + 28px logo)
-     gap + margin-bottom   : 16px   (12px gap + 4px navbar margin)
-     progress (hidden)     :  0px
-     ─────────────────────────────
-     Total overhead        : 66px
-   Board max-height = var(--vv-height) - 66px
+   Fallback overhead (used for the first ~200ms before --board-height is set):
+     app-container.training-mode pad-top : 12px  (from ≤1024px media rule)
+     training-container padding-top      : 12px  (from ≤640px media rule)
+     navbar (single collapsed row)       : 38px  (5px×2 padding + 28px logo)
+     gap (12px) + navbar margin-bottom   : 16px
+     progress bar (hidden)               :  0px
+     ──────────────────────────────────────────────────────────────────
+     Total fallback overhead             : 78px
    ──────────────────────────────────────────────────────────────────────── */
 
 /* 1 ── Collapse the navbar to a single thin strip (~38px) */
@@ -2061,8 +2062,9 @@ header::after {
 /* 4 ── Board: fill exactly the remaining visual-viewport space */
 .training-container.keyboard-open .problem-board {
   padding: 8px 12px 10px;
-  /* --vv-height is set by JS; fallback to 50vh for browsers without vv API */
-  max-height: calc(var(--vv-height, 50vh) - 66px);
+  /* --board-height is set by JS after precise measurement; the fallback uses
+     the known 78px overhead for the first ~200ms before the measurement lands */
+  max-height: var(--board-height, calc(var(--vv-height, 50vh) - 78px));
   display: flex;
   flex-direction: column;
   overflow: hidden;

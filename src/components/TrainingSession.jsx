@@ -162,12 +162,12 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
 
   // Detect soft keyboard via visualViewport. When the keyboard opens it shrinks
   // the visual viewport by >25%; we:
-  //  1. Set --vv-height on the container so CSS can size the board exactly.
-  //  2. Add keyboard-open class (via state) which collapses the navbar and
-  //     re-sizes the board to fill the remaining viewport precisely.
-  //  3. Scroll so the container top aligns with the visual-viewport top, then
-  //     reset the problem-stack scroll to show the first number.
-  // Everything reverts when the keyboard closes. Pure display — no logic touched.
+  //  1. Set --vv-height immediately so the CSS fallback (78px overhead) applies.
+  //  2. After the keyboard animation (~200ms), scroll to page top then measure
+  //     the board's exact offset from the visual-viewport top and store it in
+  //     --board-height — no hardcoded constant, works on every device size.
+  //  3. Reset the stack scrollTop so the first number is always visible.
+  // All properties are removed when the keyboard closes. Pure display — no logic.
   useEffect(() => {
     const vv = window.visualViewport;
     if (!vv) return;
@@ -179,21 +179,40 @@ function TrainingSession({ level, currentUser, currentSystem, onComplete, onBack
       if (!el) return;
       if (isKB) {
         el.style.setProperty('--vv-height', `${vv.height}px`);
-        // After the browser's own auto-scroll finishes, pin the container top
-        // to the visual-viewport top so the first number is not off-screen.
         setTimeout(() => {
-          if (!containerRef.current) return;
-          containerRef.current.scrollIntoView({ block: 'start', behavior: 'instant' });
-          const stack = containerRef.current.querySelector('.problem-stack');
-          if (stack) stack.scrollTop = 0;
-        }, 120);
+          if (!containerRef.current || !boardRef.current) return;
+          // Scroll the page to its very top so the container aligns with the
+          // visual-viewport top; then in the next animation frame measure the
+          // board's actual top offset and set --board-height precisely.
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          requestAnimationFrame(() => {
+            if (!containerRef.current || !boardRef.current) return;
+            const overhead = boardRef.current.getBoundingClientRect().top;
+            containerRef.current.style.setProperty(
+              '--board-height',
+              `${Math.max(80, vv.height - overhead)}px`
+            );
+            const stack = containerRef.current.querySelector('.problem-stack');
+            if (stack) stack.scrollTop = 0;
+          });
+        }, 200);
       } else {
         el.style.removeProperty('--vv-height');
+        el.style.removeProperty('--board-height');
       }
     };
     vv.addEventListener('resize', onVVResize);
     return () => vv.removeEventListener('resize', onVVResize);
   }, []);
+
+  // When the keyboard is open and a new problem loads, React preserves the
+  // stack's DOM scroll position from the previous problem. Always reset it so
+  // the first number is visible regardless of where the previous problem scrolled.
+  useEffect(() => {
+    if (!keyboardOpen || !containerRef.current) return;
+    const stack = containerRef.current.querySelector('.problem-stack');
+    if (stack) stack.scrollTop = 0;
+  }, [problemIndex, keyboardOpen]);
 
   const categoryConfig = {
     ...level.category.config,
