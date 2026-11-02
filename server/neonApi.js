@@ -31,10 +31,20 @@ export async function initTables() {
         birth_year INTEGER,
         country VARCHAR(100),
         coach VARCHAR(255),
+        level_id VARCHAR(50),
+        level_name VARCHAR(100),
+        category_id VARCHAR(50),
+        category_name VARCHAR(100),
+        password VARCHAR(255),
         join_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       );
     `;
+    try { await db`ALTER TABLE students ADD COLUMN IF NOT EXISTS level_id VARCHAR(50)`; } catch {}
+    try { await db`ALTER TABLE students ADD COLUMN IF NOT EXISTS level_name VARCHAR(100)`; } catch {}
+    try { await db`ALTER TABLE students ADD COLUMN IF NOT EXISTS category_id VARCHAR(50)`; } catch {}
+    try { await db`ALTER TABLE students ADD COLUMN IF NOT EXISTS category_name VARCHAR(100)`; } catch {}
+    try { await db`ALTER TABLE students ADD COLUMN IF NOT EXISTS password VARCHAR(255)`; } catch {}
 
     // 2. Coaches table (بيانات المدرب)
     await db`
@@ -159,14 +169,27 @@ export async function neonApiMiddleware(req, res, next) {
       const id = body.id || Date.now().toString();
       const birthYear = body.birthYear || (body.age ? 2026 - body.age : null);
       await db`
-        INSERT INTO students (id, name, age, birth_year, country, coach)
-        VALUES (${id}, ${body.name || ''}, ${body.age || 0}, ${birthYear}, ${body.country || ''}, ${body.coach || ''})
+        INSERT INTO students (
+          id, name, age, birth_year, country, coach,
+          level_id, level_name, category_id, category_name, password
+        )
+        VALUES (
+          ${id}, ${body.name || ''}, ${body.age || 0}, ${birthYear}, ${body.country || ''}, ${body.coach || ''},
+          ${body.levelId || body.level_id || ''}, ${body.levelName || body.level_name || ''},
+          ${body.categoryId || body.category_id || ''}, ${body.categoryName || body.category_name || ''},
+          ${body.password || ''}
+        )
         ON CONFLICT (id) DO UPDATE SET
           name = EXCLUDED.name,
           age = EXCLUDED.age,
           birth_year = EXCLUDED.birth_year,
           country = EXCLUDED.country,
-          coach = EXCLUDED.coach;
+          coach = EXCLUDED.coach,
+          level_id = EXCLUDED.level_id,
+          level_name = EXCLUDED.level_name,
+          category_id = EXCLUDED.category_id,
+          category_name = EXCLUDED.category_name,
+          password = EXCLUDED.password;
       `;
       return sendJson(res, 200, { success: true, id });
     }
@@ -260,6 +283,26 @@ export async function neonApiMiddleware(req, res, next) {
       await db`DELETE FROM competitions WHERE id = ${id}`;
       return sendJson(res, 200, { success: true, deleted: id });
     }
+    // DELETE: results by level
+    if (url.startsWith('/api/results/level/') && req.method === 'DELETE') {
+      const levelId = decodeURIComponent(url.replace('/api/results/level/', ''));
+      await db`DELETE FROM competition_results WHERE level_id = ${levelId}`;
+      return sendJson(res, 200, { success: true, deletedLevel: levelId });
+    }
+
+    // DELETE: results batch by IDs
+    if (url === '/api/results/delete-batch' && req.method === 'POST') {
+      const body = await parseBody(req);
+      const ids = Array.isArray(body.ids) ? body.ids : [];
+      const levelId = body.levelId;
+      if (ids.length > 0) {
+        await db`DELETE FROM competition_results WHERE id = ANY(${ids})`;
+      } else if (levelId) {
+        await db`DELETE FROM competition_results WHERE level_id = ${levelId}`;
+      }
+      return sendJson(res, 200, { success: true, deletedCount: ids.length, levelId });
+    }
+
     if (url.startsWith('/api/results/') && req.method === 'DELETE') {
       const id = url.split('/api/results/')[1];
       await db`DELETE FROM competition_results WHERE id = ${id}`;

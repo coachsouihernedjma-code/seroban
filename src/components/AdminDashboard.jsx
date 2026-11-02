@@ -17,6 +17,8 @@ import {
   deleteCompetition,
   deleteResult,
   deleteCoach,
+  deleteResultsByLevel,
+  deleteResultsByIds,
   clearAllDatabase
 } from '../services/dbSync';
 
@@ -118,6 +120,57 @@ function AdminDashboard() {
     if (window.confirm('هل أنت متأكد من حذف هذه النتيجة نهائياً؟')) {
       setResults(prev => prev.filter(r => r.id !== id));
       await deleteResult(id);
+    }
+  };
+
+  const [deletingLevelId, setDeletingLevelId] = useState(null);
+  const [deleteMessage, setDeleteMessage] = useState(null);
+
+  const handleDeleteResultsByLevel = async (levelId, levelName, count) => {
+    if (!count || count === 0) {
+      alert(`لا توجد نتائج مسجلة لـ (${levelName}) لحذفها.`);
+      return;
+    }
+
+    const confirmMsg = `⚠️ تحذير أمني:\n\nهل أنت متأكد تماماً من حذف جميع نتائج (${levelName})؟\n\n- سيتم حذف عدد (${count}) نتيجة نهائياً من قاعدة البيانات والتطبيق.\n- لا يمكن التراجع عن هذه الخطوة!`;
+    if (!window.confirm(confirmMsg)) return;
+
+    setDeletingLevelId(levelId);
+    try {
+      const targetResults = results.filter(r => (r.levelId || r.level_id) === levelId);
+      const ids = targetResults.map(r => r.id);
+
+      setResults(prev => prev.filter(r => (r.levelId || r.level_id) !== levelId));
+      await deleteResultsByLevel(levelId, ids);
+
+      setDeleteMessage(`✅ تم حذف جميع نتائج (${levelName}) بنجاح (${count} نتيجة).`);
+      setTimeout(() => setDeleteMessage(null), 5000);
+    } catch (err) {
+      console.error('Error deleting level results:', err);
+      alert('حدث خطأ أثناء محاولة الحذف من قاعدة البيانات.');
+      fetchResults().then(data => setResults(data || []));
+    } finally {
+      setDeletingLevelId(null);
+    }
+  };
+
+  const handleDeleteGroupResults = async (groupName, groupResults) => {
+    if (!groupResults || groupResults.length === 0) return;
+    const count = groupResults.length;
+    const confirmMsg = `⚠️ هل أنت متأكد من حذف نتائج (${groupName}) بالكامل؟\n\n- سيتم حذف (${count}) نتيجة نهائياً.\n- لا يمكن التراجع عن هذه العملية!`;
+    if (!window.confirm(confirmMsg)) return;
+
+    const ids = groupResults.map(r => r.id);
+    const idSet = new Set(ids);
+    setResults(prev => prev.filter(r => !idSet.has(r.id)));
+    try {
+      await deleteResultsByIds(ids);
+      setDeleteMessage(`✅ تم حذف نتائج (${groupName}) بنجاح (${count} نتيجة).`);
+      setTimeout(() => setDeleteMessage(null), 5000);
+    } catch (err) {
+      console.error('Error deleting group results:', err);
+      alert('حدث خطأ أثناء حذف النتائج.');
+      fetchResults().then(data => setResults(data || []));
     }
   };
 
@@ -1009,6 +1062,218 @@ function AdminDashboard() {
 
       {activeTab === 'results' && (
         <div className="admin-results-section">
+          {/* لوحة أزرار حذف نتائج المسابقات وفق المستوى */}
+          {(() => {
+            const KNOWN_LEVELS = [
+              { id: 'prep', name: 'المستوى التحضيري', badge: '🌱 التحضيري', color: '#10b981', system: 'الجزائري' },
+              { id: 'level-1', name: 'المستوى الأول', badge: '⭐ المستوى الأول', color: '#f59e0b', system: 'الجزائري' },
+              { id: 'level-2', name: 'المستوى الثاني', badge: '🚀 المستوى الثاني', color: '#3b82f6', system: 'الجزائري' },
+              { id: 'level-3', name: 'المستوى الثالث', badge: '🔥 المستوى الثالث', color: '#8b5cf6', system: 'الجزائري' },
+              { id: 'level-4', name: 'المستوى الرابع', badge: '👑 المستوى الرابع', color: '#ef4444', system: 'الجزائري' },
+              { id: 'int-beginner', name: 'المستوى التحضيري (دولي)', badge: '🌱 التمهيدي الدولي', color: '#10b981', system: 'الدولي' },
+              { id: 'int-intermediate', name: 'المستوى المتوسط (دولي)', badge: '⭐ المتوسط الدولي', color: '#0ea5e9', system: 'الدولي' },
+              { id: 'int-advanced', name: 'المستوى المتقدم (دولي)', badge: '🚀 المتقدم الدولي', color: '#6366f1', system: 'الدولي' },
+              { id: 'int-champion', name: 'مستوى البطولة (دولي)', badge: '👑 البطولة الدولية', color: '#ec4899', system: 'الدولي' },
+            ];
+
+            const extraLevels = [];
+            results.forEach((r) => {
+              const lId = r.levelId || r.level_id;
+              if (lId && !KNOWN_LEVELS.some((k) => k.id === lId) && !extraLevels.some((e) => e.id === lId)) {
+                extraLevels.push({
+                  id: lId,
+                  name: r.levelName || r.level_name || lId,
+                  badge: `📌 ${r.levelName || r.level_name || lId}`,
+                  color: '#64748b',
+                  system: r.system === 'international' ? 'الدولي' : 'مخصص',
+                });
+              }
+            });
+
+            const allLevelsList = [...KNOWN_LEVELS, ...extraLevels];
+
+            return (
+              <div
+                style={{
+                  background: '#ffffff',
+                  border: '1.5px solid #fee2e2',
+                  borderRadius: '16px',
+                  padding: '22px',
+                  marginBottom: '28px',
+                  boxShadow: '0 4px 20px rgba(239, 68, 68, 0.05)',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '12px',
+                    marginBottom: '18px',
+                    borderBottom: '1.5px solid #fef2f2',
+                    paddingBottom: '14px',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div
+                      style={{
+                        width: '42px',
+                        height: '42px',
+                        borderRadius: '12px',
+                        background: '#fee2e2',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.4rem',
+                      }}
+                    >
+                      🗑️
+                    </div>
+                    <div>
+                      <h3 style={{ margin: 0, color: '#991b1b', fontSize: '1.2rem', fontWeight: 900 }}>
+                        حذف نتائج المسابقات وفق المستوى
+                      </h3>
+                      <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.88rem' }}>
+                        كل مستوى له زر مستقل لحذف جميع نتائجه الخاصة دفعة واحدة بأمان وبطلب تأكيد مسبق.
+                      </p>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '0.88rem',
+                      color: '#64748b',
+                      background: '#f8fafc',
+                      padding: '6px 14px',
+                      borderRadius: '20px',
+                      border: '1px solid #e2e8f0',
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    إجمالي النتائج المسجلة: <strong style={{ color: '#0f172a' }}>{results.length}</strong>
+                  </div>
+                </div>
+
+                {deleteMessage && (
+                  <div
+                    style={{
+                      background: '#ecfdf5',
+                      border: '1px solid #a7f3d0',
+                      color: '#065f46',
+                      padding: '12px 18px',
+                      borderRadius: '10px',
+                      marginBottom: '16px',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                    }}
+                  >
+                    <span>✅</span>
+                    <span>{deleteMessage}</span>
+                  </div>
+                )}
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+                    gap: '14px',
+                  }}
+                >
+                  {allLevelsList.map((lvl) => {
+                    const count = results.filter((r) => (r.levelId || r.level_id) === lvl.id).length;
+                    const isDeleting = deletingLevelId === lvl.id;
+                    const hasResults = count > 0;
+
+                    return (
+                      <div
+                        key={lvl.id}
+                        style={{
+                          border: hasResults ? '1.5px solid #fecaca' : '1px solid #e2e8f0',
+                          borderRadius: '12px',
+                          padding: '14px 16px',
+                          background: hasResults ? '#fffafa' : '#f8fafc',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'space-between',
+                          gap: '12px',
+                          transition: 'all 0.2s ease',
+                          opacity: hasResults ? 1 : 0.65,
+                        }}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '1.1rem' }}>{lvl.badge.split(' ')[0]}</span>
+                            <strong style={{ color: '#1e293b', fontSize: '0.95rem' }}>{lvl.name}</strong>
+                          </div>
+                          <span
+                            style={{
+                              fontSize: '0.75rem',
+                              padding: '2px 8px',
+                              borderRadius: '6px',
+                              background: lvl.system === 'الجزائري' ? '#eff6ff' : '#faf5ff',
+                              color: lvl.system === 'الجزائري' ? '#1d4ed8' : '#7e22ce',
+                              fontWeight: 'bold',
+                            }}
+                          >
+                            {lvl.system}
+                          </span>
+                        </div>
+
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            borderTop: '1px solid #f1f5f9',
+                            paddingTop: '10px',
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: '0.85rem',
+                              color: hasResults ? '#dc2626' : '#94a3b8',
+                              fontWeight: 800,
+                            }}
+                          >
+                            📊 {count} {count === 1 ? 'نتيجة' : (count === 2 ? 'نتيجتان' : (count <= 10 && count > 2 ? 'نتائج' : 'نتيجة'))}
+                          </span>
+
+                          <button
+                            type="button"
+                            disabled={!hasResults || isDeleting}
+                            onClick={() => handleDeleteResultsByLevel(lvl.id, lvl.name, count)}
+                            style={{
+                              background: hasResults
+                                ? 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
+                                : '#cbd5e1',
+                              color: 'white',
+                              border: 'none',
+                              padding: '7px 14px',
+                              borderRadius: '8px',
+                              cursor: hasResults ? 'pointer' : 'not-allowed',
+                              fontSize: '0.82rem',
+                              fontWeight: 'bold',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              boxShadow: hasResults ? '0 2px 8px rgba(220, 38, 38, 0.25)' : 'none',
+                              transition: 'all 0.2s ease',
+                            }}
+                          >
+                            <span>🗑️</span>
+                            <span>{isDeleting ? 'جاري الحذف...' : 'حذف نتائج هذا المستوى'}</span>
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })()}
+
           {results.length === 0 ? (
             <div style={{ padding: '30px', textAlign: 'center', color: '#999', background: 'white', borderRadius: '8px' }}>
               لا توجد نتائج اختبارات بعد
@@ -1045,16 +1310,26 @@ function AdminDashboard() {
 
               return (
                 <div key={groupName} style={{ marginBottom: '30px', background: 'white', borderRadius: 'var(--radius-md)', padding: '20px', boxShadow: 'var(--shadow-sm)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', borderBottom: '2px solid var(--bg-light)', paddingBottom: '10px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', borderBottom: '2px solid var(--bg-light)', paddingBottom: '10px', flexWrap: 'wrap', gap: '10px' }}>
                     <h3 style={{ color: 'var(--primary-dark)', margin: 0 }}>
                       {groupName}
                     </h3>
-                    <button 
-                      onClick={handleExportWord}
-                      style={{ background: 'var(--primary-color)', color: 'white', border: 'none', padding: '6px 14px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}
-                    >
-                      📥 تحميل النتائج (Word)
-                    </button>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center', flexWrap: 'wrap' }}>
+                      <button 
+                        onClick={handleExportWord}
+                        style={{ background: 'var(--primary-color)', color: 'white', border: 'none', padding: '6px 14px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold' }}
+                      >
+                        📥 تحميل النتائج (Word)
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteGroupResults(groupName, sortedResults)}
+                        style={{ background: '#fee2e2', color: '#b91c1c', border: '1px solid #fca5a5', padding: '6px 12px', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '4px' }}
+                        title="حذف نتائج هذا الجدول بالتحديد"
+                      >
+                        <span>🗑️</span>
+                        <span>حذف نتائج هذا الجدول ({sortedResults.length})</span>
+                      </button>
+                    </div>
                   </div>
                   <div style={{ overflowX: 'auto' }}>
                     <table className="admin-table">

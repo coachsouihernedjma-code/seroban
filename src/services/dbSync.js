@@ -137,6 +137,32 @@ export async function deleteResult(id) {
   return await apiCall(`/api/results/${encodeURIComponent(id)}`, 'DELETE');
 }
 
+export async function deleteResultsByLevel(levelId, optionalIds = []) {
+  const results = JSON.parse(localStorage.getItem('soroban_results') || '[]');
+  const idsToDelete = new Set(optionalIds.map(String));
+  const filtered = results.filter(r => {
+    if (idsToDelete.size > 0) {
+      return !idsToDelete.has(String(r.id));
+    }
+    return (r.levelId || r.level_id) !== levelId;
+  });
+  localStorage.setItem('soroban_results', JSON.stringify(filtered));
+
+  // If explicit IDs provided, use batch delete or fallback to level endpoint
+  if (optionalIds.length > 0) {
+    return await apiCall('/api/results/delete-batch', 'POST', { ids: optionalIds, levelId });
+  }
+  return await apiCall(`/api/results/level/${encodeURIComponent(levelId)}`, 'DELETE');
+}
+
+export async function deleteResultsByIds(ids) {
+  const idSet = new Set(ids.map(String));
+  const results = JSON.parse(localStorage.getItem('soroban_results') || '[]');
+  const filtered = results.filter(r => !idSet.has(String(r.id)));
+  localStorage.setItem('soroban_results', JSON.stringify(filtered));
+  return await apiCall('/api/results/delete-batch', 'POST', { ids });
+}
+
 export async function deleteCoach(id) {
   const coaches = JSON.parse(localStorage.getItem('soroban_coaches') || '[]');
   const filtered = coaches.filter(c => c.id !== id);

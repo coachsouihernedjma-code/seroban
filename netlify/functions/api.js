@@ -250,6 +250,26 @@ export const handler = async (event) => {
       `;
       return json(200, { success: true, id });
     }
+    // DELETE: results by level
+    if (path.startsWith('/results/level/') && method === 'DELETE') {
+      const levelId = decodeURIComponent(path.replace('/results/level/', ''));
+      await db`DELETE FROM competition_results WHERE level_id = ${levelId}`;
+      return json(200, { success: true, deletedLevel: levelId });
+    }
+
+    // DELETE: results batch by IDs
+    if (path === '/results/delete-batch' && method === 'POST') {
+      const body = await parseBody(req);
+      const ids = Array.isArray(body.ids) ? body.ids : [];
+      const levelId = body.levelId;
+      if (ids.length > 0) {
+        await db`DELETE FROM competition_results WHERE id = ANY(${ids})`;
+      } else if (levelId) {
+        await db`DELETE FROM competition_results WHERE level_id = ${levelId}`;
+      }
+      return json(200, { success: true, deletedCount: ids.length, levelId });
+    }
+
     if (path.startsWith('/results/') && method === 'DELETE') {
       const id = path.split('/results/')[1];
       await db`DELETE FROM competition_results WHERE id = ${id}`;
